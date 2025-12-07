@@ -1,0 +1,7 @@
+
+*.pyc
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.ini
+*.log
