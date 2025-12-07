@@ -36,16 +36,16 @@ def format_nexus_file_data(moddata):
 
 # Info types are UMM
 # Definition types are Railloader
-def check_for_mod_updates(id):
+async def check_for_mod_updates(id):
     meta = re.split(r'[-@#]', id)
     game, mod, version = meta[0], meta[1], meta[2] if len(meta) > 2 else None
     # log.debug(meta)
     log.debug(game + ' ' + mod + ' ' + str(version))
     _id = id.split('-')
-    test = web.Client(f"https://api.nexusmods.com/v1/games/{game}/mods/{mod}/files.json", headers={
+    test = await web.Client(f"https://api.nexusmods.com/v1/games/{game}/mods/{mod}/files.json", headers={
         "accept": "application/json",
         "apikey": config['nexus']['apikey']
-    }).get()
+    }).async_get()
     # log.debug(f"Nexus Mod Info for {id}:\n{pformat(test.json())}")
     versions = format_nexus_file_data(test.json())
     log.debug(versions.keys())
