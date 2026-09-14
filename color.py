@@ -1,4 +1,4 @@
-# 2018-2025 ElenaBerry
+# 2018-2026 ElenaBerry
 from colorama import Fore, Back, Style
 # B stands for background
 # S stands for strong

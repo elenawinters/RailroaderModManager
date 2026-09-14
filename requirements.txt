@@ -1,4 +1,6 @@
+selenium
 colorama
 dataset
+pyquery
 json5
 httpx

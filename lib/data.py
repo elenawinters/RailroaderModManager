@@ -13,8 +13,10 @@ class Data:
         self.base = dataset.connect(config['db']['address'], engine_kwargs={'pool_recycle': 3600})
         dbtab1 = self.base.create_table('mods', primary_id='modid', primary_type=sqltypes.Text)
         dbtab1.create_column('name', sqltypes.Text)
-        dbtab1.create_column('last_update', sqltypes.Text)
         dbtab1.create_column('version', sqltypes.Text)
+        dbtab1.create_column('current_filename', sqltypes.Text)
+        dbtab1.create_column('pending_filename', sqltypes.Text)
+        dbtab1.create_column('pending_version', sqltypes.Text)
         log.debug(f"Database Connected! Object: {self.base}")
         
 
