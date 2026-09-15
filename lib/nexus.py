@@ -2,6 +2,7 @@ from collections import OrderedDict
 from curses import meta
 from dataclasses import dataclass
 import subprocess
+from main import DOWNLOADS_PATH
 from utils import setup_logging
 from lib.config import config
 from lib.data import data
@@ -11,7 +12,7 @@ from lib import web
 import logging
 import asyncio
 import random
-import json5
+import json
 import os
 import re
 
@@ -48,10 +49,9 @@ class API:
         
     @staticmethod
     async def get_download_link(game, mod_id, file_id):
-        # This will only work if you have Nexus premium, which I don't have, and have no intention of getting.
-        # So, this code literally does nothing after it's executed, but it's here for future reference at the very least.
-        # https://www.nexusmods.com/Core/Libs/Common/Widgets/ModRequirementsPopUp?id=3747&game_id=5982&nmm=1
-        # =2rhpulWxfdP0CmL0QJkBUw&expires=1765333682
+        return NotImplementedError("This function is not implemented yet. It would require Nexus premium access to work.")
+        # This can only work if you have Nexus premium, which I don't have, and have no intention of getting.
+        # I'm not gonna further develop it. PR if you want to make it work.
         nxm = {
             'key': 'asdasdasdasd',
             'expires': 1234567890
@@ -71,9 +71,6 @@ class API:
 
 
 async def open_dl_link(game, mod_id, file_id=None):
-    # game_id = await API.get_numerical_game_id(game)
-    # const downloadUrl = 'nxm://railroader/mods/410/files/3747?key=E8MbBu59eCkwNzhApS8yCA&expires=1765311054&user_id=124452793';
-    # url = f"https://www.nexusmods.com/Core/Libs/Common/Widgets/ModRequirementsPopUp?id={file_id}&game_id={game_id}"
     if file_id is None:
         url = f"https://www.nexusmods.com/{game}/mods/{mod_id}?tab=files"
     else:
@@ -91,6 +88,7 @@ async def open_dl_link(game, mod_id, file_id=None):
     else:  # Linux and other OSes
         subprocess.run(['xdg-open', url])
 
+DELIMITER = ';;'
 # Regex is hard.
 RE_PATTERN = pattern = re.compile(
     r'^(?P<game>[^@#$!]+)-(?P<mod>[^-@#$!]+)'
@@ -114,21 +112,9 @@ def parse_id_string(id_string):
     meta_dict['search'] = meta_dict['search'].split(';') if meta_dict['search'] else []
     meta_dict['exclude'] = meta_dict['exclude'].split(';') if meta_dict['exclude'] else []
     return ModMeta(**meta_dict)
-    # print(meta)
-    log.debug(meta.groupdict())
-    # # meta = re.split(r'[-@#$]', id_string)
-    # game, mod = meta.pop(0), meta.pop(0)
-    # # meta.pop(1)
-    # version = meta
-    # print(game, mod, version)
-    # return game, mod, version
-
-def compile_vstring(meta):
-    vstring = meta
-    # vstring = game + '-' + mod + '@' + f"{str(version) if version else 'latest'}"
-    return vstring
 
 async def refresh_nexus_data(kwargs):
+    return NotImplementedError("This would require a UI for it to really be useful. Dunno if one will ever be made")
     pass
     # async with asyncio.TaskGroup() as tg:
     #     for func in _listeners:
@@ -141,14 +127,8 @@ def format_nexus_file_data(moddata, meta):
     else:
         log.warning(f"No 'files' key in moddata for {meta.game}-{meta.mod}. Using raw moddata.")
     versions = {}
-    # log.debug('test')
-    # log.debug(moddata)
     for version in moddata:
-        # versions[version['version']] = version
-        # log.debug(';<'.join([str(version['version']), str(version['file_id']), str(version['name'])]))
-        versions[';;'.join([str(version['version']), str(version['file_id']), str(version['name'])])] = version
-    # versions[None] = moddata[-1]
-    # versions['latest'] = moddata[-1]
+        versions[DELIMITER.join([str(version['version']), str(version['file_id']), str(version['name'])])] = version
     return OrderedDict(reversed(list(versions.items())))
 
 def formatted_version_string(version_string):
@@ -159,27 +139,11 @@ def search_nexus_file_data(versions, meta):
     results = []
 
     log.debug(meta)
-
-    # log.debug(f'--- Begin file dump for {meta.game}-{meta.mod} ---'.upper())
-    # for x in versions.keys():
-    #     log.debug(x)
-    # log.debug(f'--- End file dump for {meta.game}-{meta.mod} ---'.upper())
-
-    #  = []
-
-    # order of filtration
-    # filter by fileID if provided
-    # filter by search terms if provided
-    # filter out exluded terms if provided
-    # filter by version if provided
-    # if version is provided, return all files
-    # if no version is provided, return latest file
-
     if meta.fileid:
         for key in versions.keys():
-            v, f, n = key.split(';;')
+            f = key.split(DELIMITER)[1]
             if f == meta.fileid:
-                log.debug(f'fileid yes: {meta.fileid}')
+                log.debug(f'fileid returned: {meta.fileid}')
                 return [versions[key]]
         return []
 
@@ -188,8 +152,7 @@ def search_nexus_file_data(versions, meta):
         versions = {
             key: versions[key]
             for key in versions.keys()
-            for search in meta.search
-            if search.lower() in key.lower()
+            if all(search.lower() in key.lower() for search in meta.search)
         }
 
     if meta.exclude:
@@ -200,35 +163,32 @@ def search_nexus_file_data(versions, meta):
         }
 
     log.debug(len(versions))
-
     if meta.version:
         target_version = meta.version
         if meta.version == 'latest':
-            paired = [(v.split(';;')[0], formatted_version_string(v.split(';;')[0])) for v in versions.keys()]
+            paired = [(v.split(DELIMITER)[0], formatted_version_string(v.split(DELIMITER)[0])) for v in versions.keys()]
             target_version = max(paired, key=lambda pair: pair[1])[0]
-            # target_version = max([formatted_version_string(v.split(';;')[0]) for v in versions.keys()])
 
         for key in versions.keys():
-            v, f, n = key.split(';;')
+            v = key.split(DELIMITER)[0]
             if v == target_version:
                 results.append(versions[key])
-                log.debug(f'version yes: {target_version}')
+                log.debug(f'version returned: {target_version}')
     else:
         for key in versions.keys():
             results.append(versions[key])
-            log.debug('newest file yes')
+            log.debug('newest file returned')
             break
         return results
     return results
 
 VCACHE = {}
-async def fetch_nexus_file_info(id_string, return_all=False):
+async def fetch_nexus_file_info(id_string):
     meta = parse_id_string(id_string)
-    log.debug(meta)
-    vstring = id_string
+    # log.debug(meta)
     data = await API.get_mod_files(meta.game, meta.mod)
     if not data: 
-        log.error(f"No data returned for {vstring}")
+        log.error(f"No data returned for {id_string}")
         return None
     # log.debug(data)
     if f"{meta.game}-{meta.mod}" in VCACHE:
@@ -238,53 +198,51 @@ async def fetch_nexus_file_info(id_string, return_all=False):
 
     log.debug('Starting search...')
     result = search_nexus_file_data(VCACHE[f"{meta.game}-{meta.mod}"], meta)
-    log.debug(f"Number of search results for {vstring}: {len(result)}")
+    log.debug(f"Number of search results for {id_string}: {len(result)}")
     log.debug('Search concluded!')
 
-    # log.debug(result)
+    return result
 
-    # if '#' in version:
-    #     version = version.split('#')
-
-
-    return None
-    # vformatted = versions[meta.version]['name'] if meta.version in versions else 'Unknown Version'
-    # log.debug(f"Fetched Nexus file info for {vstring}: {vformatted}")
-    # if vformatted == 'Unknown Version':
-    #     return versions['latest']
-    # if return_all:
-    #     return versions
-    # return versions[version]
 
 async def check_for_updates_and_download_if_available(id_string):
     meta = parse_id_string(id_string)
     file_info = await fetch_nexus_file_info(id_string)
     if not file_info:
-        log.error(f"Failed to fetch file info for {meta.game}-{meta.mod}. Skipping update check.")
+        log.error(f"Failed to fetch file info for {id_string}. Skipping update check.")
         return
     # log.debug(f"Download link data: {pformat(file_info)}")
-    if file_info['version'] == meta.version:
-        # log.debug(f"No update available for {meta.game}-{meta.mod} (current version: {meta.version})")
-        return
-    
-    log.info(f"Update available for {meta.game}-{meta.mod}: {file_info['version']} (current version: {meta.version})")
-    # await open_dl_link(meta.game, meta.mod)
+    aggregate = {
+        'names': [],
+        'pending_fileids': [],
+        'pending_files': []
+    }
+
+    for file in file_info:
+        if file['version'] == meta.version:
+            # log.debug(f"No update available for {meta.game}-{meta.mod} (current version: {meta.version})")
+            return
+        aggregate['names'].append(file['name'])
+        aggregate['pending_files'].append(file['file_name'])
+        aggregate['pending_fileids'].append(file['file_id'])
+        log.info(f"Update available for {id_string}: {file['version']} (current version: {meta.version})")
+        pending_path = Path(DOWNLOADS_PATH) / file['file_name']
+        if not pending_path.exists():
+            await open_dl_link(meta.game, meta.mod, file['file_id'])
 
     data.base['mods'].upsert({
-        'modid': f'{meta.game}-{meta.mod}',
-        'name': file_info['name'],
+        'modid': id_string,
+        'names': json.dumps(aggregate['names']),
         # 'last_update': None,
-        'pending_filename': file_info['file_name'],
-        'pending_version': file_info['version']
+        'pending_filenames': json.dumps(aggregate['pending_files']),
+        'pending_fileids': json.dumps(aggregate['pending_fileids']),
+        'pending_version': file['version']
     }, ['modid'])
 
-    
-    # log.debug(f"Download link data: {pformat(file_info)}")
-    # await open_dl_link(meta.game, meta.mod)
     pass
 
 # WARNING: This function is deprecated and should not be used.
 def build_railroader_modlist_from_gamefiles():
+    import json5
     directory = Path(config['gameloc']['railroader'])
     mods = []
     for file in directory.iterdir():

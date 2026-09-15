@@ -1,5 +1,7 @@
+aiofiles
 selenium
 colorama
+msgpack
 dataset
 pyquery
 json5

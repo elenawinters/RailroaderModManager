@@ -1,8 +1,11 @@
+import json
+
 from utils import setup_logging
 from lib.config import config
 from lib.data import data
 from pathlib import Path
 from lib import nexus
+import aiofiles
 import asyncio
 import logging
 
@@ -14,19 +17,17 @@ setup_logging(log, logging.DEBUG)
 # log.debug(f"Database Object: {data.base}")
 
 
-def do_all_pending_files_exist(pending_mods):
+async def do_all_pending_files_exist(pending_files):
     all_exist = True
-    for mod in pending_mods:
-        for modid, pending in mod.items():
-            pending_file = pending['pending_file']
-            if not pending_file:
-                continue
-            pending_path = Path(DOWNLOADS_PATH) / pending_file
-            if not pending_path.exists():
-                log.warning(f"Pending file for mod {modid} ({pending['name']}) does not exist: {pending_path}")
-                all_exist = False
-            # else:
-            #     log.info(f"Pending file for mod {modid} exists: {pending_path}")
+    for pending_file in pending_files:
+        if not pending_file:
+            continue
+        pending_path = Path(DOWNLOADS_PATH) / pending_file
+        if not pending_path.exists():
+            log.warning(f"Pending file {pending_path} does not exist.")
+            all_exist = False
+        # else:
+        #     log.info(f"Pending file for mod {modid} exists: {pending_path}")
     return all_exist
 
 # This is just my railroader mod-list. This is tempoarary for testing and will be moved to an example file later.
@@ -48,7 +49,7 @@ tmp_mod_list = [
 for x in tmp_mod_list:
     data.base['mods'].upsert({
         'modid': f'railroader-{x}',
-        'name': 'test'
+        'names': json.dumps(['test'])
     }, ['modid'])
 
     # nexus.parse_id_string(f'railroader-{x}')
@@ -91,19 +92,44 @@ async def refresh_nexus_data_and_install():
             tg.create_task(check_func(id))
     # log.debug(nexus.VCACHE)
     nexus.VCACHE = {}
-    pending_mods = [{mod['modid']: {'name': mod['name'], 'pending_file': mod['pending_filename'],'pending_version': mod['pending_version'], 'old_filename': mod['current_filename']}} for mod in data.base['mods'].all() if mod['pending_filename'] is not None]
+    # pending_files = []
+    # for mod in data.base['mods'].all():
+    #     for file in json.loads(mod['pending_filenames']):
+    #         pending_files.append(file)
 
-    while not do_all_pending_files_exist(pending_mods):
-        log.info("These messages will display every 10 seconds until all pending update files are present in the Downloads folder.")
-        await asyncio.sleep(10)
+    pending_files = [file for mod in data.base['mods'].all() for file in json.loads(mod['pending_filenames'])]
+
+    #     if mod['pending_filenames'] is None: continue
+    #     name = json.loads(mod['names'])
+    #     folders = json.loads(mod['folders']) if mod['folders'] else None
+    #     pending_filenames = json.loads(mod['pending_filenames'])
+    #     for index in range(len(pending_filenames)):
+    #         pending_mods.append({mod['modid']: {
+    #             'name': name[index] if mod['names'] else None,
+    #             'pending_file': pending_filenames[index] if mod['pending_filenames'] else None,
+    #             'pending_version': mod['pending_version'],
+    #             'old_installs': folders
+    #         }})
+
+
+    # pending_mods = [{mod['modid']: {'name': mod['names'], 'pending_file': mod['pending_filenames'],'pending_version': mod['pending_version'], 'old_filename': mod['folders']}} for mod in data.base['mods'].all() if mod['pending_filenames'] is not None]
+
+    while not do_all_pending_files_exist(pending_files):
+        # log.info("These messages will display every 10 seconds until all pending update files are present in the Downloads folder.")
+        log.info("Please download the missing files above to continue.")
+        input("Press any key to initiate installation (if all files are present)...")
+        # await asyncio.sleep(10)
         
     log.info("All pending update files are present. Proceeding with installation...")
+    async with asyncio.TaskGroup() as tg:
+        for mod in data.base['mods'].all():
+            tg.create_task(install_mods(mod))
     # for mod in pending_mods:
     #     for modid, pending in mod.items():
     #         pending_file = pending['pending_file']
     #         pending_version = pending['pending_version']
     #         if not pending_file:
-    #             log.info(f"No pending file for mod {modid} ({pending['name']}). Skipping installation.")
+    #             log.warning(f"No pending file for mod {modid} ({pending['name']}). Skipping installation.")
     #             continue
     #         pending_path = Path(DOWNLOADS_PATH) / pending_file
     #         if pending_path.exists():
@@ -115,6 +141,21 @@ async def refresh_nexus_data_and_install():
     # log.warning("Please run this program again after having downloaded the update files.")
 
     
+async def install_mods(mod):
+    log.debug(mod)
+
+    old_installs = mod['folders']
+    old_version = mod['version']
+    old_names = mod['names']
+
+    for folders in mod['folders']:
+
+
+
+
+
+    pass
+
 
 if __name__ == "__main__":
     asyncio.run(refresh_nexus_data_and_install())
