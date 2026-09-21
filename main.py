@@ -7,15 +7,17 @@ from pathlib import Path
 from lib import nexus
 import aiofiles.os
 import aiofiles
+import msgpack
 import asyncio
 import logging
+import base64
 import shutil
 import json5
 import json
 import os
 
 log = logging.getLogger(__name__)
-setup_logging(log, logging.DEBUG)
+setup_logging(log)
 
 # log.debug(f"Database Address: {config['db']['address']}")
 # log.debug("Connecting to database...")
@@ -70,55 +72,26 @@ DOWNLOADS_PATH = Path(Path.home(), "Downloads")
 # nexus.build_railroader_modlist_from_gamefiles()
 # nexus.check_for_mod_updates('railroader-1096@1.0')
 async def refresh_nexus_data_and_install():
-    # for x in tmp_mod_list:
-    #     await nexus.fetch_nexus_file_info(f'railroader-{x}')
-
-    # return
     check_func = nexus.check_for_updates_and_download_if_available
     mod_ids = sorted([mod['modid'] for mod in data.base['mods'].all()])
-    # mod_ids = sorted([mod['modid'] + '@' + str(mod['version']) for mod in data.base['mods'].all()])
 
     log.debug(mod_ids)
-    # for mod in mods:
-    #     log.debug(mod)
-        # await func(mod['modid'] + '@' + mod['version'])
-    # log.debug(list(mods))
-    # log.debug(data.base['mods'].all())
-    # for mod in data.base['mods']:
-    #     log.debug(f"Checking for updates for mod: {mod['modid']} (current version: {mod['version']})")
-    # mod_ids = []
-    # mod_ids = [
-    #     'railroader-1029',
-    #     'railroader-143',
-    #     'railroader-410'
-    # ]
-    # return
-    async with asyncio.TaskGroup() as tg:
-        for id in mod_ids:
-            tg.create_task(check_func(id))
-    # log.debug(nexus.VCACHE)
+
+    log.info('Searching for updates...')
+    try:
+        async with asyncio.TaskGroup() as tg:
+            for id in mod_ids:
+                tg.create_task(check_func(id))
+    except Exception as e:
+        log.exception(e)
+
     nexus.VCACHE = {}
-    # pending_files = []
-    # for mod in data.base['mods'].all():
-    #     for file in json.loads(mod['pending_filenames']):
-    #         pending_files.append(file)
 
-    pending_files = [file for mod in data.base['mods'].all() for file in json.loads(mod['pending_filenames'])]
+    pending_files = [file for mod in data.base['mods'].all() for file in json.loads(mod['pending_filenames'] if mod['pending_filenames'] else '[]')]
 
-    #     if mod['pending_filenames'] is None: continue
-    #     name = json.loads(mod['names'])
-    #     folders = json.loads(mod['folders']) if mod['folders'] else None
-    #     pending_filenames = json.loads(mod['pending_filenames'])
-    #     for index in range(len(pending_filenames)):
-    #         pending_mods.append({mod['modid']: {
-    #             'name': name[index] if mod['names'] else None,
-    #             'pending_file': pending_filenames[index] if mod['pending_filenames'] else None,
-    #             'pending_version': mod['pending_version'],
-    #             'old_installs': folders
-    #         }})
-
-
-    # pending_mods = [{mod['modid']: {'name': mod['names'], 'pending_file': mod['pending_filenames'],'pending_version': mod['pending_version'], 'old_filename': mod['folders']}} for mod in data.base['mods'].all() if mod['pending_filenames'] is not None]
+    if not pending_files:
+        log.info('All mods are up to date!')
+        return
 
     while not await do_all_pending_files_exist(pending_files):
         # log.info("These messages will display every 10 seconds until all pending update files are present in the Downloads folder.")
@@ -137,8 +110,8 @@ async def refresh_nexus_data_and_install():
     except Exception as e:
         log.exception(e)
 
-    # if not is_dangerous_path(TMP_FOLDER):
-    #     shutil.rmtree(TMP_FOLDER)
+    if not is_dangerous_path(TMP_FOLDER):
+        shutil.rmtree(TMP_FOLDER)
 
 def unpack_to_tmp(archive: Path):
     loc = Path(TMP_FOLDER, archive.name)
@@ -149,14 +122,16 @@ def unpack_to_tmp(archive: Path):
         obj.extractall(path=loc)
 
     log.debug(f'`{archive.name}` extracted to temp folder.')
-    
+
+
 async def install_mods(moddat):
     meta = nexus.parse_id_string(moddat['modid'])
+    meta.patch = moddat['patch']
     if is_dangerous_path(config['gameloc'][meta.game]):
         log.error(f'`{config['gameloc'][meta.game]}` has been flagged as a dangerous path. Aborting install.')
         return
     moddat['names'] = json.loads(moddat['names'] if moddat['names'] else ['N/A'])
-    moddat['folders'] = json.loads(moddat['folders']) if moddat['folders'] else []
+    # moddat['folders'] = json.loads(moddat['folders']) if moddat['folders'] else []
     moddat['pending_filenames'] = json.loads(moddat['pending_filenames']) if moddat['pending_filenames'] else []
 
     ## decided not to use this code. it wipes every entry in moddat folders, but we might only be updating one of them
@@ -180,26 +155,80 @@ async def install_mods(moddat):
 
         tmp = Path(TMP_FOLDER, pending_file)
         glob = list(tmp.rglob('Info.json', case_sensitive=False)) + list(tmp.rglob('Definition.json', case_sensitive=False))
-        if not glob: log.error(f'Glob was empty!!! {pending_file}')
+        if not glob:
+            log.error(f'Glob was empty!!! {pending_file}. Cannot continue install!!!')
+            continue
+        if meta.patch:
+            patch = msgpack.unpackb(base64.b64decode(meta.patch))
+        else:
+            patch = None
         for file in glob:
             folder = file.parents[0].name
+            true_id = folder
             if file.name.lower() == 'info.json':
-                with file.open("r", encoding="utf-8-sig") as f:
+                with file.open("r+", encoding="utf-8-sig") as f:
                     modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
                     if modinfo:
                         folder = modinfo['Id']
+                        true_id = folder
+                    if meta.patch and modinfo and 'replaceId' in patch:
+                        # patch = msgpack.unpackb(base64.b64decode(meta.patch))
+                        if modinfo['Id'] in patch['replaceId']:
+                            modinfo['Id'] = patch['replaceId'][modinfo['Id']]
+                            f.seek(0)
+                            json.dump(modinfo, f, indent=4)
+                            f.truncate()
+                            log.debug(f'`{true_id}` has been patched to `{modinfo['Id']}`')
+                        folder = modinfo['Id']
+
+            elif file.name.lower() == 'definition.json' and meta.patch and 'removeRLConflict' in patch:
+                with file.open("r+", encoding="utf-8-sig") as f:
+                    modinfo = json5.load(f)
+                    if 'conflictsWith' in modinfo:
+                        popqueue = []
+                        for item in modinfo['conflictsWith']:
+                            if item['id'] in patch['removeRLConflict']:
+                                popqueue.append(item)
+                        for item in popqueue:
+                            modinfo['conflictsWith'].remove(item)
+                        f.seek(0)
+                        json.dump(modinfo, f, indent=4)
+                        f.truncate()
+                        log.debug(f'`{file.name}` has been patched for mod `{folder}`.')
+                    else:
+                        log.warning(f'Failed to patch `{file.name}` for `{folder}`: No conflicts defined by mod!')
+
             log.debug(f'Folder name has been determined to be {folder}.')
 
-            # path = file.parents[0]
             path = Path(config['gameloc'][meta.game], folder)
             if await aiofiles.os.path.exists(path):
                 log.debug(f"Clearing old `{folder}` install.")
                 await asyncio.to_thread(shutil.rmtree, path)
-            elif moddat['version'] is None:  # not sure how to hand this rn 
-                log.warning(f"Folder `{folder}` doesn't exist and couldn't be cleared. This might mean that the mod identifier changed! Please manually verify. Continuing with install.")
+            elif moddat['version'] is not None:  # not sure how to handle this rn 
+                if folder != true_id and await aiofiles.os.path.exists(true_id_path := Path(config['gameloc'][meta.game], true_id)):
+                    log.warning(f"Folder `{folder}` didn't exist, but {true_id} was found. Deleting potential conflict.")
+                    await asyncio.to_thread(shutil.rmtree, true_id_path)
+                else:
+                    log.warning(f"Folder `{folder}` doesn't exist and couldn't be cleared. This might mean that the mod identifier changed! Please manually verify. Continuing with install.")
 
             await asyncio.to_thread(shutil.copytree, file.parents[0], path)
             log.debug(f"Installed `{folder}`.")
+
+    log.info(f'Installed {len(moddat['pending_filenames'])} file(s) for {moddat['modid']}')
+    data.base['mods'].upsert({
+        'modid': moddat['modid'],
+        # 'names': json.dumps(aggregate['names']),
+        'version': moddat['pending_version'],
+        'fileids': moddat['pending_fileids'],
+        'pending_filenames': None,
+        'pending_fileids': None,
+        'pending_version': None
+    }, ['modid'])
+    # eepy, what needs to happen
+    # - update database (right here)
+    # - add support for the different import/export types (lib/modpack.py)
+    # - 
+
 
             # log.debug(file)
             # break

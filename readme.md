@@ -40,15 +40,15 @@ Some filters, for example `railroader-143@4.4.2`, will download *multiple* files
 
 For some mods though, you'll want to take advantage of the multi-file capability. For example, the trucks required for the GP38: `railroader-143@3.05.11$trucks`
 
-This is all convention though. You don't have to follow this, but you might lose mods on updates.
+This is all convention though. You don't have to follow this, but RMM might lose track of mods on updates.
 
-#### Losing Mods On Updates
+#### Mod Decoupling
 
-Yeah, let's just get this outta the way. If you are too vague with your RMM-ID, and mods update, you might lose some of them.
+Yeah, let's just get this outta the way. If you are too vague with your RMM-ID, and mods update, RMM might lose track of some of them.
 
-For example, the GP38 by BeeMan. Let's assume we use `railroader-143@latest`. If the Scripts file gets updated to 4.4.3, but the GP38 file is still on 4.4.2, the GP38 file will get uninstalled since it no longer has the highest ("latest") version number.
+For example, the GP38 by BeeMan. Let's assume we use `railroader-143@latest`. If the Scripts file gets updated to 4.4.3, but the GP38 file is still on 4.4.2, the Scripts mod will get updated, but RMM will stock tracking the GP38 since it no longer has the highest ("latest") version number.
 
-RMM will warn you when this happens. The only way to avoid this is by using 
+RMM will warn you when this happens, and uninstall the decoupled mod if it can.
 
 ### Order of Operations
 
@@ -121,6 +121,35 @@ While MsgPack is the preferred storage medium for modpacks, JSON can also be use
 #### Plaintext
 
 Newline/Return delimited RMM-IDs can be read by RMM and installed. Ideally, you really shouldn't use this unless you are building a modpack to then export as a `.mpk`. 
+
+## RMM-ID Patching
+
+### DO NOT REPORT ISSUES TO MOD MAKERS ABOUT MOD ISSUES IF YOU HAVE INSTALLED IT WITH A PATCH.
+
+Sometimes, mods you download come with broken dependencies. Patching takes advantage of the RMM-ID system to allow patching of mods to fix issues with them. This patching gets applied during mod install.
+
+Patches are part of the RMM-ID itself. They are a **Base64 MsgPack object**. This contents contain the information for the patch, structured as followed:
+
+```json
+{
+    "replaceId": {
+        "beemansrollingstockscripts": "BeemansRollingStockScripts"
+    },
+    "removeRLConflict": ["AlinaNova21.AlinasMapMod"]
+}
+```
+
+Let's use the `replaceId` example as an example. Most mods that rely on Beemans Rolling Stock Scripts expect the ID to be capitalized, when it's not currently. This, at least under FUSE, causes errors. So, you can provide a patch to fix it inside of Beeman's scripts directly, and get around the issue.
+
+`railroader-443@latest|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz`
+
+The `removeRLConflict` patch exists to remove broken conflicts. Under FUSE, mods like MICHILSON's Large Andrews Engine Facility requires Alina's Map Mod to be above version 1.3.24149.1337. This is fine under Railloader, since you are expected to have AMM installed, but here, FUSE provides it, specifically version 0.0.0.0. The Andrews Facility will refuse to load under this configuration, even though it works fine. So, we can just patch the `Definition.json` to remove the lines causing the issue.
+
+`railroader-1334|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=`
+
+These are just examples of patches I've had to manually make for my own modded environment. This system streamlines it so you don't have to manually do it. Patches are carried over to exported modlists.
+
+You can see what a patch does by using [this utility](https://ref45638.github.io/msgpack-converter/).
 
 
 ### Quirks

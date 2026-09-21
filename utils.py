@@ -57,7 +57,10 @@ class _ColourFormatter(logging.Formatter):
 
 def setup_logging(logger, level = None) -> None:
     if level is None:
-        level = logging.INFO
+        if '--debug' in sys.argv:
+            level = logging.DEBUG
+        else:
+            level = logging.INFO
 
     handler = logging.StreamHandler()
 

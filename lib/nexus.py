@@ -13,11 +13,12 @@ import logging
 import asyncio
 import random
 import json
+import sys
 import os
 import re
 
 log = logging.getLogger(__name__)
-setup_logging(log, logging.DEBUG)
+setup_logging(log)
 class API:
     @staticmethod
     async def get_mod_files(game, mod_id):
@@ -96,7 +97,9 @@ RE_PATTERN = pattern = re.compile(
     r'(?:#(?P<fileid>\d+))?'
     r'(?:\$(?P<search>[^!]+))?'
     r'(?:!(?P<exclude>.+))?$'
+    r'(?:\|(?P<patch>[A-Za-z0-9+/=]+))?$'
 )
+
 @dataclass
 class ModMeta:
     game: str
@@ -105,6 +108,7 @@ class ModMeta:
     fileid: str = None
     search: list = None
     exclude: list = None
+    patch: str = None
         
 def parse_id_string(id_string):
     meta = RE_PATTERN.match(id_string)
@@ -147,7 +151,7 @@ def search_nexus_file_data(versions, meta):
                 return [versions[key]]
         return []
 
-    log.debug(len(versions))
+    log.debug(f'{len(versions)} (all versions)')
     if meta.search:
         versions = {
             key: versions[key]
@@ -162,7 +166,7 @@ def search_nexus_file_data(versions, meta):
             if not any(exclude.lower() in key.lower() for exclude in meta.exclude)
         }
 
-    log.debug(len(versions))
+    log.debug(f'{len(versions)} (reduced by search/exclude)')
     if meta.version:
         target_version = meta.version
         if meta.version == 'latest':
@@ -217,14 +221,20 @@ async def check_for_updates_and_download_if_available(id_string):
         'pending_files': []
     }
 
+    moddat = data.base['mods'].find_one(modid=id_string)
+    current_version = None
+    if moddat:
+        current_version = moddat['version']
+    # log.debug(current_version)
+
     for file in file_info:
-        if file['version'] == meta.version:
-            # log.debug(f"No update available for {meta.game}-{meta.mod} (current version: {meta.version})")
+        if file['version'] == current_version and '--force' not in sys.argv:
+            log.debug(f"No update available for {meta.game}-{meta.mod} (current version: {current_version})")
             return
         aggregate['names'].append(file['name'])
         aggregate['pending_files'].append(file['file_name'])
         aggregate['pending_fileids'].append(file['file_id'])
-        log.info(f"Update available for {id_string}: {file['version']} (current version: {meta.version})")
+        log.info(f"Update available for {id_string}: {file['version']} (current version: {current_version})")
         pending_path = Path(DOWNLOADS_PATH) / file['file_name']
         if not pending_path.exists():
             await open_dl_link(meta.game, meta.mod, file['file_id'])
