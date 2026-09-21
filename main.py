@@ -1,13 +1,18 @@
-import json
-
+from zipfile import ZipFile, is_zipfile
+from bad_path import is_dangerous_path
 from utils import setup_logging
 from lib.config import config
 from lib.data import data
 from pathlib import Path
 from lib import nexus
+import aiofiles.os
 import aiofiles
 import asyncio
 import logging
+import shutil
+import json5
+import json
+import os
 
 log = logging.getLogger(__name__)
 setup_logging(log, logging.DEBUG)
@@ -22,8 +27,8 @@ async def do_all_pending_files_exist(pending_files):
     for pending_file in pending_files:
         if not pending_file:
             continue
-        pending_path = Path(DOWNLOADS_PATH) / pending_file
-        if not pending_path.exists():
+        pending_path = Path(DOWNLOADS_PATH, pending_file)
+        if not await aiofiles.os.path.exists(pending_path):
             log.warning(f"Pending file {pending_path} does not exist.")
             all_exist = False
         # else:
@@ -39,18 +44,18 @@ async def do_all_pending_files_exist(pending_files):
 #     303, 806, 604, '410#main:2', 18, 816, 492, 503, 740, 752, 400, 614, 532, 545, 692, 434, 440, 421,
 #     567, 52, 858, 823, 894, '1174#main:2', '1174#main:3', '1173#main:2', '1173#main:3', 1040, 1236, 1202
 # ]
-tmp_mod_list = [
-    '1645$fuse!toolshed', '1645$toolshed', 239, '1378@latest$fuse;install'
-]
+# tmp_mod_list = [
+#     '1645$fuse!toolshed', '1645$toolshed', 239, '1378@latest$fuse;install'
+# ]
 
 
-# 444 was removed, sadge, write a thing to detect that i guess
+# # 444 was removed, sadge, write a thing to detect that i guess
 
-for x in tmp_mod_list:
-    data.base['mods'].upsert({
-        'modid': f'railroader-{x}',
-        'names': json.dumps(['test'])
-    }, ['modid'])
+# for x in tmp_mod_list:
+#     data.base['mods'].upsert({
+#         'modid': f'railroader-{x}',
+#         'names': json.dumps(['test'])
+#     }, ['modid'])
 
     # nexus.parse_id_string(f'railroader-{x}')
 
@@ -60,7 +65,8 @@ for x in tmp_mod_list:
 #     'version': '0.1.0'
 # }, ['modid'])
 
-DOWNLOADS_PATH = str(Path.home() / "Downloads")
+TMP_FOLDER = Path(Path.cwd(), 'tmp')
+DOWNLOADS_PATH = Path(Path.home(), "Downloads")
 # nexus.build_railroader_modlist_from_gamefiles()
 # nexus.check_for_mod_updates('railroader-1096@1.0')
 async def refresh_nexus_data_and_install():
@@ -114,47 +120,103 @@ async def refresh_nexus_data_and_install():
 
     # pending_mods = [{mod['modid']: {'name': mod['names'], 'pending_file': mod['pending_filenames'],'pending_version': mod['pending_version'], 'old_filename': mod['folders']}} for mod in data.base['mods'].all() if mod['pending_filenames'] is not None]
 
-    while not do_all_pending_files_exist(pending_files):
+    while not await do_all_pending_files_exist(pending_files):
         # log.info("These messages will display every 10 seconds until all pending update files are present in the Downloads folder.")
         log.info("Please download the missing files above to continue.")
         input("Press any key to initiate installation (if all files are present)...")
         # await asyncio.sleep(10)
-        
+
+    if not TMP_FOLDER.exists(): os.mkdir(TMP_FOLDER)
+
     log.info("All pending update files are present. Proceeding with installation...")
-    async with asyncio.TaskGroup() as tg:
-        for mod in data.base['mods'].all():
-            tg.create_task(install_mods(mod))
-    # for mod in pending_mods:
-    #     for modid, pending in mod.items():
-    #         pending_file = pending['pending_file']
-    #         pending_version = pending['pending_version']
-    #         if not pending_file:
-    #             log.warning(f"No pending file for mod {modid} ({pending['name']}). Skipping installation.")
-    #             continue
-    #         pending_path = Path(DOWNLOADS_PATH) / pending_file
-    #         if pending_path.exists():
-    #             log.info(f"Installing update for mod {modid} ({pending['name']}) from file: {pending_path}")
-    #             await nexus.install_nexus_file(modid + '@' + pending_version, str(pending_path))
-    #         else:
-    #             log.error(f"Pending file for mod {modid} ({pending['name']}) not found during installation: {pending_path}")
+    try:
+        async with asyncio.TaskGroup() as tg:
+            for mod in data.base['mods'].all():
+                if mod['pending_filenames'] is None: continue
+                tg.create_task(install_mods(mod))
+    except Exception as e:
+        log.exception(e)
 
-    # log.warning("Please run this program again after having downloaded the update files.")
+    # if not is_dangerous_path(TMP_FOLDER):
+    #     shutil.rmtree(TMP_FOLDER)
 
+def unpack_to_tmp(archive: Path):
+    loc = Path(TMP_FOLDER, archive.name)
+    if loc.exists():
+        log.debug(f'Directory `{archive.name}` already exists in the temp folder!')
+        return
+    with ZipFile(archive, 'r') as obj:
+        obj.extractall(path=loc)
+
+    log.debug(f'`{archive.name}` extracted to temp folder.')
     
-async def install_mods(mod):
-    log.debug(mod)
+async def install_mods(moddat):
+    meta = nexus.parse_id_string(moddat['modid'])
+    if is_dangerous_path(config['gameloc'][meta.game]):
+        log.error(f'`{config['gameloc'][meta.game]}` has been flagged as a dangerous path. Aborting install.')
+        return
+    moddat['names'] = json.loads(moddat['names'] if moddat['names'] else ['N/A'])
+    moddat['folders'] = json.loads(moddat['folders']) if moddat['folders'] else []
+    moddat['pending_filenames'] = json.loads(moddat['pending_filenames']) if moddat['pending_filenames'] else []
 
-    old_installs = mod['folders']
-    old_version = mod['version']
-    old_names = mod['names']
+    ## decided not to use this code. it wipes every entry in moddat folders, but we might only be updating one of them
+    # # cleanup old install
+    # for folder in moddat['folders']:
+    #     loc = Path(config['gameloc'][meta.game], folder)
+    #     if is_dangerous_path(loc):  # probably unneccessary. Only way this would happen is if the database corrupted I think.
+    #         log.error(f'`{loc}` has been flagged as a dangerous path. Aborting install.')
+    #         return
+    #     if not await aiofiles.os.path.isdir(loc): continue
+    #     await asyncio.to_thread(shutil.rmtree, loc)
+    #     log.debug(f"Deleted {loc} because an update is available! ({moddat['modid']})")
 
-    for folders in mod['folders']:
+    # unpack and install new files
+    for pending_file in moddat['pending_filenames']:
+        loc = Path(DOWNLOADS_PATH, pending_file)
+        if not await aiofiles.os.path.isfile(loc): continue
+        if not await asyncio.to_thread(is_zipfile, loc): continue
+
+        await asyncio.to_thread(unpack_to_tmp, loc)
+
+        tmp = Path(TMP_FOLDER, pending_file)
+        glob = list(tmp.rglob('Info.json', case_sensitive=False)) + list(tmp.rglob('Definition.json', case_sensitive=False))
+        if not glob: log.error(f'Glob was empty!!! {pending_file}')
+        for file in glob:
+            folder = file.parents[0].name
+            if file.name.lower() == 'info.json':
+                with file.open("r", encoding="utf-8-sig") as f:
+                    modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
+                    if modinfo:
+                        folder = modinfo['Id']
+            log.debug(f'Folder name has been determined to be {folder}.')
+
+            # path = file.parents[0]
+            path = Path(config['gameloc'][meta.game], folder)
+            if await aiofiles.os.path.exists(path):
+                log.debug(f"Clearing old `{folder}` install.")
+                await asyncio.to_thread(shutil.rmtree, path)
+            elif moddat['version'] is None:  # not sure how to hand this rn 
+                log.warning(f"Folder `{folder}` doesn't exist and couldn't be cleared. This might mean that the mod identifier changed! Please manually verify. Continuing with install.")
+
+            await asyncio.to_thread(shutil.copytree, file.parents[0], path)
+            log.debug(f"Installed `{folder}`.")
+
+            # log.debug(file)
+            # break
+        # done = False
+        # while not done:
+
+        
+
+        
+        
 
 
 
+        # async with aiofiles.open(Path(await aiofiles.os.getcwd(), 'tmp')) as afp:
+        #     pass
 
 
-    pass
 
 
 if __name__ == "__main__":

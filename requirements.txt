@@ -1,6 +1,7 @@
 aiofiles
 selenium
 colorama
+bad_path
 msgpack
 dataset
 pyquery
