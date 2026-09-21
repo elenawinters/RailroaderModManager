@@ -1,0 +1,54 @@
+
+# hey, welcome to the example modlist
+# as you can see, if you lead a line with a #, RMM skips it.
+# this lets you comment out problem mods from your pack!
+# comments will NOT be included in an export, only in a handmade file
+# use this to build up your first modpack (or just steal mine :3)
+# (yes, I play with a LOT of mods. i kinda had to make this lol)
+
+# "essential" mods
+railroader-1645$fuse!toolshed
+railroader-1645$toolshed
+railroader-1618
+railroader-285
+railroader-569
+railroader-1029
+railroader-443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz
+railroader-143@latest
+railroader-143@latest$trucks
+railroader-1040$replacer
+railroader-303
+railroader-308
+railroader-410
+railroader-604
+railroader-746
+railroader-966
+railroader-1031
+
+# offsite mods (`url` can technically be anything. RMM doesn't check it, but something *needs* to be there)
+offsite-url@https://github.com/Joo200/Railloader-JooMods/releases
+offsite-url@https://github.com/Reaper8f/rr-mapenhancer-fix/releases
+offsite-url@https://rmh.alinanova.dev/mod/6b70312d-66d2-428a-aadc-2f6321b11081
+offsite-url@https://rmh.alinanova.dev/mod/04417e51-ddc1-48cc-8d22-50526531387e
+offsite-url@https://rmh.alinanova.dev/mod/9c253046-13c4-4896-a8f0-3a5c8b4560c1
+offsite-url@https://rmh.alinanova.dev/mod/da44df04-5e79-4cce-92fc-909d9cbb33fd
+offsite-url@https://texasstateshops.wixsite.com/mysite/n-w-style-aux-tender
+
+# beemans mods (optional)
+railroader-440
+railroader-503
+railroader-491$gp40
+railroader-823$sd40-2
+railroader-1173$sd40-2
+railroader-1174$sd38-2
+
+# salty's mods
+railroader-838
+
+
+
+railroader-1040$16-567c
+
+
+# map mods
+railroader-1334@latest|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=

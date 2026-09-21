@@ -8,6 +8,7 @@ from lib.config import config
 from lib.data import data
 from pprint import pformat
 from pathlib import Path
+from lib import system
 from lib import web
 import logging
 import asyncio
@@ -50,7 +51,7 @@ class API:
         
     @staticmethod
     async def get_download_link(game, mod_id, file_id):
-        return NotImplementedError("This function is not implemented yet. It would require Nexus premium access to work.")
+        raise NotImplementedError("This function is not implemented yet. It would require Nexus premium access to work.")
         # This can only work if you have Nexus premium, which I don't have, and have no intention of getting.
         # I'm not gonna further develop it. PR if you want to make it work.
         nxm = {
@@ -77,17 +78,8 @@ async def open_dl_link(game, mod_id, file_id=None):
     else:
         url = f"https://www.nexusmods.com/{game}/mods/{mod_id}?tab=files&file_id={file_id}"
     # log.info(f"Opening download page for {game}-{mod_id} in web browser...")
-    # The webbrowser module opens the OS native browser, which in my case is FireDragon.
-    # However, I use Zen on my Arch system, and I want the download page to open in the browser so that I am logged in.
-    # From what I can tell, this is a common problem with webbrowser not respecting the default browser set in the OS.
-    # So, I will provide OS specific commands to open the URL in the default browser.
-    # I will only test this on Linux. Please PR if broken on other OSes.
-    if os.name == 'nt':  # Windows
-        os.startfile(url)
-    elif os.name == 'mac':  # macOS
-        subprocess.run(['open', url])
-    else:  # Linux and other OSes
-        subprocess.run(['xdg-open', url])
+    system.open_url(url)
+
 
 DELIMITER = ';;'
 # Regex is hard.
@@ -118,7 +110,7 @@ def parse_id_string(id_string):
     return ModMeta(**meta_dict)
 
 async def refresh_nexus_data(kwargs):
-    return NotImplementedError("This would require a UI for it to really be useful. Dunno if one will ever be made")
+    raise NotImplementedError("This would require a UI for it to really be useful. Dunno if one will ever be made")
     pass
     # async with asyncio.TaskGroup() as tg:
     #     for func in _listeners:
@@ -189,6 +181,14 @@ def search_nexus_file_data(versions, meta):
 VCACHE = {}
 async def fetch_nexus_file_info(id_string):
     meta = parse_id_string(id_string)
+    if meta.game == 'offsite':
+        if config['settings']['periodic_offsite_open'] == True:
+            with open('state.json', 'w') as f:
+                state = json.load(f)
+                # config.write(f)
+
+        system.open_url(meta.version)
+        return
     # log.debug(meta)
     data = await API.get_mod_files(meta.game, meta.mod)
     if not data: 
@@ -225,7 +225,6 @@ async def check_for_updates_and_download_if_available(id_string):
     current_version = None
     if moddat:
         current_version = moddat['version']
-    # log.debug(current_version)
 
     for file in file_info:
         if file['version'] == current_version and '--force' not in sys.argv:
@@ -234,7 +233,7 @@ async def check_for_updates_and_download_if_available(id_string):
         aggregate['names'].append(file['name'])
         aggregate['pending_files'].append(file['file_name'])
         aggregate['pending_fileids'].append(file['file_id'])
-        log.info(f"Update available for {id_string}: {file['version']} (current version: {current_version})")
+        log.info(f"Update available for {id_string}: {file['version']} (current version: {current_version}) ({file['name']})")
         pending_path = Path(DOWNLOADS_PATH) / file['file_name']
         if not pending_path.exists():
             await open_dl_link(meta.game, meta.mod, file['file_id'])
@@ -242,7 +241,6 @@ async def check_for_updates_and_download_if_available(id_string):
     data.base['mods'].upsert({
         'modid': id_string,
         'names': json.dumps(aggregate['names']),
-        # 'last_update': None,
         'pending_filenames': json.dumps(aggregate['pending_files']),
         'pending_fileids': json.dumps(aggregate['pending_fileids']),
         'pending_version': file['version']
@@ -252,6 +250,7 @@ async def check_for_updates_and_download_if_available(id_string):
 
 # WARNING: This function is deprecated and should not be used.
 def build_railroader_modlist_from_gamefiles():
+    raise NotImplementedError("This function is deprecated. It is very old and doesn't work the way it was supposed to.")
     import json5
     directory = Path(config['gameloc']['railroader'])
     mods = []

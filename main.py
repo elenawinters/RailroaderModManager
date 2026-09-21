@@ -19,11 +19,6 @@ import os
 log = logging.getLogger(__name__)
 setup_logging(log)
 
-# log.debug(f"Database Address: {config['db']['address']}")
-# log.debug("Connecting to database...")
-# log.debug(f"Database Object: {data.base}")
-
-
 async def do_all_pending_files_exist(pending_files):
     all_exist = True
     for pending_file in pending_files:
@@ -37,40 +32,8 @@ async def do_all_pending_files_exist(pending_files):
         #     log.info(f"Pending file for mod {modid} exists: {pending_path}")
     return all_exist
 
-# This is just my railroader mod-list. This is tempoarary for testing and will be moved to an example file later.
-# A shame some cool mods got removed by the authors. Woulda loved to put them here but guess I gotta remove them from my save.
-# tmp_mod_list = [
-#     346, 94, 447, 651, 591, 42, 443, 689, 583, 132, 356, 569, 346, 315, 370, 494, 329, 464, 345, 628, 309, 239,
-#     211, 364, 709, 714, 328, 238, 821, 59, 60, 342, '143#misc:1', '143#misc:2', '143#main:2', '143#main:3',
-#     '491#misc:1', '491#misc:2', '491#misc:3', '491#misc:4', 253, 242, 794, 706, 265, 241, 387, 739, 317,
-#     303, 806, 604, '410#main:2', 18, 816, 492, 503, 740, 752, 400, 614, 532, 545, 692, 434, 440, 421,
-#     567, 52, 858, 823, 894, '1174#main:2', '1174#main:3', '1173#main:2', '1173#main:3', 1040, 1236, 1202
-# ]
-# tmp_mod_list = [
-#     '1645$fuse!toolshed', '1645$toolshed', 239, '1378@latest$fuse;install'
-# ]
-
-
-# # 444 was removed, sadge, write a thing to detect that i guess
-
-# for x in tmp_mod_list:
-#     data.base['mods'].upsert({
-#         'modid': f'railroader-{x}',
-#         'names': json.dumps(['test'])
-#     }, ['modid'])
-
-    # nexus.parse_id_string(f'railroader-{x}')
-
-# data.base['mods'].upsert({
-#     'modid': 'railroader-1029',
-#     'name': 'test',
-#     'version': '0.1.0'
-# }, ['modid'])
-
 TMP_FOLDER = Path(Path.cwd(), 'tmp')
 DOWNLOADS_PATH = Path(Path.home(), "Downloads")
-# nexus.build_railroader_modlist_from_gamefiles()
-# nexus.check_for_mod_updates('railroader-1096@1.0')
 async def refresh_nexus_data_and_install():
     check_func = nexus.check_for_updates_and_download_if_available
     mod_ids = sorted([mod['modid'] for mod in data.base['mods'].all()])
@@ -178,7 +141,7 @@ async def install_mods(moddat):
                             f.seek(0)
                             json.dump(modinfo, f, indent=4)
                             f.truncate()
-                            log.debug(f'`{true_id}` has been patched to `{modinfo['Id']}`')
+                            log.info(f'`{true_id}` has been patched to `{modinfo['Id']}` ({moddat['modid']}).')
                         folder = modinfo['Id']
 
             elif file.name.lower() == 'definition.json' and meta.patch and 'removeRLConflict' in patch:
@@ -194,7 +157,7 @@ async def install_mods(moddat):
                         f.seek(0)
                         json.dump(modinfo, f, indent=4)
                         f.truncate()
-                        log.debug(f'`{file.name}` has been patched for mod `{folder}`.')
+                        log.info(f'`{file.name}` has been patched for mod `{folder}` ({moddat['modid']}).')
                     else:
                         log.warning(f'Failed to patch `{file.name}` for `{folder}`: No conflicts defined by mod!')
 
@@ -206,10 +169,10 @@ async def install_mods(moddat):
                 await asyncio.to_thread(shutil.rmtree, path)
             elif moddat['version'] is not None:  # not sure how to handle this rn 
                 if folder != true_id and await aiofiles.os.path.exists(true_id_path := Path(config['gameloc'][meta.game], true_id)):
-                    log.warning(f"Folder `{folder}` didn't exist, but {true_id} was found. Deleting potential conflict.")
+                    log.warning(f"Folder `{folder}` didn't exist, but `{true_id}` was found. Deleting potential conflict.")
                     await asyncio.to_thread(shutil.rmtree, true_id_path)
                 else:
-                    log.warning(f"Folder `{folder}` doesn't exist and couldn't be cleared. This might mean that the mod identifier changed! Please manually verify. Continuing with install.")
+                    log.warning(f"Folder `{folder}` doesn't exist and couldn't be cleared. This might mean that the mod identifier changed! Please manually verify. Continuing with install. ({moddat['modid']})")
 
             await asyncio.to_thread(shutil.copytree, file.parents[0], path)
             log.debug(f"Installed `{folder}`.")

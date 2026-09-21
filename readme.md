@@ -100,7 +100,13 @@ The available export options are
 
 Want to share your modpack with friends but specifically wanna share a version of it that wont update? Add `--static` after `--export` to generate a modpack that will only ever use the specific mod versions you already have installed. The resulting RMM-IDs will be generated with Specific File Query.
 
-So, `--export MSGPACK {NAME} --static`
+`--export MSGPACK {NAME} --static`
+
+#### --replace
+
+Replace your install with another using `--replace`. This will create a backup `.mpk` modpack file for you.
+
+`--import {NAME} --repalce`
 
 ### Supported Formats
 
@@ -158,3 +164,19 @@ You may have noticed that a single modpack file can potentially install mods for
 
 For one, a `gameloc` entry for any given game needs to exist and be valid in the `config.ini` file before a modpack can even be installed. So, including a Skyrim mod in your Railroader modpack won't really do anything if the user you are sharing it with doesn't have a path for Skyrim configured. RMM will throw up warnings if something fails when it comes to these specific quirks.
 
+## Offsite Mods
+
+Sometimes, especially in the case of Railroader, mod makers will host mods on their own websites (like in the case of Alina's mods). This means that ***you*** are responsible for installing and updating these. RMM in it's current state cannot do it, and likely never will. This also applies to mods that only release on GitHub. This tool only knows how to pull from Nexus Mods.
+
+If you wish to provide a list of URLs for RMM to open when the user imports a modpack, you can do it like so:
+
+```txt
+offiste-url@https://github.com/Joo200/Railloader-JooMods/releases
+offsite-url@https://github.com/Reaper8f/rr-mapenhancer-fix/releases
+offsite-url@https://rmh.alinanova.dev/mod/6b70312d-66d2-428a-aadc-2f6321b11081
+offsite-url@https://rmh.alinanova.dev/mod/04417e51-ddc1-48cc-8d22-50526531387e
+offsite-url@https://rmh.alinanova.dev/mod/9c253046-13c4-4896-a8f0-3a5c8b4560c1
+offsite-url@https://rmh.alinanova.dev/mod/da44df04-5e79-4cce-92fc-909d9cbb33fd
+```
+
+RMM will open these in the browser for the user to install every time RMM is run.
