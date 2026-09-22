@@ -9,14 +9,16 @@
       "type": "debugpy",
       "request": "launch",
       "program": "${file}",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "args": ["--debug"]
     },
     {
       "name": "Python Debugger: Main File",
       "type": "debugpy",
       "request": "launch",
       "program": "${workspaceFolder}/main.py",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "args": ["--debug"]
     }
   ]
 }

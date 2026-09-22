@@ -1,9 +1,11 @@
+from lib.config import config, config_file
+from datetime import datetime, timedelta
 from zipfile import ZipFile, is_zipfile
 from bad_path import is_dangerous_path
 from utils import setup_logging
-from lib.config import config
 from lib.data import data
 from pathlib import Path
+from lib import modlist
 from lib import nexus
 import aiofiles.os
 import aiofiles
@@ -14,6 +16,7 @@ import base64
 import shutil
 import json5
 import json
+import sys
 import os
 
 log = logging.getLogger(__name__)
@@ -25,16 +28,46 @@ async def do_all_pending_files_exist(pending_files):
         if not pending_file:
             continue
         pending_path = Path(DOWNLOADS_PATH, pending_file)
+        # try:
+        # except Exception:
+        #     log.warning(f"Pending file {pending_path} does not exist.")
+        #     all_exist = False
+        #     return all_exist
         if not await aiofiles.os.path.exists(pending_path):
-            log.warning(f"Pending file {pending_path} does not exist.")
+            log.warning(f"Pending file `{pending_path}` does not exist.")
             all_exist = False
-        # else:
-        #     log.info(f"Pending file for mod {modid} exists: {pending_path}")
+        
+        glob = list(DOWNLOADS_PATH.glob(f'{pending_path.name.removesuffix('.zip')}*.zip.part'))
+        if glob:  # glob to the rescue!!!
+            log.warning(f"Please wait for `{pending_path}` to finish downloading.")
+            all_exist = False
+
     return all_exist
 
+DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
 TMP_FOLDER = Path(Path.cwd(), 'tmp')
 DOWNLOADS_PATH = Path(Path.home(), "Downloads")
 async def refresh_nexus_data_and_install():
+
+    if '--import' in sys.argv:
+        index = sys.argv.index('--import')
+        if len(sys.argv) > index + 1:
+            modlist.import_modlist(Path(sys.argv[index + 1]))
+        else:
+            log.error('Import path not provided!')
+
+        return
+
+    if '--export' in sys.argv:
+        index = sys.argv.index('--export')
+        if len(sys.argv) > index + 2:
+            modlist.export_modlist(sys.argv[index + 1], Path(sys.argv[index + 2]))
+            return
+        else:
+            log.error('Export path or format not provided!')
+
+        return
+
     check_func = nexus.check_for_updates_and_download_if_available
     mod_ids = sorted([mod['modid'] for mod in data.base['mods'].all()])
 
@@ -47,6 +80,13 @@ async def refresh_nexus_data_and_install():
                 tg.create_task(check_func(id))
     except Exception as e:
         log.exception(e)
+
+    if config['settings'].getboolean('offsite_open') == True:
+        if datetime.now() - timedelta(days=config['settings'].getint('offsite_frequency')) > datetime.strptime(config['settings']['offsite_last_open'], DATE_FORMAT):
+             config['settings']['offsite_last_open'] = datetime.now().strftime(DATE_FORMAT)
+
+    with open(config_file, 'w') as configfile:
+        config.write(configfile)
 
     nexus.VCACHE = {}
 
@@ -69,6 +109,7 @@ async def refresh_nexus_data_and_install():
         async with asyncio.TaskGroup() as tg:
             for mod in data.base['mods'].all():
                 if mod['pending_filenames'] is None: continue
+                if 'offsite' in mod['modid']: continue
                 tg.create_task(install_mods(mod))
     except Exception as e:
         log.exception(e)
@@ -93,20 +134,7 @@ async def install_mods(moddat):
     if is_dangerous_path(config['gameloc'][meta.game]):
         log.error(f'`{config['gameloc'][meta.game]}` has been flagged as a dangerous path. Aborting install.')
         return
-    moddat['names'] = json.loads(moddat['names'] if moddat['names'] else ['N/A'])
-    # moddat['folders'] = json.loads(moddat['folders']) if moddat['folders'] else []
     moddat['pending_filenames'] = json.loads(moddat['pending_filenames']) if moddat['pending_filenames'] else []
-
-    ## decided not to use this code. it wipes every entry in moddat folders, but we might only be updating one of them
-    # # cleanup old install
-    # for folder in moddat['folders']:
-    #     loc = Path(config['gameloc'][meta.game], folder)
-    #     if is_dangerous_path(loc):  # probably unneccessary. Only way this would happen is if the database corrupted I think.
-    #         log.error(f'`{loc}` has been flagged as a dangerous path. Aborting install.')
-    #         return
-    #     if not await aiofiles.os.path.isdir(loc): continue
-    #     await asyncio.to_thread(shutil.rmtree, loc)
-    #     log.debug(f"Deleted {loc} because an update is available! ({moddat['modid']})")
 
     # unpack and install new files
     for pending_file in moddat['pending_filenames']:
@@ -135,7 +163,6 @@ async def install_mods(moddat):
                         folder = modinfo['Id']
                         true_id = folder
                     if meta.patch and modinfo and 'replaceId' in patch:
-                        # patch = msgpack.unpackb(base64.b64decode(meta.patch))
                         if modinfo['Id'] in patch['replaceId']:
                             modinfo['Id'] = patch['replaceId'][modinfo['Id']]
                             f.seek(0)
@@ -167,7 +194,7 @@ async def install_mods(moddat):
             if await aiofiles.os.path.exists(path):
                 log.debug(f"Clearing old `{folder}` install.")
                 await asyncio.to_thread(shutil.rmtree, path)
-            elif moddat['version'] is not None:  # not sure how to handle this rn 
+            elif moddat['version'] is not None:  # this could probably be better
                 if folder != true_id and await aiofiles.os.path.exists(true_id_path := Path(config['gameloc'][meta.game], true_id)):
                     log.warning(f"Folder `{folder}` didn't exist, but `{true_id}` was found. Deleting potential conflict.")
                     await asyncio.to_thread(shutil.rmtree, true_id_path)
@@ -180,46 +207,13 @@ async def install_mods(moddat):
     log.info(f'Installed {len(moddat['pending_filenames'])} file(s) for {moddat['modid']}')
     data.base['mods'].upsert({
         'modid': moddat['modid'],
-        # 'names': json.dumps(aggregate['names']),
         'version': moddat['pending_version'],
         'fileids': moddat['pending_fileids'],
         'pending_filenames': None,
         'pending_fileids': None,
         'pending_version': None
     }, ['modid'])
-    # eepy, what needs to happen
-    # - update database (right here)
-    # - add support for the different import/export types (lib/modpack.py)
-    # - 
-
-
-            # log.debug(file)
-            # break
-        # done = False
-        # while not done:
-
-        
-
-        
-        
-
-
-
-        # async with aiofiles.open(Path(await aiofiles.os.getcwd(), 'tmp')) as afp:
-        #     pass
-
-
 
 
 if __name__ == "__main__":
     asyncio.run(refresh_nexus_data_and_install())
-# asyncio.run(nexus.download_nexus_file('railroader-1096@1.0'))
-# asyncio.run(nexus.check_for_updates_and_open_if_available('railroader-1096@1.0'))
-# asyncio.run(nexus.open_page_for_nexus_file('railroader-1096@1.0'))
-# asyncio.run(nexus.fetch_nexus_file_info('railroader-1096@1.0'))
-# nexus.fetch_nexus_file_info('railroader-1029')
-# nexus.fetch_nexus_file_info('railroader-143')
-# nexus.fetch_nexus_file_info('railroader-410')
-# nexus.fetch_nexus_file_info('railroader-1028')
-# nexus.fetch_nexus_file_info('railroader-1027')
-# nexus.fetch_nexus_file_info('railroader-1026')

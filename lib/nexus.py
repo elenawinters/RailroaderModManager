@@ -1,8 +1,9 @@
+from datetime import datetime, timedelta
 from collections import OrderedDict
 from curses import meta
 from dataclasses import dataclass
 import subprocess
-from main import DOWNLOADS_PATH
+from main import DOWNLOADS_PATH, DATE_FORMAT
 from utils import setup_logging
 from lib.config import config
 from lib.data import data
@@ -84,11 +85,11 @@ async def open_dl_link(game, mod_id, file_id=None):
 DELIMITER = ';;'
 # Regex is hard.
 RE_PATTERN = pattern = re.compile(
-    r'^(?P<game>[^@#$!]+)-(?P<mod>[^-@#$!]+)'
-    r'(?:@(?P<version>[^#$!]+))?'
+    r'^(?P<game>[^@#$!|]+)-(?P<mod>[^-@#$!|]+)'
+    r'(?:@(?P<version>[^#$!|]+))?'
     r'(?:#(?P<fileid>\d+))?'
-    r'(?:\$(?P<search>[^!]+))?'
-    r'(?:!(?P<exclude>.+))?$'
+    r'(?:\$(?P<search>[^!|]+))?'
+    r'(?:!(?P<exclude>[^|]+))?'
     r'(?:\|(?P<patch>[A-Za-z0-9+/=]+))?$'
 )
 
@@ -182,19 +183,17 @@ VCACHE = {}
 async def fetch_nexus_file_info(id_string):
     meta = parse_id_string(id_string)
     if meta.game == 'offsite':
-        if config['settings']['periodic_offsite_open'] == True:
-            with open('state.json', 'w') as f:
-                state = json.load(f)
-                # config.write(f)
-
-        system.open_url(meta.version)
-        return
-    # log.debug(meta)
+        if config['settings'].getboolean('offsite_open') == True:
+            if datetime.now() - timedelta(days=config['settings'].getint('offsite_frequency')) > datetime.strptime(config['settings']['offsite_last_open'], DATE_FORMAT):
+                log.info(f'Offsite mod detected. Opening link to allow the user to check if it needs to be updated. ({meta.version})')
+                system.open_url(meta.version)
+        return 'offsite'
+    
     data = await API.get_mod_files(meta.game, meta.mod)
     if not data: 
         log.error(f"No data returned for {id_string}")
         return None
-    # log.debug(data)
+    
     if f"{meta.game}-{meta.mod}" in VCACHE:
         log.debug(f"Using VCACHE for {meta.game}-{meta.mod}")
     else:
@@ -207,16 +206,16 @@ async def fetch_nexus_file_info(id_string):
 
     return result
 
-
 async def check_for_updates_and_download_if_available(id_string):
     meta = parse_id_string(id_string)
     file_info = await fetch_nexus_file_info(id_string)
     if not file_info:
         log.error(f"Failed to fetch file info for {id_string}. Skipping update check.")
         return
-    # log.debug(f"Download link data: {pformat(file_info)}")
+    if file_info == 'offsite':
+        return
+
     aggregate = {
-        'names': [],
         'pending_fileids': [],
         'pending_files': []
     }
@@ -228,9 +227,8 @@ async def check_for_updates_and_download_if_available(id_string):
 
     for file in file_info:
         if file['version'] == current_version and '--force' not in sys.argv:
-            log.debug(f"No update available for {meta.game}-{meta.mod} (current version: {current_version})")
+            log.debug(f"No update available for {id_string} (current version: {current_version})")
             return
-        aggregate['names'].append(file['name'])
         aggregate['pending_files'].append(file['file_name'])
         aggregate['pending_fileids'].append(file['file_id'])
         log.info(f"Update available for {id_string}: {file['version']} (current version: {current_version}) ({file['name']})")
@@ -240,7 +238,6 @@ async def check_for_updates_and_download_if_available(id_string):
 
     data.base['mods'].upsert({
         'modid': id_string,
-        'names': json.dumps(aggregate['names']),
         'pending_filenames': json.dumps(aggregate['pending_files']),
         'pending_fileids': json.dumps(aggregate['pending_fileids']),
         'pending_version': file['version']

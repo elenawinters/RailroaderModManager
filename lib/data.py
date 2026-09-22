@@ -12,7 +12,7 @@ class Data:
         log.debug(f"Establishing Connection to Database Address: '{config['db']['address']}'")
         self.base = dataset.connect(config['db']['address'], engine_kwargs={'pool_recycle': 3600})
         dbtab1 = self.base.create_table('mods', primary_id='modid', primary_type=sqltypes.Text)
-        dbtab1.create_column('names', sqltypes.Text)
+        # dbtab1.create_column('names', sqltypes.Text)
         dbtab1.create_column('version', sqltypes.Text)
         # dbtab1.create_column('folders', sqltypes.Text)
         dbtab1.create_column('pending_filenames', sqltypes.Text)
