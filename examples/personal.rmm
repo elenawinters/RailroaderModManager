@@ -30,8 +30,11 @@ offsite-url@https://rmh.alinanova.dev/mod/9c253046-13c4-4896-a8f0-3a5c8b4560c1
 offsite-url@https://rmh.alinanova.dev/mod/da44df04-5e79-4cce-92fc-909d9cbb33fd
 offsite-url@https://texasstateshops.wixsite.com/mysite/n-w-style-aux-tender
 
-# beemans mods (optional)
+# beemans scripts /w patch
+# some mods rely on certain capitalization for these scripts. we patch it so that everything loads properly
 railroader-443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz
+
+# beemans mods
 railroader-143@latest
 railroader-143@latest$trucks
 railroader-1040$replacer

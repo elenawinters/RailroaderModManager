@@ -102,11 +102,13 @@ Want to share your modpack with friends but specifically wanna share a version o
 
 `--export MSGPACK {NAME} --static`
 
-#### --replace
+#### --append
 
-Replace your install with another using `--replace`. This will create a backup `.mpk` modpack file for you.
+By default, RMM will create a backup of your current install as a `.mpk` modpack file before installing the new one.
 
-`--import {NAME} --repalce`
+If instead you want to append the modpack to your current install, use `--append`.
+
+`--import {NAME} --append`
 
 ### Supported Formats
 
@@ -134,7 +136,7 @@ Newline/Return delimited RMM-IDs can be read by RMM and installed. Ideally, you 
 
 Sometimes, mods you download come with broken dependencies. Patching takes advantage of the RMM-ID system to allow patching of mods to fix issues with them. This patching gets applied during mod install.
 
-Patches are part of the RMM-ID itself. They are a **Base64 MsgPack object**. This contents contain the information for the patch, structured as followed:
+Patches are part of the RMM-ID itself. They are a **Base64 encoded MsgPack object**. The contents contain the information for the patch, structured as followed:
 
 ```json
 {
@@ -171,7 +173,7 @@ Sometimes, especially in the case of Railroader, mod makers will host mods on th
 If you wish to provide a list of URLs for RMM to open when the user imports a modpack, you can do it like so:
 
 ```txt
-offiste-url@https://github.com/Joo200/Railloader-JooMods/releases
+offsite-url@https://github.com/Joo200/Railloader-JooMods/releases
 offsite-url@https://github.com/Reaper8f/rr-mapenhancer-fix/releases
 offsite-url@https://rmh.alinanova.dev/mod/6b70312d-66d2-428a-aadc-2f6321b11081
 offsite-url@https://rmh.alinanova.dev/mod/04417e51-ddc1-48cc-8d22-50526531387e
@@ -180,3 +182,13 @@ offsite-url@https://rmh.alinanova.dev/mod/da44df04-5e79-4cce-92fc-909d9cbb33fd
 ```
 
 RMM will open these in the browser for the user to install every time RMM is run.
+
+
+## Want to support my work?
+
+You really don't have to. In fact, I'd prefer if you don't.
+
+I'm making this for me, but if you really really really really **really** want to support me, you can do so on my [Ko-fi](https://ko-fi.com/elenaberry).
+
+Again, no pressure. I've put it at the bottom here for a reason. I don't wanna bother anyone.
+

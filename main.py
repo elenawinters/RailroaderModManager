@@ -44,28 +44,38 @@ async def do_all_pending_files_exist(pending_files):
 
     return all_exist
 
-DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
-TMP_FOLDER = Path(Path.cwd(), 'tmp')
-DOWNLOADS_PATH = Path(Path.home(), "Downloads")
-async def refresh_nexus_data_and_install():
-
+def handle_args():
     if '--import' in sys.argv:
         index = sys.argv.index('--import')
         if len(sys.argv) > index + 1:
             modlist.import_modlist(Path(sys.argv[index + 1]))
         else:
             log.error('Import path not provided!')
-
-        return
+        return True
 
     if '--export' in sys.argv:
         index = sys.argv.index('--export')
         if len(sys.argv) > index + 2:
             modlist.export_modlist(sys.argv[index + 1], Path(sys.argv[index + 2]))
-            return
+            return True
         else:
             log.error('Export path or format not provided!')
+        return True
 
+    if '--convert' in sys.argv:
+        index = sys.argv.index('--convert')
+        if len(sys.argv) > index + 2:
+            modlist.convert_modlist(Path(sys.argv[index + 1]), sys.argv[index + 2])
+            return True
+        else:
+            log.error('Export path or format not provided!')
+        return True
+
+DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
+TMP_FOLDER = Path(Path.cwd(), 'tmp')
+DOWNLOADS_PATH = Path(Path.home(), "Downloads")
+async def refresh_nexus_data_and_install():
+    if handle_args():
         return
 
     check_func = nexus.check_for_updates_and_download_if_available
