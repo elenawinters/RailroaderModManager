@@ -41,7 +41,7 @@ def import_modlist(path: Path, return_modlist: bool = False):
             log.info('JSON detected! Trying to parse.')
             with open(path, 'r') as exportfile:
                 mods = dict_to_rmm(json5.load(mods, exportfile))
-        case '.rmm' | '.txt':
+        case '.rmmpack' | '.rmm' | '.txt':
             log.info('RMM plaintext detected! Trying to parse.')
             with open(path, "rt") as f:
                 for line in f.readlines():
@@ -130,8 +130,8 @@ def export_modlist(packformat: str, path: Path, mods: list = None):
             with open(outfile, 'w') as exportfile:
                 json.dump(mods, exportfile, indent=4)
             pass
-        case 'plaintext' | 'rmm' | '.rmm':
-            outfile = Path(path).with_suffix('.rmm')
+        case 'plaintext' | 'rmm' | '.rmm' | 'rmmpack' | '.rmmpack':
+            outfile = Path(path).with_suffix('.rmmpack')
             if outfile.exists(): raise ModpackExportError(f'File `{outfile}` already exists!')
             with open(outfile, 'w') as exportfile:
                 exportfile.write('\n'.join(modlist))

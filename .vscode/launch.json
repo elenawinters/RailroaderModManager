@@ -10,7 +10,7 @@
       "request": "launch",
       "program": "${file}",
       "console": "integratedTerminal",
-      "args": ["--debug", "--force"]
+      "args": ["--debug"]
     },
     {
       "name": "Python Debugger: Main File",
@@ -18,7 +18,7 @@
       "request": "launch",
       "program": "${workspaceFolder}/main.py",
       "console": "integratedTerminal",
-      "args": ["--debug", "--force"]
+      "args": ["--debug"]
     }
   ]
 }
