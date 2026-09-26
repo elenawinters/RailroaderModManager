@@ -46,6 +46,8 @@ def import_modlist(path: Path, return_modlist: bool = False):
             with open(path, "rt") as f:
                 for line in f.readlines():
                     if line.startswith('\n') or line.startswith('\r') or line.startswith('#'): continue
+                    if ' ' in line:  # comment support bullshit. if you don't have a space after the RMM-ID, that's on you
+                        line = line.split(' ')[0]
                     mods.append(line.rstrip().lstrip())
         case _:
             raise ModpackImportError(f'`{path.suffix}` is not a recognized file import format!')

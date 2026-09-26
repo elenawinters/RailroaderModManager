@@ -6,6 +6,7 @@ from utils import setup_logging
 from lib.data import data
 from pathlib import Path
 from lib import modlist
+from lib import tests
 from lib import nexus
 import aiofiles.os
 import aiofiles
@@ -68,7 +69,16 @@ def handle_args():
             modlist.convert_modlist(Path(sys.argv[index + 1]), sys.argv[index + 2])
             return True
         else:
-            log.error('Export path or format not provided!')
+            log.error('Convert path or format not provided!')
+        return True
+
+    if '--generate' in sys.argv:
+        index = sys.argv.index('--generate')
+        if len(sys.argv) > index + 1:
+            tests.generate_rmm_modpack_from_gamefiles(Path(sys.argv[index + 1]))
+            return True
+        else:
+            log.error('Generate path not provided!')
         return True
 
 DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'

@@ -3,23 +3,54 @@
 # as you can see, if you lead a line with a #, RMM skips it.
 # this lets you comment out problem mods from your pack!
 # comments will NOT be included in an export, only in a handmade file
+# comments can be included after an RMM-ID. Just make sure to pad it out.
 # use this to build up your first modpack (or just steal mine :3)
 # (yes, I play with a LOT of mods. i kinda had to make this lol)
 
+# this modpack is a frankensteined together mess. FUSE complains, but it's "safe" to ignore
+
 # "essential" mods
-railroader-1645$fuse!toolshed
-railroader-1645$toolshed
-railroader-1618
-railroader-285
-railroader-569
-railroader-1029
-railroader-303
-railroader-308
-railroader-410
-railroader-604
-railroader-746
-railroader-966
-railroader-1031
+railroader-1645$fuse!toolshed   # fuse
+railroader-1645$toolshed   # toolshed
+railroader-1618  # ZRVF - Visual Framework
+railroader-285   # TheTies - Doubles the rendering limit for ties and tie plates.
+railroader-569   # dynamic weather
+railroader-1029  # Waypoint Queue
+railroader-434   # SCOLD
+
+# legotrainman mods
+railroader-303   # Legotrainman's Library of Stuff
+railroader-308   # Legotrainman's Custom Reporting Marks
+railroader-410   # Legotrainman's Logos and Deco
+railroader-966   # Legotrainman's Better Rolling Stock
+railroader-1031  # Legotrainman's Better Steam
+
+# scrappalachia
+railroader-604   # Legotrainman's Used Equipment Market
+railroader-746   # Legotrainman's Scrappalachia
+railroader-1521  # Helvetic Bryson Salvage and Scrap
+railroader-1522  # Helvetic Scrapalachia Compatibility Patch
+
+# assets, asset packs, and trucks
+railroader-132   # c_l_b assets
+railroader-1019  # Embeddeds Building Blocks- Asset Pack
+railroader-1378  # ALW Scenery
+railroader-1020  # RTM Asset pack
+railroader-1071  # alw trucks
+railroader-1214  # pirate's trucks
+railroader-1400  # pirate's whistle model library
+railroader-838   # salty & freemans trucks
+railroader-8     # Greenninja's Whistles Mod
+railroader-711   # Michigan Shore Line Decal Pack
+railroader-831   # Tuckasegee Steel Works - Freight and Tender Truck Compendium
+railroader-1766  # Crusher's Trucks And Assets
+railroader-1180  # scv42's Horn Pack
+railroader-383   # Latoms Objects and Sounds
+
+# other
+railroader-902$base   # Western North Carolina Piggyback (TOFC) Service
+railroader-858   # Interchanged Industry Unloader
+
 
 # offsite mods (`url` can technically be anything. RMM doesn't check it, but something *needs* to be there)
 offsite-url@https://github.com/Joo200/Railloader-JooMods/releases
@@ -30,11 +61,22 @@ offsite-url@https://rmh.alinanova.dev/mod/9c253046-13c4-4896-a8f0-3a5c8b4560c1
 offsite-url@https://rmh.alinanova.dev/mod/da44df04-5e79-4cce-92fc-909d9cbb33fd
 offsite-url@https://texasstateshops.wixsite.com/mysite/n-w-style-aux-tender
 
-# beemans scripts /w patch
-# some mods rely on certain capitalization for these scripts. we patch it so that everything loads properly
-railroader-443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz
+# misc locomotive mods and tenders
+railroader-1438  # DMIR M-3 Yellowstone
+railroader-1737  # Southern Pacific GS4
+railroader-1755  # SP Aux Tender
+railroader-1509  # EMD GP20
+railroader-1617  # EMD GP7
+railroader-1642  # EMD GP18
+railroader-1741  # Steam Generator Car
+railroader-872   # New York Central F-12e
+railroader-866   # Rutland F-2j
+railroader-1032  # Great Northern M-2 (2-6-8-0)
+railroader-1064$RMWF-1   # RLW Jarl
+railroader-1064$RMWF-2   # RLW Great Jarl
 
 # beemans mods
+railroader-443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz  # beemans scripts /w patch
 railroader-143@latest
 railroader-143@latest$trucks
 railroader-1040$replacer
@@ -45,13 +87,241 @@ railroader-823$sd40-2
 railroader-1173$sd40-2
 railroader-1174$sd38-2
 
+# greenninja's mods
+railroader-59    # EMD F7A
+railroader-60    # EMD F7B
+railroader-342   # 2-4-4-2 Articulated Skookum
+railroader-346   # ALCo RS-1
+railroader-1175  # Baldwin Locomotive Works DS 4-4-1000
+railroader-1403  # Illinois Central 371 - 2001 Class 4-6-0
+railroader-1404  # Illinois Central 603 Class 2-8-0
+railroader-1558  # Davenport 44 Ton Switch Engine DE44
+railroader-1580  # Wabash F-4 2-6-0
+railroader-1581  # Dual Whistle
+railroader-1582  # Timken Four Aces
+railroader-1610  # Large ALCo Logging Mikado
+railroader-1611  # 50t Willamette
+railroader-1726  # Greenninjas Class Lights
+railroader-1727  # BLW 8-26C
+railroader-1744  # Great Northern H-5 1355
+
+# routeofthewhippet rolling stoc
+railroader-603   # Pullman-Standard PS-2 2003 cu.ft. Covered Hopper
+railroader-612   # Pullman-Standard PS-2 2893 cu.ft. Covered Hopper
+railroader-624   # Norfolk and Western Class GU Gondolas
+railroader-641   # USRA Bethlehem Steel 42ft 50-ton Flat Car
+railroader-733   # USRA Single Sheathed Boxcar
+railroader-743   # Great Northern 40ft Truss-Rod Boxcars
+railroader-761   # USRA Specification 1005-B 55-ton Steel Twin Hopper
+railroader-762   # USRA 46ft Drop-End Steel Gondola
+railroader-805   # AAR Recommended Practice 11-Panel 41ft Steel Gondola
+railroader-832   # The Definitive Pullman-Standard PS-1 40ft Boxcar Pack
+railroader-833   # PS-1 40ft Boxcars Liveries of the Northeast
+railroader-850   # Union Tank Car Company X-3 Series Tank Cars
+railroader-880   # ACF 40ft Flatcar and Gondola Conversion
+railroader-903   # USRA Design 70-Ton Steel Triple Hopper
+railroader-918   # ACF Type 27 8000 Gallon 3 Dome Tank Car
+railroader-944   # Northern Pacific 10000 Series Boxcars
+railroader-953   # Pennsylvania Railroad Class GLa Hoppers
+railroader-954   # USRA Specification 1003-B 40-Ton Double Sheathed Boxcar
+railroader-969   # PRR NW DTI Virginian 40ft and 50ft Turtleback Roof Boxcars
+railroader-993   # ACF Type 27 8000 Gallon Single Dome Tank Car
+railroader-1062  # Chesapeake and Ohio Class GB 40ft Gondola
+railroader-1216  # PRR H21A 70 Ton 4 Bay Hopper
+railroader-1265  # Seaboard Air Line Class G-10 Low Side Gondola
+railroader-1505  # ACF 36ft Double Sheathed Boxcar Series
+
+# misc rolling stock
+railroader-47    # MVR's Logging Cars
+
 # salty's mods
-railroader-838
+railroader-840   # colorable gmd 
+railroader-857   # GE 9-44CWL
+railroader-889   # MLW RS-10
+railroader-1000  # ALCo RSD-15 and MLW RSD-17
+railroader-1001  # ALCo RS-36
+railroader-1059  # Salty's GP9 Slug
+railroader-1103  # Salty's GP9 - Long Hood Front
+railroader-1102  # Salty's GP9 - Wide Cab
+railroader-1101  # Salty's GP9 - Short Hood Forward
+railroader-1100  # Salty's GP9 B-Unit
+railroader-1211  # Salty's MLW RSC-3
+railroader-1210  # Salty's ALCo RS-3
+railroader-1212  # Salty's ALCo RSD-5
+railroader-1252  # Salty's RS-3 Slug
+railroader-1335  # Salty's Alco C630
+railroader-1336  # Salty's MLW M630W
+railroader-1700  # GMDD-EMD SW900
+railroader-1699  # GMDD SW1200RSm
+railroader-1698  # GMDD-EMD SW1200 Calf
+railroader-1697  # GMDD-EMD SW1200
+
+# freemans locomotives
+railroader-744   # GE U30B-U30C-C30-7B
+railroader-751   # GE C30-7
+railroader-755   # GE B40-8
+railroader-758   # GE C40-8
+railroader-766   # GE C40-8W
+railroader-767   # GE B40-8W
+railroader-784   # EMD SD60
+railroader-807   # EMD SD60M And E
+railroader-821   # GE U50B
+railroader-826   # EMD MP15
+railroader-887   # GE P42 And B Unit
+railroader-1146  # GE BQ23
+railroader-1153  # EMD SW1500
+railroader-1172  # EMD SD70M - MAC - SD75I
+railroader-1196  # EMD SD70ACE
+railroader-1242  # GE AC6000CW
+railroader-1259  # EMD DD35A and DD35B
+railroader-1294  # EMD DDA40X
+railroader-1348  # EMD GP60
+railroader-1356  # The Conrail Bug
+railroader-1357  # EMD MP-X
+railroader-1386  # NRE 3GS21 B And C
+railroader-1476  # GE C44-9W
+railroader-1529  # GE ES44AC And AC44CW
+railroader-1567  # EMD SD90MAC and Phase 2
+railroader-1738  # EMD SDP40F and F45
+railroader-1742  # EMD SD20
+railroader-1753  # NRE GS14B
+
+# freeman cars
+railroader-848   # Greenbrier 33k and 25k Gallon Tank Cars
+
+# MarquetteCreations mods
+railroader-1017!tenderswaps;legacy  # LLW Catalog 1
+railroader-401   # Gorre and Daphetid 4-10-0 D-85
+railroader-421   # USATC S100 (US spec)
+railroader-686   # Virginian G-4C Battleship Gondola
+railroader-685   # H.K. Porter 16-Ton 0-4-0ST
+railroader-795   # Davenport Gear Drive 70-Ton Prairie
+railroader-1033  # Baldwin 2-6-6-2ST Articulated Logger
+railroader-1488  # GearedSteam
+railroader-1490  # Lima Locomotive Works C-60-3 Shay
+railroader-1491  # Climax Manufacturing Co. C-70 Climax
+railroader-1502  # Smith And Porter 0-4-0ST
+railroader-1556  # LLW 282-S-36 Mikado
+
+# nurdyman (athabasca) mods
+railroader-1266  # custom diesel exhaust
+railroader-1287  # distributed power and control
+railroader-1358  # steam dream
 
 
+# diesel audio mods
+railroader-1040$16-567c  # beemans
+railroader-1241!max  # nurdyman - ALCo 16-251B (Rumble Edition)
+railroader-1048  # Salty's Vanilla Diesel Shutdown-Mute
+railroader-1049  # Salty's and Freeman GE 7FDL (U-BOAT) Prime Mover
+railroader-1050  # Salty's GE 7FDL (44-9) Prime Mover
+railroader-1051  # Salty's EMD 12-567C Prime Mover
+railroader-1055  # Salty's CAT 8-3608 Prime Mover
+railroader-1054  # Salty's ALCo 16-251B Prime Mover
+railroader-1053  # Salty's ALCo 12-251B Prime Mover
+railroader-1052  # Salty's - Greenninja ALCo 12-244 Prime Mover
+railroader-1067  # Salty's EMD 16-710G3A
+railroader-1069  # Salty's EMD 12-645E
+railroader-1078  # Salty's Doodlebug Audio - Fairbanks-Morse
+railroader-1077  # Salty's Doodlebug Audio - Gardner 6LW
+railroader-1199  # Salty's Alternate ALCo 12-244 Prime Mover
+railroader-1204  # Salty's 6-539T Prime Mover Audio
+railroader-1203  # Salty's 6-539 Prime Mover Audio
+railroader-1321  # Salty's New 16-251B Alternate Prime Mover
+railroader-1555  # Salty's Detroit Diesel 110 Prime Mover
 
-railroader-1040$16-567c
+
+# CLB's mods
+railroader-1350  # dkw
+railroader-52  # west bryson industries
+railroader-133  # west bryson scenery
+
+# ZottiKarotti mods
+railroader-1202  # Macon Country Railroad
+railroader-1093  # Interchange Sales Expansion
+railroader-1099  # Osprey Branch Extension
+railroader-1092!interchange  # Graham County Railroad
+railroader-1105$branch  # Jackson Branch
+
+# kirkland
+railroader-387!alternate;battleship
+railroader-628$patch  # foxy's patch
+railroader-706$entry  # kater's east entry
+railroader-706$remover  # kater's loop remover
+railroader-1754  # ARR compat patch
+
+# Appalachian Railway 
+railroader-1652  # ARR
+railroader-1653  # ARR loads
+
+# BMR mods
+railroader-573   # Bjorn's Appalachian Hardwood add-on
+railroader-689   # Bjorn's Whittier Sawmill Revamp
+railroader-1693  # BMR - Universal Bunker-C Interchange Purchase
+railroader-1706  # Not Enough Ballast - Track Terrain Fix
+railroader-1717  # BMR Appalachian Railroad's Ocona-Lufty Interchange Connector
+railroader-1739  # BMR Equipment Delivery
+railroader-1756  # BMR Bunker C Refuellers
+
+# foxy's map mods
+railroader-315!yar
+railroader-481
+railroader-86
+railroader-309
+railroader-239
+railroader-211
+railroader-709
+railroader-714
+railroader-328
+railroader-1414
 
 
-# map mods
+# kater's map mods
+railroader-108   # andrews loop
+railroader-104   # walker extensions
+railroader-127   # locust pin extension
+railroader-161   # connelly extension
+railroader-172   # grassy gap passing track
+railroader-241   # nantahala banking engine track
+railroader-242   # alarka loop
+railroader-251   # robinson gap double entry track
+railroader-258   # andrews hump yard
+railroader-265   # alarka mgchem remake
+railroader-276   # graham country rmg passing track
+railroader-514   # tatham revamp
+railroader-794   # hewitt industry revamp
+railroader-813   # barker's creek pulpwood extension
+railroader-1245  # watia point tunnel
+
+# tuckasegee steel works
+railroader-1060  # TSG itself
+railroader-974   # Jones and Laughlin ACF 20k Gallon Tank Car
+railroader-1525!docs;test  # Latom's Crossings Editable
+railroader-1076  # Tomer's Captive Pay
+railroader-961   # Tomer's Steel Mill Cars
+railroader-1134  # Freeman's Steel Mill Cars
+railroader-1135  # Freeman's Coal Tar Tank Car
+
+# woody's mods
+railroader-1374$iron  # Woodys Munsick Gypsum-Iron Co.
+railroader-1374$yard  # WD.DillsboroMineExtraYard
+railroader-1328!vanilla;radio  # Woodys Walker Top Town
+railroader-1362  # Woodys McAdams Multi-Fuel Refinery
+railroader-1422  # Woodys Wesser Grade Adjustment
+railroader-1423  # Woodys Fontana Lake to Alarka Jct Grade Adjustment
+railroader-1424  # Woodys Bryson Hill Grade Adjustment
+railroader-1425  # Woodys Alarka Jct Engine Shed
+
+
+# misc map mods
 railroader-1334@latest|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=
+railroader-1574  # Shay's Yard Lights - Foxy's Sylva Interchange
+railroader-1236$extension  # Asheville Extension
+railroader-1236$tiles  # Asheville Map Tiles
+railroader-1084$fuse  # Fontana line
+railroader-782   # Osprey Branch Line
+
+
+
+
+
