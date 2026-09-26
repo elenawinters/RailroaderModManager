@@ -1,6 +1,20 @@
+from utils import setup_logging
+from zipfile import is_zipfile
+from lib.data import data
+from pathlib import Path
 import subprocess
 import datetime
+import aiofiles
+import logging
+import sys
 import os
+
+log = logging.getLogger(__name__)
+setup_logging(log)
+
+DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
+TMP_FOLDER = Path(Path.cwd(), 'tmp')
+DOWNLOADS_PATH = Path(Path.home(), "Downloads")
 
 def open_url(url):
     # The webbrowser module opens the OS native browser, which in my case is FireDragon.
@@ -15,3 +29,23 @@ def open_url(url):
     else:  # Linux and other OSes
         subprocess.run(['xdg-open', url])
 
+
+
+async def does_zipfile_exist(path, partial: bool = False):
+    if not await aiofiles.os.path.exists(path):
+        log.warning(f"Pending file `{path}` does not exist.")
+        return False
+
+    glob = list(DOWNLOADS_PATH.glob(f'{path.name.removesuffix('.zip')}*.zip.part'))
+    if glob:  # glob to the rescue!!!
+        log.warning(f"Please wait for `{path}` to finish downloading.")
+        if partial:
+            return True
+        else:
+            return False
+
+    if not is_zipfile(path):
+        log.error(f"`{path}` is not a valid zipfile!")
+        return False
+
+    return True

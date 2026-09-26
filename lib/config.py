@@ -8,7 +8,8 @@ if not os.path.exists(config_file):
     config['settings'] = {
         'offsite_open': True,
         'offsite_last_open': "2026-06-09T00:0:00.000000",
-        'offsite_frequency': 7
+        'offsite_frequency': 7,
+        'delete_tmp': True
     }
     config['db'] = { 'address': 'sqlite:///rmm.sqlite'}
     config['gameloc'] = { 'railroader': '/path/to/railroader/mods' }

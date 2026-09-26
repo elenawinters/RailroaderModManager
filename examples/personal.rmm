@@ -8,6 +8,7 @@
 # (yes, I play with a LOT of mods. i kinda had to make this lol)
 
 # this modpack is a frankensteined together mess. FUSE complains, but it's "safe" to ignore
+# this modpack is MASSIVE. Expect an extracted download size in excess of 20 GB.
 
 # "essential" mods
 railroader-1645$fuse!toolshed   # fuse
@@ -17,6 +18,8 @@ railroader-285   # TheTies - Doubles the rendering limit for ties and tie plates
 railroader-569   # dynamic weather
 railroader-1029  # Waypoint Queue
 railroader-434   # SCOLD
+railroader-1401  # RTM Avatar Enhancer (AE)
+railroader-1352  # RTM Trainline Monitor (TLM)
 
 # legotrainman mods
 railroader-303   # Legotrainman's Library of Stuff
@@ -46,6 +49,8 @@ railroader-831   # Tuckasegee Steel Works - Freight and Tender Truck Compendium
 railroader-1766  # Crusher's Trucks And Assets
 railroader-1180  # scv42's Horn Pack
 railroader-383   # Latoms Objects and Sounds
+railroader-1730  # Rex Components Enhancements (RCE)
+railroader-739   # EMD HT-C AND GE FB-2 BOGIES
 
 # other
 railroader-902$base   # Western North Carolina Piggyback (TOFC) Service
@@ -74,6 +79,7 @@ railroader-866   # Rutland F-2j
 railroader-1032  # Great Northern M-2 (2-6-8-0)
 railroader-1064$RMWF-1   # RLW Jarl
 railroader-1064$RMWF-2   # RLW Great Jarl
+railroader-740   # GE P30CH
 
 # beemans mods
 railroader-443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz  # beemans scripts /w patch
@@ -105,7 +111,7 @@ railroader-1726  # Greenninjas Class Lights
 railroader-1727  # BLW 8-26C
 railroader-1744  # Great Northern H-5 1355
 
-# routeofthewhippet rolling stoc
+# routeofthewhippet rolling stock
 railroader-603   # Pullman-Standard PS-2 2003 cu.ft. Covered Hopper
 railroader-612   # Pullman-Standard PS-2 2893 cu.ft. Covered Hopper
 railroader-624   # Norfolk and Western Class GU Gondolas
@@ -207,6 +213,7 @@ railroader-1556  # LLW 282-S-36 Mikado
 railroader-1266  # custom diesel exhaust
 railroader-1287  # distributed power and control
 railroader-1358  # steam dream
+railroader-1464  # service configurator
 
 
 # diesel audio mods
@@ -229,6 +236,7 @@ railroader-1204  # Salty's 6-539T Prime Mover Audio
 railroader-1203  # Salty's 6-539 Prime Mover Audio
 railroader-1321  # Salty's New 16-251B Alternate Prime Mover
 railroader-1555  # Salty's Detroit Diesel 110 Prime Mover
+railroader-1376  # CUMMINS QSK19
 
 
 # CLB's mods
@@ -239,7 +247,6 @@ railroader-133  # west bryson scenery
 # ZottiKarotti mods
 railroader-1202  # Macon Country Railroad
 railroader-1093  # Interchange Sales Expansion
-railroader-1099  # Osprey Branch Extension
 railroader-1092!interchange  # Graham County Railroad
 railroader-1105$branch  # Jackson Branch
 
@@ -249,6 +256,13 @@ railroader-628$patch  # foxy's patch
 railroader-706$entry  # kater's east entry
 railroader-706$remover  # kater's loop remover
 railroader-1754  # ARR compat patch
+
+# map expansions / extensions
+railroader-1236$extension  # Asheville Extension
+railroader-1236$tiles  # Asheville Map Tiles
+railroader-1084$fuse  # Fontana line
+railroader-782   # Osprey Branch Line
+railroader-1099  # Osprey Branch Extension
 
 # Appalachian Railway 
 railroader-1652  # ARR
@@ -314,14 +328,10 @@ railroader-1425  # Woodys Alarka Jct Engine Shed
 
 
 # misc map mods
-railroader-1334@latest|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=
+railroader-1334@latest|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=   # andrews large facility & lights
 railroader-1574  # Shay's Yard Lights - Foxy's Sylva Interchange
-railroader-1236$extension  # Asheville Extension
-railroader-1236$tiles  # Asheville Map Tiles
-railroader-1084$fuse  # Fontana line
-railroader-782   # Osprey Branch Line
-
-
+railroader-599   # JB's C_L_B West Bryson SouthSide Access track
+railroader-1380  # Styker's Bryson
 
 
 

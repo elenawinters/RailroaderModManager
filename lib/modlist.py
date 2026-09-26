@@ -1,13 +1,14 @@
+from lib.system import DATE_FORMAT, does_zipfile_exist
 from lib.config import config, config_file
 from lib.nexus import parse_id_string
 from utils import setup_logging
 from datetime import datetime
-from main import DATE_FORMAT
 from lib.data import data
 from pathlib import Path
 import msgpack
 import logging
 import shutil
+import json5
 import json
 import sys
 import os
@@ -34,13 +35,12 @@ def import_modlist(path: Path, return_modlist: bool = False):
     match path.suffix.lower():
         case '.mpk' | '.mp' | '.msgpack':
             log.info(f'MsgPack ({path.suffix.lower()}) detected! Trying to parse.')
-            # msgpack.packb(mods)
             with open(path, 'rb') as exportfile:
                 mods = dict_to_rmm(msgpack.unpackb(exportfile.read()))
-        case '.json':
+        case '.json' | '.json5':
             log.info('JSON detected! Trying to parse.')
             with open(path, 'r') as exportfile:
-                mods = dict_to_rmm(json.load(mods, exportfile, indent=4))
+                mods = dict_to_rmm(json5.load(mods, exportfile))
         case '.rmm' | '.txt':
             log.info('RMM plaintext detected! Trying to parse.')
             with open(path, "rt") as f:

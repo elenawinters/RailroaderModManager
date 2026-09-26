@@ -1,3 +1,4 @@
+from lib.system import DATE_FORMAT, TMP_FOLDER, DOWNLOADS_PATH, does_zipfile_exist
 from lib.config import config, config_file
 from datetime import datetime, timedelta
 from zipfile import ZipFile, is_zipfile
@@ -29,20 +30,10 @@ async def do_all_pending_files_exist(pending_files):
         if not pending_file:
             continue
         pending_path = Path(DOWNLOADS_PATH, pending_file)
-        # try:
-        # except Exception:
-        #     log.warning(f"Pending file {pending_path} does not exist.")
-        #     all_exist = False
-        #     return all_exist
-        if not await aiofiles.os.path.exists(pending_path):
-            log.warning(f"Pending file `{pending_path}` does not exist.")
-            all_exist = False
-        
-        glob = list(DOWNLOADS_PATH.glob(f'{pending_path.name.removesuffix('.zip')}*.zip.part'))
-        if glob:  # glob to the rescue!!!
-            log.warning(f"Please wait for `{pending_path}` to finish downloading.")
-            all_exist = False
 
+        if not await does_zipfile_exist(pending_path):
+            all_exist = False
+            continue
     return all_exist
 
 def handle_args():
@@ -81,9 +72,7 @@ def handle_args():
             log.error('Generate path not provided!')
         return True
 
-DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
-TMP_FOLDER = Path(Path.cwd(), 'tmp')
-DOWNLOADS_PATH = Path(Path.home(), "Downloads")
+
 async def refresh_nexus_data_and_install():
     if handle_args():
         return
@@ -134,7 +123,7 @@ async def refresh_nexus_data_and_install():
     except Exception as e:
         log.exception(e)
 
-    if not is_dangerous_path(TMP_FOLDER):
+    if config['settings'].getboolean('delete_tmp') == True and not is_dangerous_path(TMP_FOLDER):
         shutil.rmtree(TMP_FOLDER)
 
 def unpack_to_tmp(archive: Path):
@@ -147,6 +136,14 @@ def unpack_to_tmp(archive: Path):
 
     log.debug(f'`{archive.name}` extracted to temp folder.')
 
+    # Some mods, like TheTies and InterchangedIndustryUnloader have their archives structured weirdly
+    # So, uh... this corrects it! Or, at least tries to.
+    for orig in loc.glob('*'):
+        if orig.is_dir(): return  # Safe to abort if we find a directory
+        if '\\' not in str(orig): return
+        final = Path(loc, *str(orig).split('\\'))
+        final.parent.mkdir(parents=True, exist_ok=True)
+        orig.move(final)
 
 async def install_mods(moddat):
     meta = nexus.parse_id_string(moddat['modid'])

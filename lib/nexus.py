@@ -1,22 +1,17 @@
+from lib.system import does_zipfile_exist
 from datetime import datetime, timedelta
 from collections import OrderedDict
-from curses import meta
 from dataclasses import dataclass
-import subprocess
-from main import DOWNLOADS_PATH, DATE_FORMAT
 from utils import setup_logging
 from lib.config import config
-from lib.data import data
 from pprint import pformat
+from lib.data import data
 from pathlib import Path
 from lib import system
 from lib import web
 import logging
-import asyncio
-import random
 import json
 import sys
-import os
 import re
 
 log = logging.getLogger(__name__)
@@ -184,7 +179,7 @@ async def fetch_nexus_file_info(id_string):
     meta = parse_id_string(id_string)
     if meta.game == 'offsite':
         if config['settings'].getboolean('offsite_open') == True:
-            if datetime.now() - timedelta(days=config['settings'].getint('offsite_frequency')) > datetime.strptime(config['settings']['offsite_last_open'], DATE_FORMAT):
+            if datetime.now() - timedelta(days=config['settings'].getint('offsite_frequency')) > datetime.strptime(config['settings']['offsite_last_open'], system.DATE_FORMAT):
                 log.info(f'Offsite mod detected. Opening link to allow the user to check if it needs to be updated. ({meta.version})')
                 system.open_url(meta.version)
         return 'offsite'
@@ -206,6 +201,12 @@ async def fetch_nexus_file_info(id_string):
 
     return result
 
+# Yep, sometimes this happens. Dunno how to get around it so patches are hardcoded for now
+# Could potentially rely on the end of file identifier, but I don't know how to easily get that rn
+# TODO: Make this not hardcoded. Might require a rewrite
+brokenDLFilenamePatches = {
+    'Duel Whistle 1581 1.0.0 2026-07-19T02-08Z muYqJIOHI.zip': 'Duel Whistle 1581 1 2026-07-19T02-08Z muYqJIOHI.zip'
+}
 async def check_for_updates_and_download_if_available(id_string):
     meta = parse_id_string(id_string)
     file_info = await fetch_nexus_file_info(id_string)
@@ -229,11 +230,27 @@ async def check_for_updates_and_download_if_available(id_string):
         if file['version'] == current_version and '--force' not in sys.argv:
             log.debug(f"No update available for {id_string} (current version: {current_version})")
             return
+
+        if file['file_name'] in brokenDLFilenamePatches:
+            file['file_name'] = brokenDLFilenamePatches[file['file_name']]
+       
         aggregate['pending_files'].append(file['file_name'])
         aggregate['pending_fileids'].append(file['file_id'])
         log.info(f"Update available for {id_string}: {file['version']} (current version: {current_version}) ({file['name']})")
-        pending_path = Path(DOWNLOADS_PATH) / file['file_name']
-        if not pending_path.exists():
+        pending_path = Path(system.DOWNLOADS_PATH, file['file_name'])
+
+        # Some mods, like Dual Whistle, list the wrong file name in their metadata
+        # I'm not sure if this is a Nexus mods issue or a mod maker issue
+        # if 'duel whistle' in pending_path.name.lower():
+        #     log.debug(pending_path.name)
+        #     log.debug(file['file_name'])
+        #     log.debug('Duel Whistle 1581 1 2026-07-19T02-08Z muYqJIOHI.zip')
+        #     log.debug(file['file_name'] == pending_path.name)
+        #     log.debug(pending_path.name == 'Duel Whistle 1581 1 2026-07-19T02-08Z muYqJIOHI.zip')
+        #     log.debug(pending_path.exists())
+        #     log.debug(file)
+        #     sys.exit(0)
+        if not await does_zipfile_exist(pending_path, True):
             await open_dl_link(meta.game, meta.mod, file['file_id'])
 
     data.base['mods'].upsert({
