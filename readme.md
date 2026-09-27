@@ -146,21 +146,54 @@ Patches are part of the RMM-ID itself. They are a **Base64 encoded MsgPack objec
     "replaceId": {
         "beemansrollingstockscripts": "BeemansRollingStockScripts"
     },
-    "removeRLConflict": ["AlinaNova21.AlinasMapMod"]
+    "removeRLConflict": ["AlinaNova21.AlinasMapMod"],
+    "customFile": "Settings.xml"
 }
 ```
 
 Let's use the `replaceId` example as an example. Most mods that rely on Beemans Rolling Stock Scripts expect the ID to be capitalized, when it's not currently. This, at least under FUSE, causes errors. So, you can provide a patch to fix it inside of Beeman's scripts directly, and get around the issue.
 
-`railroader-443@latest|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz`
+```
+railroader-443@latest|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz
+```
 
 The `removeRLConflict` patch exists to remove broken conflicts. Under FUSE, mods like MICHILSON's Large Andrews Engine Facility requires Alina's Map Mod to be above version 1.3.24149.1337. This is fine under Railloader, since you are expected to have AMM installed, but here, FUSE provides it, specifically version 0.0.0.0. The Andrews Facility will refuse to load under this configuration, even though it works fine. So, we can just patch the `Definition.json` to remove the lines causing the issue.
 
-`railroader-1334|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=`
+```
+railroader-1334|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=
+```
 
 These are just examples of patches I've had to manually make for my own modded environment. This system streamlines it so you don't have to manually do it. Patches are carried over to exported modlists.
 
-You can see what a patch does by using [this utility](https://ref45638.github.io/msgpack-converter/).
+`customFile` can be used to create a file that doesn't exist, usually a settings file.
+
+To define the contents of the patch, we have an additional field called the payload.<br>
+The payland exists after the patch contents, and is seperated by `?payload`.
+
+The payload is a **RFC 1924 Base85 string**. Take the example below, which is for the NoPassenger mod.
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<Settings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <skipService>true</skipService>
+  <skipEquipment>true</skipEquipment>
+</Settings>
+```
+
+We turn this into a RFC 1924 Base85 string, and append it after the `customFile` patch information.
+
+```
+railroader-492|gapjdXN0b21GaWxlrFNldHRpbmdzLnhtbA==?payloadJU@7CY#?@Ja&u{KZapF~E-)e>Wo~0{WNB_^JtB2<W-T}(KRyaPQ)P5?X>Mn8Ab4$TZgV<#b7VatXmoUNIxjDGcXuv#GcIp(XD>1^FflJ!O-xf`Xk~3-A|QBeY;JQpcynnzB4~7Ua5^t9cXxL#cQY<;a%V3xFfcJMSWQe*V`yb<VJ&HHb97;DV`U;f3Lqdnb8BgEQ)O~?X=7zRbaHiNJTG%=X>e0za&~EBWj+cZAUtzxX>dhxb!l*IWo~pnbaHiNJTG%=X>dhxb!l*IWo~pn3Op}UWps3DZfA2o
+```
+
+The resulting patch will create "Settings.xml" and set it's contents to the decoded payload.
+
+This form of patch should rarely be used.
+
+#### Patching Tools
+
+You can see what a patch does by using [this utility](https://ref45638.github.io/msgpack-converter/).<br>
+You can see what a payload does by using [this utility](https://toolkitbay.com/tools/encoding/base85).
 
 
 ### Quirks

@@ -106,7 +106,7 @@ RE_PATTERN = pattern = re.compile(
     r'(?:#(?P<fileid>\d+))?'
     r'(?:\$(?P<search>[^!|]+))?'
     r'(?:!(?P<exclude>[^|]+))?'
-    r'(?:\|(?P<patch>[A-Za-z0-9+/=]+))?$'
+    r'(?:\|(?P<patch>.+))?$'
 )
 
 @dataclass

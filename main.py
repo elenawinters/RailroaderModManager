@@ -167,10 +167,17 @@ async def install_mods(moddat):
         if not glob:
             log.error(f'Glob was empty!!! {pending_file}. Cannot continue install!!!')
             continue
+        patch = None
+        payload = None
         if meta.patch:
-            patch = msgpack.unpackb(base64.b64decode(meta.patch))
-        else:
-            patch = None
+            if '?payload' in meta.patch:
+                patch, payload = meta.patch.split('?payload', 1)
+            else:
+                patch = meta.patch
+            patch = msgpack.unpackb(base64.b64decode(patch))
+            payload = base64.b85decode(payload).decode() if payload else None
+
+        # log.debug(f'Patch: {patch} | Payload: {payload} | File: {pending_file}')
         for file in glob:
             folder = file.parents[0].name
             true_id = folder
@@ -189,7 +196,7 @@ async def install_mods(moddat):
                             log.info(f'`{true_id}` has been patched to `{modinfo['Id']}` ({moddat['modid']}).')
                         folder = modinfo['Id']
 
-            elif file.name.lower() == 'definition.json' and meta.patch and 'removeRLConflict' in patch:
+            if file.name.lower() == 'definition.json' and meta.patch and 'removeRLConflict' in patch:
                 with file.open("r+", encoding="utf-8-sig") as f:
                     modinfo = json5.load(f)
                     if 'conflictsWith' in modinfo:
@@ -205,6 +212,15 @@ async def install_mods(moddat):
                         log.info(f'`{file.name}` has been patched for mod `{folder}` ({moddat['modid']}).')
                     else:
                         log.warning(f'Failed to patch `{file.name}` for `{folder}`: No conflicts defined by mod!')
+
+            if meta.patch and 'customFile' in patch and payload is not None:
+                cfile = Path(file.parent, patch['customFile'])
+                if not cfile.exists():
+                    cfile.touch()
+                    with cfile.open("w", encoding="utf-8-sig") as f:
+                        f.write(payload)
+                    log.warning(f'Custom file `{patch['customFile']}` has been created for `{folder}`')
+
 
             log.debug(f'Folder name has been determined to be {folder}.')
             folders.append(folder)
