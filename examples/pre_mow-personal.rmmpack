@@ -266,7 +266,7 @@ railroader-1236$extension  # Asheville Extension
 railroader-1236$tiles  # Asheville Map Tiles
 railroader-1084$fuse  # Fontana line
 railroader-782   # Osprey Branch Line
-railroader-1099  # Osprey Branch Extension
+# railroader-1099  # Osprey Branch Extension - broken on FUSE
 
 # Appalachian Railway 
 railroader-1652  # ARR
