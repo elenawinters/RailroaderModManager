@@ -1,5 +1,3 @@
-# NOT ALL FEATURES ARE IMPLEMENTED YET
-
 # Railroader Mod Manager (RMM)
 
 The purpose of this program is to auto-update installed Railroader mods when requested.
@@ -13,6 +11,11 @@ You will need a [Nexus Mods API Key](https://next.nexusmods.com/settings/api-key
 #### Scope
 
 This manager will only manage the mods that you have added to the game via the manager. If you manually add a mod, it will not handle that, and it'll be up to you to maintain and update it.
+
+## Is a feature listed here but not present in the software?
+
+Please open an issue on this. I wrote a good portion of the README before all features were implemented. I'll go through this and make sure everything is correct at a later date.
+
 
 ## RMM-ID Format
 
@@ -184,11 +187,11 @@ offsite-url@https://rmh.alinanova.dev/mod/da44df04-5e79-4cce-92fc-909d9cbb33fd
 RMM will open these in the browser for the user to install every time RMM is run.
 
 
-## Want to support my work?
+<!-- ## Want to support my work?
 
 You really don't have to. In fact, I'd prefer if you don't.
 
 I'm making this for me, but if you really really really really **really** want to support me, you can do so on my [Ko-fi](https://ko-fi.com/elenaberry).
 
 Again, no pressure. I've put it at the bottom here for a reason. I don't wanna bother anyone.
-
+ -->
