@@ -143,7 +143,6 @@ def export_modlist(packformat: str, path: Path, mods: list = None):
                 if x not in mod_name:
                     named_modlist.append(x)
                     continue
-                log.debug(mod_name[x])
                 named_modlist.append(x + '  # ' + mod_name[x])
             with open(outfile, 'w') as exportfile:
                 exportfile.write('\n'.join(named_modlist))
