@@ -14,7 +14,7 @@ class Data:
         dbtab1 = self.base.create_table('mods', primary_id='modid', primary_type=sqltypes.Text)
         # dbtab1.create_column('names', sqltypes.Text)
         dbtab1.create_column('version', sqltypes.Text)
-        # dbtab1.create_column('folders', sqltypes.Text)
+        dbtab1.create_column('folders', sqltypes.Text)
         dbtab1.create_column('pending_filenames', sqltypes.Text)
         dbtab1.create_column('pending_version', sqltypes.Text)
         dbtab1.create_column('pending_fileids', sqltypes.Text)

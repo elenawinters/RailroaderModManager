@@ -154,6 +154,7 @@ async def install_mods(moddat):
     moddat['pending_filenames'] = json.loads(moddat['pending_filenames']) if moddat['pending_filenames'] else []
 
     # unpack and install new files
+    folders = []
     for pending_file in moddat['pending_filenames']:
         loc = Path(DOWNLOADS_PATH, pending_file)
         if not await aiofiles.os.path.isfile(loc): continue
@@ -206,6 +207,7 @@ async def install_mods(moddat):
                         log.warning(f'Failed to patch `{file.name}` for `{folder}`: No conflicts defined by mod!')
 
             log.debug(f'Folder name has been determined to be {folder}.')
+            folders.append(folder)
 
             path = Path(config['gameloc'][meta.game], folder)
             if await aiofiles.os.path.exists(path):
@@ -226,6 +228,7 @@ async def install_mods(moddat):
         'modid': moddat['modid'],
         'version': moddat['pending_version'],
         'fileids': moddat['pending_fileids'],
+        'folders': json.dumps(folders),
         'pending_filenames': None,
         'pending_fileids': None,
         'pending_version': None

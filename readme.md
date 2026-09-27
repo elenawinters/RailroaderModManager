@@ -49,7 +49,7 @@ This is all convention though. You don't have to follow this, but RMM might lose
 
 Yeah, let's just get this outta the way. If you are too vague with your RMM-ID, and mods update, RMM might lose track of some of them.
 
-For example, the GP38 by BeeMan. Let's assume we use `railroader-143@latest`. If the Scripts file gets updated to 4.4.3, but the GP38 file is still on 4.4.2, the Scripts mod will get updated, but RMM will stock tracking the GP38 since it no longer has the highest ("latest") version number.
+For example, the GP38 by BeeMan. Let's assume we use `railroader-143@latest`. If the Scripts file gets updated to 4.4.3, but the GP38 file is still on 4.4.2, the Scripts mod will get updated, but RMM will stop tracking the GP38 since it no longer has the highest ("latest") version number.
 
 RMM will warn you when this happens, and uninstall the decoupled mod if it can.
 

@@ -1,5 +1,4 @@
 aiofiles
-selenium
 colorama
 bad_path
 msgpack
