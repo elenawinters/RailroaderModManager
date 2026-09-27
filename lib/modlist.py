@@ -95,6 +95,7 @@ def rmm_to_dict(rmm_list):
 
 def export_modlist(packformat: str, path: Path, mods: list = None):
     modlist = []
+    mod_name = {}
     if not mods:
         for moddat in data.base['mods'].all():
             fileids = json.loads(moddat['fileids']) if moddat['fileids'] else []
@@ -104,9 +105,13 @@ def export_modlist(packformat: str, path: Path, mods: list = None):
             if meta.patch: patch = '|' + meta.patch
             if fileids == [] or '--strict' not in sys.argv:
                 modlist.append(f'{moddat['modid']}{patch}')
+                if moddat['name'] is not None:
+                    mod_name[f'{moddat['modid']}{patch}'] = moddat['name']
                 continue
             for file in fileids:
                 modlist.append(f'{meta.game}-{meta.mod}#{file}{patch}')
+                if moddat['name'] is not None:
+                    mod_name[f'{meta.game}-{meta.mod}#{file}{patch}'] = moddat['name']
     else:
         modlist = mods
 
@@ -133,8 +138,15 @@ def export_modlist(packformat: str, path: Path, mods: list = None):
         case 'plaintext' | 'rmm' | '.rmm' | 'rmmpack' | '.rmmpack':
             outfile = Path(path).with_suffix('.rmmpack')
             if outfile.exists(): raise ModpackExportError(f'File `{outfile}` already exists!')
+            named_modlist = []
+            for x in modlist:
+                if x not in mod_name:
+                    named_modlist.append(x)
+                    continue
+                log.debug(mod_name[x])
+                named_modlist.append(x + '  # ' + mod_name[x])
             with open(outfile, 'w') as exportfile:
-                exportfile.write('\n'.join(modlist))
+                exportfile.write('\n'.join(named_modlist))
             pass
         case _:
             raise ModpackExportError(f'`{packformat}` is not a recognized file export format!')

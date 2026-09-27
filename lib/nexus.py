@@ -32,6 +32,27 @@ class API:
             return {}
         
     @staticmethod
+    async def get_mod_data(game, mod_id):
+        url = f"https://api.nexusmods.com/v1/games/{game}/mods/{mod_id}.json"
+        headers = {
+            "accept": "application/json",
+            "apikey": config['nexus']['apikey']
+        }
+        response = await web.Client(url, timeout=120, headers=headers).async_get()
+        if response.status_code == 200:
+            return response.json()
+        else:
+            log.error(f"Failed to fetch mod data: {response.status_code} - {response.text}")
+            return {}
+
+    @staticmethod
+    async def get_mod_name(game, mod_id):
+        data = await API.get_mod_data(game, mod_id)
+        if data:
+            return data['name']
+        return
+        
+    @staticmethod
     async def get_numerical_game_id(game):
         url = f"https://api.nexusmods.com/v1/games/{game}.json"
         headers = {
@@ -233,7 +254,7 @@ async def check_for_updates_and_download_if_available(id_string):
 
         if file['file_name'] in brokenDLFilenamePatches:
             file['file_name'] = brokenDLFilenamePatches[file['file_name']]
-       
+
         aggregate['pending_files'].append(file['file_name'])
         aggregate['pending_fileids'].append(file['file_id'])
         log.info(f"Update available for {id_string}: {file['version']} (current version: {current_version}) ({file['name']})")
@@ -255,6 +276,7 @@ async def check_for_updates_and_download_if_available(id_string):
 
     data.base['mods'].upsert({
         'modid': id_string,
+        'name': await API.get_mod_name(meta.game, meta.mod),
         'pending_filenames': json.dumps(aggregate['pending_files']),
         'pending_fileids': json.dumps(aggregate['pending_fileids']),
         'pending_version': file['version']

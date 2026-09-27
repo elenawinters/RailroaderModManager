@@ -2,7 +2,7 @@
 # hey, welcome to the example modlist
 # as you can see, if you lead a line with a #, RMM skips it.
 # this lets you comment out problem mods from your pack!
-# comments will NOT be included in an export, only in a handmade file
+# comments will NOT be included in an export, only in a handmade file (modnames will be appended in exports)
 # comments can be included after an RMM-ID. Just make sure to pad it out.
 # use this to build up your first modpack (or just steal mine :3)
 # (yes, I play with a LOT of mods. i kinda had to make this lol)
@@ -26,6 +26,7 @@ railroader-1124  # Roundhouse Research Program
 railroader-816   # Light's Modded Diesel Liveries
 railroader-1433  # TooManyWaybills
 railroader-1441  # Bells And Whistles
+railroader-1627  # Railroader Origin Culling Fix
 
 # legotrainman mods
 railroader-303   # Legotrainman's Library of Stuff
@@ -39,6 +40,7 @@ railroader-604   # Legotrainman's Used Equipment Market
 railroader-746   # Legotrainman's Scrappalachia
 railroader-1521  # Helvetic Bryson Salvage and Scrap
 railroader-1522  # Helvetic Scrapalachia Compatibility Patch
+railroader-1772  # Tetz's Scrappalachia Scrap Cargo
 
 # assets, asset packs, and trucks
 railroader-132   # c_l_b assets
@@ -243,7 +245,29 @@ railroader-1203  # Salty's 6-539 Prime Mover Audio
 railroader-1321  # Salty's New 16-251B Alternate Prime Mover
 railroader-1555  # Salty's Detroit Diesel 110 Prime Mover
 railroader-1376  # CUMMINS QSK19
+railroader-1587  # EMD 16-567C Quad Exhaust
+railroader-1591  # 16-567D Turbo
+railroader-1592  # EMD 6-567A
+railroader-1593  # EMD 16-567B Dual Exh
+railroader-1594  # EMD 16-710G3C-ES
+railroader-1609  # 7FDL16 Prime Mover Audio's
+railroader-1613  # EMD 12-645E
+railroader-1634  # 16-710G3A_B_C Prime Mover Audio
+railroader-1659  # EMD 12-567C
+railroader-1662  # EMD 16-567D Non-Turbo
+railroader-1689  # EMD 8-567C
+railroader-1692  # Baldwin 6-606SC
+railroader-1701  # ALCO Prime Mover Audio Collection
+railroader-1729  # EMD 16-645E3 Turbo
+railroader-1740  # EMD 20-645E3
+railroader-1746  # EMD 16-645D Non-Turbo 4 Exhaust
 
+# whistles, bells, and horns
+railroader-1638  # Nathan P Horn Pack
+railroader-1640  # Nathan K Horn Pack
+railroader-1654  # Nathan M Horn Pack
+railroader-1655  # Diesel Bell Pack
+railroader-1657  # Leslie Horn Pack
 
 # CLB's mods
 railroader-1350  # dkw
