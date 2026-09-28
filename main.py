@@ -6,9 +6,8 @@ from bad_path import is_dangerous_path
 from utils import setup_logging
 from lib.data import data
 from pathlib import Path
-from lib import modlist
-from lib import tests
 from lib import nexus
+from lib import args
 import aiofiles.os
 import aiofiles
 import msgpack
@@ -36,47 +35,7 @@ async def do_all_pending_files_exist(pending_files):
             continue
     return all_exist
 
-def handle_args():
-    if '--import' in sys.argv:
-        index = sys.argv.index('--import')
-        if len(sys.argv) > index + 1:
-            modlist.import_modlist(Path(sys.argv[index + 1]))
-        else:
-            log.error('Import path not provided!')
-        return True
-
-    if '--export' in sys.argv:
-        index = sys.argv.index('--export')
-        if len(sys.argv) > index + 2:
-            modlist.export_modlist(sys.argv[index + 1], Path(sys.argv[index + 2]))
-            return True
-        else:
-            log.error('Export path or format not provided!')
-        return True
-
-    if '--convert' in sys.argv:
-        index = sys.argv.index('--convert')
-        if len(sys.argv) > index + 2:
-            modlist.convert_modlist(Path(sys.argv[index + 1]), sys.argv[index + 2])
-            return True
-        else:
-            log.error('Convert path or format not provided!')
-        return True
-
-    if '--generate' in sys.argv:
-        index = sys.argv.index('--generate')
-        if len(sys.argv) > index + 1:
-            tests.generate_rmm_modpack_from_gamefiles(Path(sys.argv[index + 1]))
-            return True
-        else:
-            log.error('Generate path not provided!')
-        return True
-
-
 async def refresh_nexus_data_and_install():
-    if handle_args():
-        return
-
     check_func = nexus.check_for_updates_and_download_if_available
     mod_ids = sorted([mod['modid'] for mod in data.base['mods'].all()])
 
@@ -90,14 +49,14 @@ async def refresh_nexus_data_and_install():
     except Exception as e:
         log.exception(e)
 
+    nexus.VCACHE = {}
+
     if config['settings'].getboolean('offsite_open') == True:
         if datetime.now() - timedelta(days=config['settings'].getint('offsite_frequency')) > datetime.strptime(config['settings']['offsite_last_open'], DATE_FORMAT):
              config['settings']['offsite_last_open'] = datetime.now().strftime(DATE_FORMAT)
 
-    with open(config_file, 'w') as configfile:
-        config.write(configfile)
-
-    nexus.VCACHE = {}
+        with open(config_file, 'w') as configfile:
+            config.write(configfile)
 
     pending_files = [file for mod in data.base['mods'].all() for file in json.loads(mod['pending_filenames'] if mod['pending_filenames'] else '[]')]
 
@@ -252,4 +211,7 @@ async def install_mods(moddat):
 
 
 if __name__ == "__main__":
+    if args.handle_args():
+        sys.exit(0)
+
     asyncio.run(refresh_nexus_data_and_install())
