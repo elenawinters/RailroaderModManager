@@ -79,6 +79,7 @@ def import_modlist(path: Path, return_modlist: bool = False):
         config['settings']['offsite_last_open'] = '2026-06-09T00:0:00.000000'
         with open(config_file, 'w') as configfile:
             config.write(configfile)
+    return True
 
 def rmm_to_dict(rmm_list):
     moddict = {}
@@ -149,6 +150,7 @@ def export_modlist(packformat: str, path: Path, mods: list = None):
             pass
         case _:
             raise ModpackExportError(f'`{packformat}` is not a recognized file export format!')
+    return True
 
 
 def convert_modlist(path: Path, desiredformat):
@@ -156,3 +158,4 @@ def convert_modlist(path: Path, desiredformat):
     mods = import_modlist(path, return_modlist=True)
     export_modlist(desiredformat, path, mods)
     log.info('Pack converted!')
+    return True

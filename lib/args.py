@@ -25,14 +25,12 @@ def proc_arg(arg, fields):
 
 def handle_args():
     if args := proc_arg('--convert', ['path', 'desiredformat']):
-        modlist.convert_modlist(Path(args.path), args.desiredformat)
-        return True
+        return modlist.convert_modlist(Path(args.path), args.desiredformat)
 
     if args := proc_arg('--import', ['path']):
-        modlist.import_modlist(Path(args.path))
-        return True
+        return modlist.import_modlist(Path(args.path))
 
     if args := proc_arg('--export', ['packformat', 'path']):
-        modlist.export_modlist(args.packformat, Path(args.path))
-        return True
+        return modlist.export_modlist(args.packformat, Path(args.path))
+    
 

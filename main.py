@@ -3,11 +3,11 @@ from lib.config import config, config_file
 from datetime import datetime, timedelta
 from zipfile import ZipFile, is_zipfile
 from bad_path import is_dangerous_path
+from lib.args import handle_args
 from utils import setup_logging
 from lib.data import data
 from pathlib import Path
 from lib import nexus
-from lib import args
 import aiofiles.os
 import aiofiles
 import msgpack
@@ -211,7 +211,7 @@ async def install_mods(moddat):
 
 
 if __name__ == "__main__":
-    if args.handle_args():
+    if handle_args():
         sys.exit(0)
 
     asyncio.run(refresh_nexus_data_and_install())
