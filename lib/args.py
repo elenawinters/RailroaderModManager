@@ -16,9 +16,7 @@ def proc_arg(arg, fields):
         log.error(f'Arguments missing for `{arg}`: {{ {', '.join(fields[len(sys.argv) - argindex - 1:])} }}')
         sys.exit(0)  # maybe don't continue execution 
 
-    args = {}  # could prob dict comprehend this but lazy
-    for index, field in enumerate(fields):
-        args[field] = sys.argv[argindex + index + 1]
+    args = {field: sys.argv[argindex + index + 1] for index, field in enumerate(fields)}
 
     # yay, dataclass shenanigans!!!
     return make_dataclass(arg, [tuple([k, v]) for k, v in args.items()])(**args)
