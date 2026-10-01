@@ -31,21 +31,21 @@ def open_url(url):
 
 
 
-async def does_zipfile_exist(path, partial: bool = False):
+async def does_zipfile_exist(path, partial: bool = False, do_log: bool = True):
     if not await aiofiles.os.path.exists(path):
-        log.warning(f"Pending file `{path}` does not exist.")
+        if do_log: log.warning(f"Pending file `{path}` does not exist.")
         return False
 
     glob = list(DOWNLOADS_PATH.glob(f'{path.name.removesuffix('.zip')}*.zip.part'))
     if glob:  # glob to the rescue!!!
-        log.warning(f"Please wait for `{path}` to finish downloading.")
+        if do_log: log.warning(f"Please wait for `{path}` to finish downloading.")
         if partial:
             return True
         else:
             return False
 
     if not is_zipfile(path):
-        log.error(f"`{path}` is not a valid zipfile!")
+        if do_log: log.error(f"`{path}` is not a valid zipfile!")
         return False
 
     return True

@@ -90,6 +90,8 @@ railroader-1032  # Great Northern M-2 (2-6-8-0)
 railroader-1064$RMWF-1   # RLW Jarl
 railroader-1064$RMWF-2   # RLW Great Jarl
 railroader-740   # GE P30CH
+railroader-1661  # Crystal River and Cripple Creek 2-6-2
+railroader-1782  # HLW M1a 2-8-2 Camelback
 
 # beemans mods
 railroader-443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz  # beemans scripts /w patch
@@ -263,6 +265,8 @@ railroader-1701  # ALCO Prime Mover Audio Collection
 railroader-1729  # EMD 16-645E3 Turbo
 railroader-1740  # EMD 20-645E3
 railroader-1746  # EMD 16-645D Non-Turbo 4 Exhaust
+railroader-1779  # DDA40X Dual 16-645E3 Prime Mover Audio
+railroader-1780  # U50 Dual FDL16 prime mover audio
 
 # whistles, bells, and horns
 railroader-1638  # Nathan P Horn Pack
