@@ -61,6 +61,7 @@ railroader-1180  # scv42's Horn Pack
 railroader-383   # Latoms Objects and Sounds
 railroader-1730  # Rex Components Enhancements (RCE)
 railroader-739   # EMD HT-C AND GE FB-2 BOGIES
+railroader-1119  # RLW PRR Tenders
 
 # other
 railroader-902$base   # Western North Carolina Piggyback (TOFC) Service
@@ -87,8 +88,6 @@ railroader-1741  # Steam Generator Car
 railroader-872   # New York Central F-12e
 railroader-866   # Rutland F-2j
 railroader-1032  # Great Northern M-2 (2-6-8-0)
-railroader-1064$RMWF-1   # RLW Jarl
-railroader-1064$RMWF-2   # RLW Great Jarl
 railroader-740   # GE P30CH
 railroader-1661  # Crystal River and Cripple Creek 2-6-2
 railroader-1782  # HLW M1a 2-8-2 Camelback
@@ -203,6 +202,7 @@ railroader-1567  # EMD SD90MAC and Phase 2
 railroader-1738  # EMD SDP40F and F45
 railroader-1742  # EMD SD20
 railroader-1753  # NRE GS14B
+railroader-1795  # EMD SD45 Family
 
 # freeman cars
 railroader-848   # Greenbrier 33k and 25k Gallon Tank Cars
@@ -220,6 +220,27 @@ railroader-1490  # Lima Locomotive Works C-60-3 Shay
 railroader-1491  # Climax Manufacturing Co. C-70 Climax
 railroader-1502  # Smith And Porter 0-4-0ST
 railroader-1556  # LLW 282-S-36 Mikado
+
+# RLW locomotives
+railroader-1064$RMWF-1   # RLW Jarl
+railroader-1064$RMWF-2   # RLW Great Jarl
+railroader-1081  # RLW RFS-1T
+railroader-1114  # RLW Pennsylvania Railroad K4
+railroader-1115  # RLW RNF-3 Class (PRR L1)
+railroader-1116  # RLW Pennsylvania Railroad M1s
+railroader-1127  # RLW RMF-2 Class (PRR H6sb)
+railroader-1128  # RLW RJP-1 Sparrow (PRR G5s)
+railroader-1129  # RLW RRP-3 Cardinal (PRR E6s)
+railroader-1220  # RLW RQM-2 (PRR D16sb)
+railroader-1221  # RLW RLF-1 (PRR F3)
+railroader-1308  # RDS-5T Class (LCV 1)
+railroader-1415  # RLW ROF-1 (Rebuild)
+railroader-1553  # RLW New York Central L-3A Mohawk
+railroader-1583  # RLW Pennsylvania Railroad R2 (PRR 4-8-4)
+railroader-1650  # RLW PRR B6sb
+railroader-1649  # RLW PRR A5
+railroader-1792  # RLW CBQ S-4 Hudson
+
 
 # nurdyman (athabasca) mods
 railroader-1266  # custom diesel exhaust
