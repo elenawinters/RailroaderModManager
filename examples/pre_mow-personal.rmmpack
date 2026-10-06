@@ -29,6 +29,9 @@ railroader-816   # Light's Modded Diesel Liveries
 railroader-1433  # TooManyWaybills
 railroader-1441  # Bells And Whistles
 railroader-1627  # Railroader Origin Culling Fix
+railroader-188   # Discord Rich Presence
+# S3 - Seton's Special Sauce  (will need to create a new customFiles format to support this mod further. Luckily for me, I only use Mesh LOD)
+railroader-1523|gapjdXN0b21GaWxlr1MzLm1lc2hsb2QuanNvbg==?payloaddkP>RARr=TZee0<Wn>~cAartdWh@FHARr(jY;R;SQe|#rWpZV5Msi_ebZKvHB03;2E;TF)ARr(hB5ZGDGE!x3WMy(?az=7tV{~b6ZX!A$FfK7QFfcGMFfcVaHZU|cG&DIZ3LqdLAR=sUWHCf(b97;DV`U;bAUH5CFf0lnARr(jY;R;TL}_z$VQyn(B03;4FfcAKED9hXARr=aZ)7t>X>)X8ZewL4Iv_SMFfK4G3LqdLAR=LKaBO*0Z%l7vZ*6aMX?A6EB03;+a&=`a3LqdLAR=LKaBO*0Z$@%uX=iA3Lt%1rB03;+a&=`2eE
 
 # legotrainman mods
 railroader-303   # Legotrainman's Library of Stuff
@@ -289,6 +292,7 @@ railroader-1746  # EMD 16-645D Non-Turbo 4 Exhaust
 railroader-1779  # DDA40X Dual 16-645E3 Prime Mover Audio
 railroader-1780  # U50 Dual FDL16 prime mover audio
 railroader-1785  # DD35 Dual 16-567D Turbo Prime Mover Audio
+railroader-1778  # PR43C Genset Audio
 
 # whistles, bells, and horns
 railroader-1638  # Nathan P Horn Pack
@@ -364,6 +368,7 @@ railroader-514   # tatham revamp
 railroader-794   # hewitt industry revamp
 railroader-813   # barker's creek pulpwood extension
 railroader-1245  # watia point tunnel
+railroader-1801  # Katers Whittier Depot Extended
 
 # tuckasegee steel works
 railroader-1060  # TSG itself

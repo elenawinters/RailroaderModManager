@@ -18,11 +18,11 @@ railroader-308#1226  # Legotrainman's Custom Reporting Marks
 railroader-410#3747  # Legotrainman's Logos and Deco
 railroader-966#5582  # Legotrainman's Better Rolling Stock
 railroader-1031#4041  # Legotrainman's Better Steam
-railroader-604#5382  # Legotrainman's Used Equipment Market
+railroader-604#7330  # Legotrainman's Used Equipment Market
 railroader-746#2902  # Legotrainman's Scrappalachia
 railroader-1521#7276  # Helvetic Bryson Salvage and Scrap
 railroader-1522#7275  # Helvetic Scrapalachia Compatibility Patch
-railroader-1772#7248  # Tetz's Scrappalachia Scrap Cargo
+railroader-1772#7346  # Tetz's Scrappalachia Scrap Cargo
 railroader-132#7038  # C_L_B's Assets 01
 railroader-1019#3991  # Embeddeds Building Blocks- Asset Pack
 railroader-1378#6790  # Autism Locomotive Works Scenery Assets
@@ -152,7 +152,7 @@ railroader-1196#6422  # EMD SD70ACE
 railroader-1242#5955  # GE AC6000CW
 railroader-1259#5897  # EMD DD35A and DD35B
 railroader-1294#5898  # EMD DDA40X
-railroader-1348#5701  # EMD GP60
+railroader-1348#7365  # EMD GP60
 railroader-1356#5476  # The Conrail Bug
 railroader-1357#5901  # EMD MP-X
 railroader-1386#7184  # NRE 3GS21 B And C
@@ -297,7 +297,7 @@ railroader-1782#7303  # HLW M1a 2-8-2 Camelback
 railroader-1779#7279  # DDA40X Dual 16-645E3 Prime Mover Audio
 railroader-1780#7280  # U50 Dual FDL16 prime mover audio
 railroader-1785#7290  # DD35 Dual 16-567D Turbo Prime Mover Audio
-railroader-1795#7326  # EMD SD45 Family
+railroader-1795#7339  # EMD SD45 Family
 railroader-1119#6637  # RLW PRR Tenders
 railroader-1081#4450  # RLW RFS-1T
 railroader-1114#6435  # RLW Pennsylvania Railroad K4
@@ -315,3 +315,7 @@ railroader-1583#6424  # RLW Pennsylvania Railroad R2 (PRR 4-8-4)
 railroader-1650#6636  # RLW PRR B6sb
 railroader-1649#6634  # RLW PRR A5
 railroader-1792#7318  # RLW CBQ S-4 Hudson
+railroader-1801#7340  # Katers Whittier Depot Extended
+railroader-1778#7271  # PR43C Genset Audio
+railroader-188#4995  # Discord RPC
+railroader-1523#6278|gapjdXN0b21GaWxlr1MzLm1lc2hsb2QuanNvbg==?payloaddkP>RARr=TZee0<Wn>~cAartdWh@FHARr(jY;R;SQe|#rWpZV5Msi_ebZKvHB03;2E;TF)ARr(hB5ZGDGE!x3WMy(?az=7tV{~b6ZX!A$FfK7QFfcGMFfcVaHZU|cG&DIZ3LqdLAR=sUWHCf(b97;DV`U;bAUH5CFf0lnARr(jY;R;TL}_z$VQyn(B03;4FfcAKED9hXARr=aZ)7t>X>)X8ZewL4Iv_SMFfK4G3LqdLAR=LKaBO*0Z%l7vZ*6aMX?A6EB03;+a&=`a3LqdLAR=LKaBO*0Z$@%uX=iA3Lt%1rB03;+a&=`2eE  # S3 - Seton's Special Sauce
