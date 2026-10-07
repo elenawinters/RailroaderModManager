@@ -32,6 +32,7 @@ railroader-1627  # Railroader Origin Culling Fix
 railroader-188   # Discord Rich Presence
 # S3 - Seton's Special Sauce  (will need to create a new customFiles format to support this mod further. Luckily for me, I only use Mesh LOD)
 railroader-1523|gapjdXN0b21GaWxlr1MzLm1lc2hsb2QuanNvbg==?payloaddkP>RARr=TZee0<Wn>~cAartdWh@FHARr(jY;R;SQe|#rWpZV5Msi_ebZKvHB03;2E;TF)ARr(hB5ZGDGE!x3WMy(?az=7tV{~b6ZX!A$FfK7QFfcGMFfcVaHZU|cG&DIZ3LqdLAR=sUWHCf(b97;DV`U;bAUH5CFf0lnARr(jY;R;TL}_z$VQyn(B03;4FfcAKED9hXARr=aZ)7t>X>)X8ZewL4Iv_SMFfK4G3LqdLAR=LKaBO*0Z%l7vZ*6aMX?A6EB03;+a&=`a3LqdLAR=LKaBO*0Z$@%uX=iA3Lt%1rB03;+a&=`2eE
+railroader-1364$optimizer  # RollingStock Optimizer
 
 # legotrainman mods
 railroader-303   # Legotrainman's Library of Stuff
@@ -94,6 +95,8 @@ railroader-1032  # Great Northern M-2 (2-6-8-0)
 railroader-740   # GE P30CH
 railroader-1661  # Crystal River and Cripple Creek 2-6-2
 railroader-1782  # HLW M1a 2-8-2 Camelback
+railroader-1281  # EMC Early E Units
+railroader-1239  # F40PH
 
 # beemans mods
 railroader-443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz  # beemans scripts /w patch
@@ -153,6 +156,7 @@ railroader-1505  # ACF 36ft Double Sheathed Boxcar Series
 
 # misc rolling stock
 railroader-47    # MVR's Logging Cars
+railroader-1056  # PRR K7A STOCK CAR
 
 # salty's mods
 railroader-840   # colorable gmd 
@@ -205,6 +209,7 @@ railroader-1567  # EMD SD90MAC and Phase 2
 railroader-1738  # EMD SDP40F and F45
 railroader-1742  # EMD SD20
 railroader-1753  # NRE GS14B
+railroader-1777  # Progress Rail PR43C
 railroader-1795  # EMD SD45 Family
 
 # freeman cars
@@ -397,4 +402,6 @@ railroader-599   # JB's C_L_B West Bryson SouthSide Access track
 railroader-1380  # Styker's Bryson
 railroader-253   # East Whittier Sugar Mill
 railroader-1106  # Nations Creek Logging Branch
+railroader-238   # Flanagan Coal Mine
+railroader-545   # Chesapeake and Ohio T1
 

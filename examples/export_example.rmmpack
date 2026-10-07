@@ -13,6 +13,9 @@ railroader-816  # Light's Modded Diesel Liveries
 railroader-1433  # TooManyWaybills
 railroader-1441  # Bells and Whistles
 railroader-1627  # Railroader Origin Culling Fix
+railroader-188  # Discord RPC
+railroader-1523|gapjdXN0b21GaWxlr1MzLm1lc2hsb2QuanNvbg==?payloaddkP>RARr=TZee0<Wn>~cAartdWh@FHARr(jY;R;SQe|#rWpZV5Msi_ebZKvHB03;2E;TF)ARr(hB5ZGDGE!x3WMy(?az=7tV{~b6ZX!A$FfK7QFfcGMFfcVaHZU|cG&DIZ3LqdLAR=sUWHCf(b97;DV`U;bAUH5CFf0lnARr(jY;R;TL}_z$VQyn(B03;4FfcAKED9hXARr=aZ)7t>X>)X8ZewL4Iv_SMFfK4G3LqdLAR=LKaBO*0Z%l7vZ*6aMX?A6EB03;+a&=`a3LqdLAR=LKaBO*0Z$@%uX=iA3Lt%1rB03;+a&=`2eE  # S3 - Seton's Special Sauce
+railroader-1364$optimizer  # RollingStock Optimizer
 railroader-303  # Legotrainman's Library of Stuff
 railroader-308  # Legotrainman's Custom Reporting Marks
 railroader-410  # Legotrainman's Logos and Deco
@@ -39,6 +42,7 @@ railroader-1180  # scv42's Horn Pack
 railroader-383  # Latoms Objects and Sounds
 railroader-1730  # Rex Components Enhancements (RCE)
 railroader-739  # EMD HT-C AND GE FB-2 BOGIES
+railroader-1119  # RLW PRR Tenders
 railroader-902$base  # Western North Carolina Piggyback (TOFC) Service
 railroader-858  # Interchanged Industry Unloader
 offsite-url@https://github.com/Joo200/Railloader-JooMods/releases
@@ -58,9 +62,9 @@ railroader-1741  # Steam Generator Car
 railroader-872  # New York Central F-12e
 railroader-866  # Rutland F-2j
 railroader-1032  # Great Northern M-2 (2-6-8-0)
-railroader-1064$RMWF-1  # RLW RMWF-1 (JARL) And RMWF-2 (GREAT JARL)
-railroader-1064$RMWF-2  # RLW RMWF-1 (JARL) And RMWF-2 (GREAT JARL)
 railroader-740  # GE P30CH
+railroader-1661  # Crystal River and Cripple Creek 2-6-2
+railroader-1782  # HLW M1a 2-8-2 Camelback
 railroader-443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz  # Beemans Rolling Stock Scripts
 railroader-143@latest  # EMD GP38 V4.4.2
 railroader-143@latest$trucks  # EMD GP38 V4.4.2
@@ -160,6 +164,7 @@ railroader-1567  # EMD SD90MAC and Phase 2
 railroader-1738  # EMD SDP40F and F45
 railroader-1742  # EMD SD20
 railroader-1753  # NRE GS14B
+railroader-1795  # EMD SD45 Family
 railroader-848  # Greenbrier 33k and 25k Gallon Tank Cars
 railroader-1017!tenderswaps;legacy  # The Lunar Locomotive Works Generic Locomotive Catalog
 railroader-401  # Gorre and Daphetid 4-10-0 D-85
@@ -173,6 +178,24 @@ railroader-1490  # Lima Locomotive Works C-60-3 Shay
 railroader-1491  # Climax Manufacturing Co. C-70 Climax
 railroader-1502  # Smith And Porter 0-4-0ST
 railroader-1556  # LLW 282-S-36 Mikado
+railroader-1064$RMWF-1  # RLW RMWF-1 (JARL) And RMWF-2 (GREAT JARL)
+railroader-1064$RMWF-2  # RLW RMWF-1 (JARL) And RMWF-2 (GREAT JARL)
+railroader-1081  # RLW RFS-1T
+railroader-1114  # RLW Pennsylvania Railroad K4
+railroader-1115  # RLW RNF-3 Class (PRR L1)
+railroader-1116  # RLW Pennsylvania Railroad M1s
+railroader-1127  # RLW RMF-2 Class (PRR H6sb)
+railroader-1128  # RLW RJP-1 Sparrow (PRR G5s)
+railroader-1129  # RLW RRP-3 Cardinal (PRR E6s)
+railroader-1220  # RLW RQM-2 (PRR D16sb)
+railroader-1221  # RLW RLF-1 (PRR F3)
+railroader-1308  # RDS-5T Class (LCV 1)
+railroader-1415  # RLW ROF-1 (Rebuild)
+railroader-1553  # RLW New York Central L-3A Mohawk
+railroader-1583  # RLW Pennsylvania Railroad R2 (PRR 4-8-4)
+railroader-1650  # RLW PRR B6sb
+railroader-1649  # RLW PRR A5
+railroader-1792  # RLW CBQ S-4 Hudson
 railroader-1266  # Custom Diesel Exhaust
 railroader-1287  # Distributed Power and Control
 railroader-1358  # Steam Dream
@@ -213,6 +236,10 @@ railroader-1701  # ALCO Prime Mover Audio Collection
 railroader-1729  # EMD 16-645E3 Turbo
 railroader-1740  # EMD 20-645E3
 railroader-1746  # EMD 16-645D Non-Turbo 4 Exhaust
+railroader-1779  # DDA40X Dual 16-645E3 Prime Mover Audio
+railroader-1780  # U50 Dual FDL16 prime mover audio
+railroader-1785  # DD35 Dual 16-567D Turbo Prime Mover Audio
+railroader-1778  # PR43C Genset Audio
 railroader-1638  # Nathan P Horn Pack
 railroader-1640  # Nathan K Horn Pack
 railroader-1654  # Nathan M Horn Pack
@@ -268,6 +295,7 @@ railroader-514  # Katers Tatham RevAmp
 railroader-794  # Katers Hewitt Industry Revamp
 railroader-813  # Katers Barker's Creek Pulpwood Extension
 railroader-1245  # Katers Watia Point Tunnel
+railroader-1801  # Katers Whittier Depot Extended
 railroader-1060  # Katers Tuckasegee Steel Works
 railroader-974  # Jones and Laughlin ACF 20k Gallon Tank Car
 railroader-1525!docs;test  # Latom's Crossings Editable
@@ -289,30 +317,9 @@ railroader-599  # JB's C_L_B West Bryson SouthSide Access track
 railroader-1380  # Bryson Roundhouse Revamp'ed
 railroader-253  # East Whittier Sugar Mill
 railroader-1106  # Nations Creek Logging Branch
-railroader-1661  # Crystal River and Cripple Creek 2-6-2
-railroader-1782  # HLW M1a 2-8-2 Camelback
-railroader-1779  # DDA40X Dual 16-645E3 Prime Mover Audio
-railroader-1780  # U50 Dual FDL16 prime mover audio
-railroader-1785  # DD35 Dual 16-567D Turbo Prime Mover Audio
-railroader-1795  # EMD SD45 Family
-railroader-1119  # RLW PRR Tenders
-railroader-1081  # RLW RFS-1T
-railroader-1114  # RLW Pennsylvania Railroad K4
-railroader-1115  # RLW RNF-3 Class (PRR L1)
-railroader-1116  # RLW Pennsylvania Railroad M1s
-railroader-1127  # RLW RMF-2 Class (PRR H6sb)
-railroader-1128  # RLW RJP-1 Sparrow (PRR G5s)
-railroader-1129  # RLW RRP-3 Cardinal (PRR E6s)
-railroader-1220  # RLW RQM-2 (PRR D16sb)
-railroader-1221  # RLW RLF-1 (PRR F3)
-railroader-1308  # RDS-5T Class (LCV 1)
-railroader-1415  # RLW ROF-1 (Rebuild)
-railroader-1553  # RLW New York Central L-3A Mohawk
-railroader-1583  # RLW Pennsylvania Railroad R2 (PRR 4-8-4)
-railroader-1650  # RLW PRR B6sb
-railroader-1649  # RLW PRR A5
-railroader-1792  # RLW CBQ S-4 Hudson
-railroader-1801  # Katers Whittier Depot Extended
-railroader-1778  # PR43C Genset Audio
-railroader-188  # Discord RPC
-railroader-1523|gapjdXN0b21GaWxlr1MzLm1lc2hsb2QuanNvbg==?payloaddkP>RARr=TZee0<Wn>~cAartdWh@FHARr(jY;R;SQe|#rWpZV5Msi_ebZKvHB03;2E;TF)ARr(hB5ZGDGE!x3WMy(?az=7tV{~b6ZX!A$FfK7QFfcGMFfcVaHZU|cG&DIZ3LqdLAR=sUWHCf(b97;DV`U;bAUH5CFf0lnARr(jY;R;TL}_z$VQyn(B03;4FfcAKED9hXARr=aZ)7t>X>)X8ZewL4Iv_SMFfK4G3LqdLAR=LKaBO*0Z%l7vZ*6aMX?A6EB03;+a&=`a3LqdLAR=LKaBO*0Z$@%uX=iA3Lt%1rB03;+a&=`2eE  # S3 - Seton's Special Sauce
+railroader-238  # Flanagan Coal Mine
+railroader-1281  # EMC Early E Units
+railroader-1239  # F40PH
+railroader-1056  # PRR K7A STOCK CAR
+railroader-1777  # Progress Rail PR43C
+railroader-545  # Chesapeake and Ohio T1

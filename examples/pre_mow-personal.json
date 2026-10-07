@@ -17,6 +17,7 @@
         1627,
         188,
         "1523|gapjdXN0b21GaWxlr1MzLm1lc2hsb2QuanNvbg==?payloaddkP>RARr=TZee0<Wn>~cAartdWh@FHARr(jY;R;SQe|#rWpZV5Msi_ebZKvHB03;2E;TF)ARr(hB5ZGDGE!x3WMy(?az=7tV{~b6ZX!A$FfK7QFfcGMFfcVaHZU|cG&DIZ3LqdLAR=sUWHCf(b97;DV`U;bAUH5CFf0lnARr(jY;R;TL}_z$VQyn(B03;4FfcAKED9hXARr=aZ)7t>X>)X8ZewL4Iv_SMFfK4G3LqdLAR=LKaBO*0Z%l7vZ*6aMX?A6EB03;+a&=`a3LqdLAR=LKaBO*0Z$@%uX=iA3Lt%1rB03;+a&=`2eE",
+        "1364$optimizer",
         303,
         308,
         410,
@@ -59,6 +60,8 @@
         740,
         1661,
         1782,
+        1281,
+        1239,
         "443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz",
         "143@latest",
         "143@latest$trucks",
@@ -110,6 +113,7 @@
         1265,
         1505,
         47,
+        1056,
         840,
         857,
         889,
@@ -158,6 +162,7 @@
         1738,
         1742,
         1753,
+        1777,
         1795,
         848,
         "1017!tenderswaps;legacy",
@@ -310,7 +315,9 @@
         599,
         1380,
         253,
-        1106
+        1106,
+        238,
+        545
     ],
     "offsite": [
         "url@https://github.com/Joo200/Railloader-JooMods/releases",
