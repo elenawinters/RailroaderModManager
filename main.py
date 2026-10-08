@@ -1,4 +1,4 @@
-from lib.system import DATE_FORMAT, TMP_FOLDER, DOWNLOADS_PATH, does_zipfile_exist
+from lib.system import DATE_FORMAT, TMP_FOLDER, DOWNLOADS_PATH, CACHE_PATH, does_zipfile_exist
 from lib.config import config, config_file
 from datetime import datetime, timedelta
 from zipfile import ZipFile, is_zipfile
@@ -29,8 +29,10 @@ async def do_all_pending_files_exist(pending_files):
         if not pending_file:
             continue
         pending_path = Path(DOWNLOADS_PATH, pending_file)
+        pending_cache_path = Path(CACHE_PATH, pending_file)
 
-        if not await does_zipfile_exist(pending_path):
+        if not await does_zipfile_exist(pending_path, False, False) and \
+           not await does_zipfile_exist(pending_cache_path):
             all_exist = False
             continue
     return all_exist
@@ -71,6 +73,7 @@ async def refresh_nexus_data_and_install():
         # await asyncio.sleep(10)
 
     if not TMP_FOLDER.exists(): os.mkdir(TMP_FOLDER)
+    if not CACHE_PATH.exists(): os.mkdir(CACHE_PATH)
 
     log.info("All pending update files are present. Proceeding with installation...")
     try:
@@ -115,9 +118,17 @@ async def install_mods(moddat):
     # unpack and install new files
     folders = []
     for pending_file in moddat['pending_filenames']:
-        loc = Path(DOWNLOADS_PATH, pending_file)
-        if not await aiofiles.os.path.isfile(loc): continue
-        if not await asyncio.to_thread(is_zipfile, loc): continue
+        loc = Path(CACHE_PATH, pending_file)
+        if not await aiofiles.os.path.isfile(loc):
+            dl = Path(DOWNLOADS_PATH, pending_file)
+            if not await aiofiles.os.path.isfile(dl):
+                log.critical(f'Pending file `{pending_file}` does not exist in Downloads or Cache. How did we get here?! Skipping file.')
+                continue
+            dl.move(loc)
+
+        if not await asyncio.to_thread(is_zipfile, loc):
+            log.debug(f'`{pending_file}` is not a valid zipfile. Skipping.')
+            continue
 
         await asyncio.to_thread(unpack_to_tmp, loc)
 

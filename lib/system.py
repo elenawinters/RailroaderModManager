@@ -14,6 +14,7 @@ setup_logging(log)
 
 DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%f'
 TMP_FOLDER = Path(Path.cwd(), 'tmp')
+CACHE_PATH = Path(Path.cwd(), 'cache')
 DOWNLOADS_PATH = Path(Path.home(), "Downloads")
 
 def open_url(url):
@@ -36,7 +37,8 @@ async def does_zipfile_exist(path, partial: bool = False, do_log: bool = True):
         if do_log: log.warning(f"Pending file `{path}` does not exist.")
         return False
 
-    glob = list(DOWNLOADS_PATH.glob(f'{path.name.removesuffix('.zip')}*.zip.part'))
+    check_path = DOWNLOADS_PATH if path.parent == DOWNLOADS_PATH else CACHE_PATH
+    glob = list(check_path.glob(f'{path.name.removesuffix('.zip')}*.zip.part'))
     if glob:  # glob to the rescue!!!
         if do_log: log.warning(f"Please wait for `{path}` to finish downloading.")
         if partial:

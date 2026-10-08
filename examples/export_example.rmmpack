@@ -43,6 +43,7 @@ railroader-383  # Latoms Objects and Sounds
 railroader-1730  # Rex Components Enhancements (RCE)
 railroader-739  # EMD HT-C AND GE FB-2 BOGIES
 railroader-1119  # RLW PRR Tenders
+railroader-1482  # Slightly's Concilliator
 railroader-902$base  # Western North Carolina Piggyback (TOFC) Service
 railroader-858  # Interchanged Industry Unloader
 offsite-url@https://github.com/Joo200/Railloader-JooMods/releases
@@ -65,6 +66,8 @@ railroader-1032  # Great Northern M-2 (2-6-8-0)
 railroader-740  # GE P30CH
 railroader-1661  # Crystal River and Cripple Creek 2-6-2
 railroader-1782  # HLW M1a 2-8-2 Camelback
+railroader-1281  # EMC Early E Units
+railroader-1239  # F40PH
 railroader-443|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz  # Beemans Rolling Stock Scripts
 railroader-143@latest  # EMD GP38 V4.4.2
 railroader-143@latest$trucks  # EMD GP38 V4.4.2
@@ -116,6 +119,7 @@ railroader-1216  # PRR H21A 70 Ton 4 Bay Hopper
 railroader-1265  # Seaboard Air Line Class G-10 Low Side Gondola
 railroader-1505  # ACF 36ft Double Sheathed Boxcar Series
 railroader-47  # MVR's Logging Cars
+railroader-1056  # PRR K7A STOCK CAR
 railroader-840  # Salty's Colourable GMD General Motor Diesel Pack
 railroader-857  # Salty's GE 9-44CWL
 railroader-889  # MLW RS-10
@@ -164,6 +168,7 @@ railroader-1567  # EMD SD90MAC and Phase 2
 railroader-1738  # EMD SDP40F and F45
 railroader-1742  # EMD SD20
 railroader-1753  # NRE GS14B
+railroader-1777  # Progress Rail PR43C
 railroader-1795  # EMD SD45 Family
 railroader-848  # Greenbrier 33k and 25k Gallon Tank Cars
 railroader-1017!tenderswaps;legacy  # The Lunar Locomotive Works Generic Locomotive Catalog
@@ -198,7 +203,7 @@ railroader-1649  # RLW PRR A5
 railroader-1792  # RLW CBQ S-4 Hudson
 railroader-1266  # Custom Diesel Exhaust
 railroader-1287  # Distributed Power and Control
-railroader-1358  # Steam Dream
+railroader-1358|gapjdXN0b21GaWxlunN0ZWFtLWV4aGF1c3Qtc2V0dGluZ3MueG1s?payloadJU@7CY#?@Ja&u{KZapF~E-)e>Wo~0{WNB_^JtB2<W-T}(KRyaPAuTN+Q*>ovZ6HK)Wnpa~;((MOV|8<MZ*3rRbY)>}AZ2)HVRdtKATJ<ed2DHJWMy(7V{c<?b09AucW7yIbZliHb97~4Z7v`!Ej|i7Q*>ovZA5ZqVQo`obaZKMXLBHSWpZ<AZ*DyzGB6?_VQ_G4c~oyfY;03>WnpbhZ)0z5Z**yPWph0ubaHiNA|PdMVPb4$LTqn$WN&wFb3GzvVQh0{A|PjMZ(?C=P;zB+Wpq6vQ*>ovZA5ZqVQnHHV`z0|W>R5vWj!J@A|PXEb!KK(Wo$hnF(M#iXmw_0Olf9iJt8qKH#H(4V`z0|W>aZ;Wj!J?E;S+`V`z0|W>j@@Vm%@;E;S+`V`z0|W<hLlXkk4fFfKARA|PXVY*Jx#Wj!J`A|PXVY*uA#Jt8t9AY*xKQ)zl-Jt8wAAY*xKOlf9iJt8wMGBqL~V|i>;b#h`oA~qr*V|i>rY;b5{Jt8nJGBqL~X>Mv#VRU6ZA~G&FH6kEsZfaI#Y&{|}A|PpQYEx-?Wj!J>A|PpQYD{TnWj!J>E;S+`X>Mv%b#h`oA~7N$X>MvkY;b5{Jt8nJG&Le1WMOS^WpYwsbY(pvF(M#jVQp|_a#m$*Jt8nJFf}3|WMOS^WpYz#dSyK#F)leGAY@@}aAk5#X=Y_TA~7yFA|Pa8ZE$6BRCRJ<Jt8qKH#H(4WMOS^WpY7maA;vYA}}s8H6kE)XlZkFY-LhmbY(pvHX<N*XlZkFY-LtuY&{||E;2PDAa`hKb98KFOlf9iJt8(DAa`hKb98KFQ)zl-Jt8tLH6kE)XlZkFY-Ln+a$-FqF)lVWA|Q8YX>)XJWkGCkXkk4fFfKJBAY^%NVQp_xVRU6ZA~P;EA|PaWZeeY2R%L8GA~7yAH6kEnd2V5CZ%k=sWj!J?E;cnHAY^%NVQp_yX?kTnA~7yBH6kEnd2V5CZ&Y=1Vm%@-E;BVEAY^%NVQp_gY;b5{Jt8nJGBqL~b97;2Yg2D;bVOltYh`XdA}}sFA|P{gVPk7Ub#iuPM`3MkVLc)-A|P{gVPk7SY;b5{MsIRsWj!J=E;%(KAZc!DP;7N=Wj!Kva&=`QAZB7vY;|pAJtA~+b!8$TVq{Qkb!}xmB4%N1b7dkRVq{WbbY(pvG9n;iWL9NtJt8t9AYx=wX?kTnA~qr*Vq{EdW@SAhG$J5kWK?x>Vm%@=A|PU9L2PhnVLc)+E;BVEAZc!DLuhqoW>a}?V?82ta&=`QAaitKV{1ijXkl(+WpX_tW?^h|Wg;MRbYWv_MQ&(eZewL~Msja$Jt8nJHZ>w3b97;2Ye{5mWl~{uWj!J=E;b?{b97;2Ye{5mWm9Q-Wj!J=E;%9~b97;2Ye{5mWmIK7A}}s6G9n;zbYWv_LuhqoW=COgJt8nJGBqL~b97;2YeZ>tV{&D5WkO|icV%U6LuhqoW=3ppZ*n~%FfKMCAar_DbYWv_O<{9%WpX_tF(M#zdQ)^^V{21%Z*V;#FfK77Aar_DbYWv_Q*3W{Jt8n7Aar_DbYWv_MqzVwJt8nJF(M#zdQ)^^V{21sdSyK#G9n;!dQxv}Y-w(1O=)gYVRU6ZA}}H#bb3;6Y;0+6XH98tQ)zl-Fg+qLA|P~nMQ&$dXJtfXY+-pua$#*{b3Gz9Fd`srVRLk4az$olWn*+iVQp|_ay=q3A|P^lP;7N=WldpobY*fqA~7N$a(Yl~b!}x*VRU6ZA}}s7A|P^lP;7N=WmaWuJt8nJF(M#xdQfb2ZDmtwdSyK#F)lVDAaZ(8Y;|pAL2PhnVLc)+E;2PDAYo-pX=iA3Wo}b+VPk7OB4%N1b7dkRVP#WvVPk7kZ*O!#Y;b5{Q*?4=ZfA68Jt8nJH6kD{J^  # Steam Dream
 railroader-1464  # Service Configurator
 railroader-1040$16-567c  # Custom Prime Mover Audio by TheBeeMan
 railroader-1241!max  # Audio - ALCo 16-251B (Rumble Edition)
@@ -306,20 +311,19 @@ railroader-1135  # Coal Tar Tank Car
 railroader-1374$iron  # Woodys Munsick Gypsum-Iron Co.
 railroader-1374$yard  # Woodys Munsick Gypsum-Iron Co.
 railroader-1328!vanilla;radio  # Woodys Walker Top Town
+railroader-1326!vanilla;radio  # Woodys Upper Walker Pulpwood and Production Tweaks
 railroader-1362  # Woodys McAdams Multi-Fuel Refinery
 railroader-1422  # Woodys Wesser Grade Adjustment
 railroader-1423  # Woodys Fontana Lake to Alarka Jct Grade Adjustment
 railroader-1424  # Woodys Bryson Hill Grade Adjustment
 railroader-1425  # Woodys Alarka Jct Engine Shed
-railroader-1334@latest|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=  # Large Andrews Engine Facility
 railroader-1574  # Shay's Yard Lights - Foxy's Sylva Interchange
+railroader-1551  # Shay's Yard Lights - Stryker's Bryson
+railroader-1334@latest|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=  # Large Andrews Engine Facility
 railroader-599  # JB's C_L_B West Bryson SouthSide Access track
 railroader-1380  # Bryson Roundhouse Revamp'ed
 railroader-253  # East Whittier Sugar Mill
 railroader-1106  # Nations Creek Logging Branch
 railroader-238  # Flanagan Coal Mine
-railroader-1281  # EMC Early E Units
-railroader-1239  # F40PH
-railroader-1056  # PRR K7A STOCK CAR
-railroader-1777  # Progress Rail PR43C
 railroader-545  # Chesapeake and Ohio T1
+railroader-646  # Epps Springs Interchange

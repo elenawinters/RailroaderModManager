@@ -271,7 +271,8 @@ async def check_for_updates_and_download_if_available(id_string):
         #     log.debug(pending_path.exists())
         #     log.debug(file)
         #     sys.exit(0)
-        if not await does_zipfile_exist(pending_path, True, False):
+        if not await does_zipfile_exist(Path(system.DOWNLOADS_PATH, file['file_name']), True, False) and \
+           not await does_zipfile_exist(Path(system.CACHE_PATH, file['file_name']), True, False):
             await open_dl_link(meta.game, meta.mod, file['file_id'])
 
     data.base['mods'].upsert({
