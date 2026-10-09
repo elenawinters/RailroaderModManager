@@ -286,7 +286,6 @@ railroader-714  # Foxy's East Whittier Yard Revamp
 railroader-328  # Foxy's Sylva Interchange
 railroader-1414  # Bryson Hardware and Grain
 railroader-108  # Katers Andrews Loop
-railroader-104  # Walker Extensions
 railroader-127  # Locust Pin Extension
 railroader-161  # Katers Connelly Extension
 railroader-172  # Katers Grassy Gap Passing Track
@@ -329,3 +328,7 @@ railroader-1106  # Nations Creek Logging Branch
 railroader-238  # Flanagan Coal Mine
 railroader-545  # Chesapeake and Ohio T1
 railroader-646  # Epps Springs Interchange
+railroader-1817  # Tetz's Game Fixes
+railroader-470  # CargoPerDay
+railroader-1811  # Tetz's Rails Load
+railroader-1810  # Tetz's Ties Load

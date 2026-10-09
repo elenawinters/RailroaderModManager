@@ -33,6 +33,8 @@ railroader-188   # Discord Rich Presence
 # S3 - Seton's Special Sauce  (will need to create a new customFiles format to support this mod further. Luckily for me, I only use Mesh LOD)
 railroader-1523|gapjdXN0b21GaWxlr1MzLm1lc2hsb2QuanNvbg==?payloaddkP>RARr=TZee0<Wn>~cAartdWh@FHARr(jY;R;SQe|#rWpZV5Msi_ebZKvHB03;2E;TF)ARr(hB5ZGDGE!x3WMy(?az=7tV{~b6ZX!A$FfK7QFfcGMFfcVaHZU|cG&DIZ3LqdLAR=sUWHCf(b97;DV`U;bAUH5CFf0lnARr(jY;R;TL}_z$VQyn(B03;4FfcAKED9hXARr=aZ)7t>X>)X8ZewL4Iv_SMFfK4G3LqdLAR=LKaBO*0Z%l7vZ*6aMX?A6EB03;+a&=`a3LqdLAR=LKaBO*0Z$@%uX=iA3Lt%1rB03;+a&=`2eE
 railroader-1364$optimizer  # RollingStock Optimizer
+railroader-1817  # Tetz's Game Fixes
+railroader-470   # CargoPerDay
 
 # legotrainman mods
 railroader-303   # Legotrainman's Library of Stuff
@@ -46,7 +48,6 @@ railroader-604   # Legotrainman's Used Equipment Market
 railroader-746   # Legotrainman's Scrappalachia
 railroader-1521  # Helvetic Bryson Salvage and Scrap
 railroader-1522  # Helvetic Scrapalachia Compatibility Patch
-railroader-1772  # Tetz's Scrappalachia Scrap Cargo
 
 # assets, asset packs, and trucks
 railroader-132   # c_l_b assets
@@ -67,6 +68,10 @@ railroader-1730  # Rex Components Enhancements (RCE)
 railroader-739   # EMD HT-C AND GE FB-2 BOGIES
 railroader-1119  # RLW PRR Tenders
 railroader-1482  # Slightly's Concilliator (apparently this fixes an asset conflict with RTM and Styker's Bryson. it also looks nicer imo)
+railroader-1811  # Tetz's Rails Load
+railroader-1772  # Tetz's Scrappalachia Scrap Cargo
+railroader-1810  # Tetz's Ties Load
+
 
 # other
 railroader-902$base   # Western North Carolina Piggyback (TOFC) Service
@@ -361,7 +366,7 @@ railroader-1414  # Bryson Hardware and Grain
 
 # kater's map mods
 railroader-108   # andrews loop
-railroader-104   # walker extensions
+# railroader-104   # walker extensions  - breaks with Woody's walker prod tweaks
 railroader-127   # locust pin extension
 railroader-161   # connelly extension
 railroader-172   # grassy gap passing track
