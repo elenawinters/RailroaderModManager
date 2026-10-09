@@ -376,6 +376,7 @@ railroader-794   # hewitt industry revamp
 railroader-813   # barker's creek pulpwood extension
 railroader-1245  # watia point tunnel
 railroader-1801  # Katers Whittier Depot Extended
+railroader-1142  # Katers Walker Iron Mine (discontinued)
 
 # tuckasegee steel works
 railroader-1060  # TSG itself
@@ -396,6 +397,8 @@ railroader-1422  # Woodys Wesser Grade Adjustment
 railroader-1423  # Woodys Fontana Lake to Alarka Jct Grade Adjustment
 railroader-1424  # Woodys Bryson Hill Grade Adjustment
 railroader-1425  # Woodys Alarka Jct Engine Shed
+# Woodys Walker Upper Wye  (patch removes the "s2" prereq. For some reason it's broken in this pack, no idea why)
+railroader-1324!vanilla;radio|gadybUtleUlusXByb2dyZXNzaW9ucy5qc29u?payloadaB^jGWpQ<Bb7^#CQ)OdxX>V?G
 
 # scenery mods
 railroader-1574  # Shay's Yard Lights - Foxy's Sylva Interchange

@@ -1,4 +1,5 @@
-from lib.system import DATE_FORMAT, TMP_FOLDER, DOWNLOADS_PATH, CACHE_PATH, does_zipfile_exist
+from lib.system import DATE_FORMAT, TMP_FOLDER, DOWNLOADS_PATH, CACHE_PATH
+from lib.system import does_zipfile_exist, rm_key
 from lib.config import config, config_file
 from datetime import datetime, timedelta
 from zipfile import ZipFile, is_zipfile
@@ -189,8 +190,16 @@ async def install_mods(moddat):
                     cfile.touch()
                     with cfile.open("w", encoding="utf-8-sig") as f:
                         f.write(payload)
-                    log.warning(f'Custom file `{patch['customFile']}` has been created for `{folder}`')
+                    log.warning(f'Custom file `{patch['customFile']}` has been created for `{folder}` ({moddat['modid']}).')
 
+            if meta.patch and 'rmKeyIn' in patch and payload is not None:
+                cfile = Path(file.parent, patch['rmKeyIn'])
+                with cfile.open("r+", encoding="utf-8-sig") as f:
+                    cdat = rm_key(json5.load(f), payload)
+                    f.seek(0)
+                    json.dump(cdat, f, indent=4)
+                    f.truncate()
+                    log.warning(f'Key `{payload}` has been removed from `{patch['rmKeyIn']}` for `{folder}` ({moddat['modid']}).')
 
             log.debug(f'Folder name has been determined to be {folder}.')
             folders.append(folder)

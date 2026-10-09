@@ -51,3 +51,16 @@ async def does_zipfile_exist(path, partial: bool = False, do_log: bool = True):
         return False
 
     return True
+
+
+def rm_key(data, target):
+    if isinstance(data, dict):
+        return {
+            k: rm_key(v, target)
+            for k, v in data.items()
+            if k != target
+        }
+    if isinstance(data, list):
+        return [rm_key(item, target) for item in data]
+    return data
+
