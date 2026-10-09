@@ -157,9 +157,12 @@ Patches are part of the RMM-ID itself. They are a **Base64 encoded MsgPack objec
         "beemansrollingstockscripts": "BeemansRollingStockScripts"
     },
     "removeRLConflict": ["AlinaNova21.AlinasMapMod"],
-    "customFile": "Settings.xml"
+    "customFile": "Settings.xml",
+    "rmKeyIn:": "progressions.json"
 }
 ```
+
+##### replaceID
 
 Let's use the `replaceId` example as an example. Most mods that rely on Beemans Rolling Stock Scripts expect the ID to be capitalized, when it's not currently. This, at least under FUSE, causes errors. So, you can provide a patch to fix it inside of Beeman's scripts directly, and get around the issue.
 
@@ -167,6 +170,7 @@ Let's use the `replaceId` example as an example. Most mods that rely on Beemans 
 railroader-443@latest|galyZXBsYWNlSWSBumJlZW1hbnNyb2xsaW5nc3RvY2tzY3JpcHRzukJlZW1hbnNSb2xsaW5nU3RvY2tTY3JpcHRz
 ```
 
+##### removeRLConflict
 The `removeRLConflict` patch exists to remove broken conflicts. Under FUSE, mods like MICHILSON's Large Andrews Engine Facility requires Alina's Map Mod to be above version 1.3.24149.1337. This is fine under Railloader, since you are expected to have AMM installed, but here, FUSE provides it, specifically version 0.0.0.0. The Andrews Facility will refuse to load under this configuration, even though it works fine. So, we can just patch the `Definition.json` to remove the lines causing the issue.
 
 ```
@@ -175,7 +179,9 @@ railroader-1334|gbByZW1vdmVSTENvbmZsaWN0kbhBbGluYU5vdmEyMS5BbGluYXNNYXBNb2Q=
 
 These are just examples of patches I've had to manually make for my own modded environment. This system streamlines it so you don't have to manually do it. Patches are carried over to exported modlists.
 
-`customFile` can be used to create a file that doesn't exist, usually a settings file.
+##### customFile
+
+`customFile` can be used to create a file that doesn't exist, usually a settings file. If the file already exists, this patch gets ignored.
 
 To define the contents of the patch, we have an additional field called the payload.<br>
 The payland exists after the patch contents, and is seperated by `?payload`.
@@ -198,7 +204,18 @@ railroader-492|gapjdXN0b21GaWxlrFNldHRpbmdzLnhtbA==?payloadJU@7CY#?@Ja&u{KZapF~E
 
 The resulting patch will create "Settings.xml" and set it's contents to the decoded payload.
 
-This form of patch should rarely be used.
+This form of patch should rarely be used, as it can be very cumbersome.
+
+##### rmKeyIn
+
+`rmKeyIn` stands for "remove key in". It takes a filename as a value and a keyname as the payload. This file is assumed to be a JSON file, and this patch will remove any keys that match the payload from the file.
+
+```
+railroader-1324!vanilla;radio|gadybUtleUlusXByb2dyZXNzaW9ucy5qc29u?payloadaB^jGWpQ<Bb7^#CQ)OdxX>V?G
+```
+
+This is parsed as: `{"rmKeyIn:": "progressions.json"}` ?payload `prerequisiteSections`.
+
 
 #### Patching Tools
 
