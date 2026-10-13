@@ -28,7 +28,7 @@ class API:
         if response and response.status_code == 200:
             return response.json()
         else:
-            log.error(f"Failed to fetch mod files for {game}-{mod_id}: {response.status_code} - {response.text}")
+            log.error(f"Failed to fetch mod files for {game}-{mod_id}: {f'{response.status_code} - {response.text}' if response else 'No Response'}")
             return {}
         
     @staticmethod
@@ -42,7 +42,7 @@ class API:
         if response and response.status_code == 200:
             return response.json()
         else:
-            log.error(f"Failed to fetch mod data for {game}-{mod_id}: {response.status_code} - {response.text}")
+            log.error(f"Failed to fetch mod data for {game}-{mod_id}: {f'{response.status_code} - {response.text}' if response else 'No Response'}")
             return {}
 
     @staticmethod
@@ -63,7 +63,7 @@ class API:
         if response and response.status_code == 200:
             return response.json()['id']
         else:
-            log.error(f"Failed to fetch numerical gameId for {game}: {response.status_code} - {response.text}")
+            log.error(f"Failed to fetch numerical gameId for {game}: {f'{response.status_code} - {response.text}' if response else 'No Response'}")
             return {}
         
     @staticmethod
@@ -85,7 +85,7 @@ class API:
         if response and response.status_code == 200:
             return response.json()
         else:
-            log.error(f"Failed to fetch download link for {game}-{mod_id}: {response.status_code} - {response.text}")
+            log.error(f"Failed to fetch download link for {game}-{mod_id}: {f'{response.status_code} - {response.text}' if response else 'No Response'}")
             return {}
 
 

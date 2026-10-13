@@ -186,9 +186,9 @@ async def install_mods(moddat):
             folders.append(folder)
 
             # I would've loved to include the above patch in the patcher, but it needs to be separate because it fetches the real modname.
-            patcher(file, moddat, patch, payload, folder)
-
             path = Path(config['gameloc'][meta.game], folder)
+            patcher(file, moddat, patch, payload, path)
+
             if await aiofiles.os.path.exists(path):
                 log.debug(f"Clearing old `{folder}` install.")
                 await asyncio.to_thread(shutil.rmtree, path)

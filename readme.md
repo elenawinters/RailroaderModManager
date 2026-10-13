@@ -151,6 +151,7 @@ Patches are part of the RMM-ID itself. They are a **Base64 encoded MsgPack objec
     "replaceId": {
         "beemansrollingstockscripts": "BeemansRollingStockScripts"
     },
+    "bkp": ["profiles"],
     "removeRLConflict": ["AlinaNova21.AlinasMapMod"],
     "customFile": "Settings.xml",
     "rmKeyIn:": "progressions.json"
@@ -210,6 +211,14 @@ railroader-1324!vanilla;radio|gadybUtleUlusXByb2dyZXNzaW9ucy5qc29u?payloadaB^jGW
 ```
 
 This is parsed as: `{"rmKeyIn:": "progressions.json"}` ?payload `prerequisiteSections`.
+
+##### bkp
+
+`bkp` contains a list of files/folders. It will moves these from your old install and into your new one.
+
+This is useful for keeping old settings when updating.
+
+Can be paired with `customFile`, although `bkp` will need to be placed before `customFile` in the patch.
 
 
 #### Patching Tools
