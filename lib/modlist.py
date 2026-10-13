@@ -1,5 +1,6 @@
 from lib.system import DATE_FORMAT, does_zipfile_exist
 from lib.config import config, config_file
+from bad_path import is_dangerous_path
 from lib.nexus import parse_id_string
 from utils import setup_logging
 from datetime import datetime
@@ -158,4 +159,34 @@ def convert_modlist(path: Path, desiredformat):
     mods = import_modlist(path, return_modlist=True)
     export_modlist(desiredformat, path, mods)
     log.info('Pack converted!')
+    return True
+
+
+def remove_mod(rmm_id: str):
+    candidates = [mod for mod in data.base['mods'] if rmm_id in mod['modid'] and mod['modid'] is not None]
+    if len(candidates) == 0:
+        log.info('No candidates found for removal.')
+        return True
+    log.info(f'Found {len(candidates)} candidates for removal of `{rmm_id}`!')
+    for (i, item) in enumerate(candidates):
+        log.info(f'[{i}] {item["modid"]} (Name: {item['name']})')
+        log.info(f'    Manages: {item['folders']} | Version: {item['version']} | File IDs: {item['fileids']}')
+    rmIndex = input(f'Enter the index of the mod to remove (0-{len(candidates) - 1}) or `q` to cancel: ')
+    if rmIndex.lower() == 'q':
+        log.info('Removal cancelled by user.')
+        return True
+    target = candidates[int(rmIndex)]
+    log.debug(f'User input: `{rmIndex}` | Target: `{target['modid']}`')
+    if target['modid'] is None:
+        log.critical('Aborting! `modid` is `NULL`')
+    meta = parse_id_string(target['modid'])
+    for folder in json.loads(target['folders']):
+        path = Path(config['gameloc'][meta.game], folder)
+        if is_dangerous_path(path):
+            log.error(f"`{path}` is considered dangerous. Aborting.")
+            return True
+        shutil.rmtree(path)
+        log.info(f"Deleted `{folder}` from install location")
+    data.base['mods'].delete(modid=target['modid'])
+    log.info(f'Deleted `{target['modid']}` from database.')
     return True

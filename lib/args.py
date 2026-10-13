@@ -31,4 +31,6 @@ def handle_args():
     if args := proc_arg('--export', ['packformat', 'path']):
         return modlist.export_modlist(args.packformat, Path(args.path))
     
+    if args := proc_arg('--remove', ['rmm_id']):
+        return modlist.remove_mod(args.rmm_id)
 
