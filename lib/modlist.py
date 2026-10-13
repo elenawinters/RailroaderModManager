@@ -161,16 +161,19 @@ def convert_modlist(path: Path, desiredformat):
     log.info('Pack converted!')
     return True
 
+def sort_rmmid(rmmdb):
+    meta = parse_id_string(rmmdb['modid'])
+    return int(meta.mod) if meta.mod.isdigit() else 9999
 
 def remove_mod(rmm_id: str):
-    candidates = [mod for mod in data.base['mods'] if rmm_id in mod['modid'] and mod['modid'] is not None]
+    candidates = sorted([mod for mod in data.base['mods'] if rmm_id in mod['modid'] and mod['modid'] is not None], key=sort_rmmid)
     if len(candidates) == 0:
         log.info('No candidates found for removal.')
         return True
     log.info(f'Found {len(candidates)} candidates for removal of `{rmm_id}`!')
     for (i, item) in enumerate(candidates):
         log.info(f'[{i}] {item["modid"]} (Name: {item['name']})')
-        log.info(f'    Manages: {item['folders']} | Version: {item['version']} | File IDs: {item['fileids']}')
+        log.info(f'{' ' * len(list(str(i)))}   Manages: {item['folders']} | Version: {item['version']} | File IDs: {item['fileids']}')
     rmIndex = input(f'Enter the index of the mod to remove (0-{len(candidates) - 1}) or `q` to cancel: ')
     if rmIndex.lower() == 'q':
         log.info('Removal cancelled by user.')
@@ -187,6 +190,9 @@ def remove_mod(rmm_id: str):
             return True
         shutil.rmtree(path)
         log.info(f"Deleted `{folder}` from install location")
+    log.info('Creating modlist backup.')
+    export_modlist('MSGPACK', Path(BACKUP_FOLDER, 'backup_' + datetime.now().strftime(DATE_FORMAT)))
+    log.info('Created backup. Deleting entry from database.')
     data.base['mods'].delete(modid=target['modid'])
     log.info(f'Deleted `{target['modid']}` from database.')
     return True
