@@ -6,6 +6,7 @@ from lib import tests
 import logging
 import inspect
 import sys
+import re
 
 log = logging.getLogger(__name__)
 setup_logging(log)
@@ -23,6 +24,7 @@ def proc_arg(arg, fields = None):
     # yay, dataclass shenanigans!!!
     return make_dataclass(arg, [tuple([k, v]) for k, v in args.items()])(**args)
 
+PATTERN = re.compile(r"if\s+args\s*:=\s*proc_arg\(\s*['\"](?P<command>[^'\"]+)['\"](?:\s*,\s*(?P<args>\[.*?\]))?\s*\)\s*:")
 def handle_args():
     if args := proc_arg('--convert', ['path', 'desiredformat']):
         return modlist.convert_modlist(Path(args.path), args.desiredformat)
@@ -37,6 +39,10 @@ def handle_args():
         return modlist.remove_mod(args.rmm_id)
 
     if args := proc_arg('--help'):
-        log.info(inspect.getsource(handle_args).strip())
+        for com in PATTERN.findall(inspect.getsource(handle_args)):
+            log.info(f"Command: {com[0]}")
+            log.info(f"   Args: {com[1] if com[1] else 'None'}")
+            if com[0] != '--help':
+                log.info("")
         return True
 
