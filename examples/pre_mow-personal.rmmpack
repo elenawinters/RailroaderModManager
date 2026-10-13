@@ -7,9 +7,8 @@
 # use this to build up your first modpack (or just steal mine :3)
 # (yes, I play with a LOT of mods. i kinda had to make this lol)
 
-# THIS MODPACK IS NOT COMPLETE. EXPECT PROBLEMS IN-GAME.
-
-# this modpack is MASSIVE. Expect an extracted download size in excess of 20 GB.
+# This modpack is not complete. It's getting there, but expect potential problems.
+# this modpack is also MASSIVE. Expect an extracted download size in excess of 30 GB.
 
 # "essential" mods
 railroader-1645$fuse!toolshed   # fuse
@@ -35,6 +34,7 @@ railroader-1523|gapjdXN0b21GaWxlr1MzLm1lc2hsb2QuanNvbg==?payloaddkP>RARr=TZee0<W
 railroader-1364$optimizer  # RollingStock Optimizer
 railroader-1817  # Tetz's Game Fixes
 railroader-470   # CargoPerDay
+railroader-1351  # RTM ADVANCED BUY WINDOW (ABW)
 
 # legotrainman mods
 railroader-303   # Legotrainman's Library of Stuff

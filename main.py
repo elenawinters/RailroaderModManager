@@ -1,9 +1,13 @@
-from lib.system import DATE_FORMAT, TMP_FOLDER, DOWNLOADS_PATH, CACHE_PATH
-from lib.system import does_zipfile_exist, rm_key
+from lib.system import (
+    DATE_FORMAT, TMP_FOLDER,
+    DOWNLOADS_PATH, CACHE_PATH,
+    does_zipfile_exist
+)
 from lib.config import config, config_file
 from datetime import datetime, timedelta
 from zipfile import ZipFile, is_zipfile
 from bad_path import is_dangerous_path
+from lib.patchlib import patcher
 from lib.args import handle_args
 from utils import setup_logging
 from lib.data import data
@@ -40,7 +44,7 @@ async def do_all_pending_files_exist(pending_files):
 
 async def refresh_nexus_data_and_install():
     check_func = nexus.check_for_updates_and_download_if_available
-    mod_ids = sorted([mod['modid'] for mod in data.base['mods'].all()])
+    mod_ids = sorted([mod['modid'] for mod in data.base['mods'].all() if mod['modid'] is not None])
 
     log.debug(mod_ids)
 
@@ -48,6 +52,7 @@ async def refresh_nexus_data_and_install():
     try:
         async with asyncio.TaskGroup() as tg:
             for id in mod_ids:
+                # if id is None: continue
                 tg.create_task(check_func(id))
     except Exception as e:
         log.exception(e)
@@ -80,11 +85,14 @@ async def refresh_nexus_data_and_install():
     try:
         async with asyncio.TaskGroup() as tg:
             for mod in data.base['mods'].all():
+                if mod['modid'] is None: continue
                 if mod['pending_filenames'] is None: continue
                 if 'offsite' in mod['modid']: continue
                 tg.create_task(install_mods(mod))
     except Exception as e:
         log.exception(e)
+
+    log.info(f'Successfully installed {total_installs}/{pending_installs} mod(s).')
 
     if config['settings'].getboolean('delete_tmp') == True and not is_dangerous_path(TMP_FOLDER):
         shutil.rmtree(TMP_FOLDER)
@@ -108,6 +116,8 @@ def unpack_to_tmp(archive: Path):
         final.parent.mkdir(parents=True, exist_ok=True)
         orig.move(final)
 
+total_installs = 0
+pending_installs = 0
 async def install_mods(moddat):
     meta = nexus.parse_id_string(moddat['modid'])
     meta.patch = moddat['patch']
@@ -115,6 +125,10 @@ async def install_mods(moddat):
         log.error(f'`{config['gameloc'][meta.game]}` has been flagged as a dangerous path. Aborting install.')
         return
     moddat['pending_filenames'] = json.loads(moddat['pending_filenames']) if moddat['pending_filenames'] else []
+
+    global total_installs
+    global pending_installs
+    pending_installs += len(moddat['pending_filenames'])
 
     # unpack and install new files
     folders = []
@@ -138,6 +152,7 @@ async def install_mods(moddat):
         if not glob:
             log.error(f'Glob was empty!!! {pending_file}. Cannot continue install!!!')
             continue
+
         patch = None
         payload = None
         if meta.patch:
@@ -167,42 +182,11 @@ async def install_mods(moddat):
                             log.info(f'`{true_id}` has been patched to `{modinfo['Id']}` ({moddat['modid']}).')
                         folder = modinfo['Id']
 
-            if file.name.lower() == 'definition.json' and meta.patch and 'removeRLConflict' in patch:
-                with file.open("r+", encoding="utf-8-sig") as f:
-                    modinfo = json5.load(f)
-                    if 'conflictsWith' in modinfo:
-                        popqueue = []
-                        for item in modinfo['conflictsWith']:
-                            if item['id'] in patch['removeRLConflict']:
-                                popqueue.append(item)
-                        for item in popqueue:
-                            modinfo['conflictsWith'].remove(item)
-                        f.seek(0)
-                        json.dump(modinfo, f, indent=4)
-                        f.truncate()
-                        log.info(f'`{file.name}` has been patched for mod `{folder}` ({moddat['modid']}).')
-                    else:
-                        log.warning(f'Failed to patch `{file.name}` for `{folder}`: No conflicts defined by mod!')
-
-            if meta.patch and 'customFile' in patch and payload is not None:
-                cfile = Path(file.parent, patch['customFile'])
-                if not cfile.exists():
-                    cfile.touch()
-                    with cfile.open("w", encoding="utf-8-sig") as f:
-                        f.write(payload)
-                    log.warning(f'Custom file `{patch['customFile']}` has been created for `{folder}` ({moddat['modid']}).')
-
-            if meta.patch and 'rmKeyIn' in patch and payload is not None:
-                cfile = Path(file.parent, patch['rmKeyIn'])
-                with cfile.open("r+", encoding="utf-8-sig") as f:
-                    cdat = rm_key(json5.load(f), payload)
-                    f.seek(0)
-                    json.dump(cdat, f, indent=4)
-                    f.truncate()
-                    log.warning(f'Key `{payload}` has been removed from `{patch['rmKeyIn']}` for `{folder}` ({moddat['modid']}).')
-
             log.debug(f'Folder name has been determined to be {folder}.')
             folders.append(folder)
+
+            # I would've loved to include the above patch in the patcher, but it needs to be separate because it fetches the real modname.
+            patcher(file, moddat, patch, payload, folder)
 
             path = Path(config['gameloc'][meta.game], folder)
             if await aiofiles.os.path.exists(path):
@@ -217,8 +201,9 @@ async def install_mods(moddat):
 
             await asyncio.to_thread(shutil.copytree, file.parents[0], path)
             log.debug(f"Installed `{folder}`.")
+        total_installs += 1
 
-    log.info(f'Installed {len(moddat['pending_filenames'])} file(s) for {moddat['modid']}')
+    log.debug(f'Installed {len(folders)}/{len(moddat['pending_filenames'])} file(s) for {moddat['modid']}')
     data.base['mods'].upsert({
         'modid': moddat['modid'],
         'version': moddat['pending_version'],

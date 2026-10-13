@@ -25,10 +25,10 @@ class API:
             "apikey": config['nexus']['apikey']
         }
         response = await web.Client(url, timeout=120, headers=headers).async_get()
-        if response.status_code == 200:
+        if response and response.status_code == 200:
             return response.json()
         else:
-            log.error(f"Failed to fetch mod files: {response.status_code} - {response.text}")
+            log.error(f"Failed to fetch mod files for {game}-{mod_id}: {response.status_code} - {response.text}")
             return {}
         
     @staticmethod
@@ -39,10 +39,10 @@ class API:
             "apikey": config['nexus']['apikey']
         }
         response = await web.Client(url, timeout=120, headers=headers).async_get()
-        if response.status_code == 200:
+        if response and response.status_code == 200:
             return response.json()
         else:
-            log.error(f"Failed to fetch mod data: {response.status_code} - {response.text}")
+            log.error(f"Failed to fetch mod data for {game}-{mod_id}: {response.status_code} - {response.text}")
             return {}
 
     @staticmethod
@@ -60,10 +60,10 @@ class API:
             "apikey": config['nexus']['apikey']
         }
         response = await web.Client(url, headers=headers).async_get()
-        if response.status_code == 200:
+        if response and response.status_code == 200:
             return response.json()['id']
         else:
-            log.error(f"Failed to fetch numerical gameId: {response.status_code} - {response.text}")
+            log.error(f"Failed to fetch numerical gameId for {game}: {response.status_code} - {response.text}")
             return {}
         
     @staticmethod
@@ -82,10 +82,10 @@ class API:
             "apikey": config['nexus']['apikey']
         }
         response = await web.Client(url, headers=headers).async_get()
-        if response.status_code == 200:
+        if response and response.status_code == 200:
             return response.json()
         else:
-            log.error(f"Failed to fetch download link: {response.status_code} - {response.text}")
+            log.error(f"Failed to fetch download link for {game}-{mod_id}: {response.status_code} - {response.text}")
             return {}
 
 
@@ -258,19 +258,7 @@ async def check_for_updates_and_download_if_available(id_string):
         aggregate['pending_files'].append(file['file_name'])
         aggregate['pending_fileids'].append(file['file_id'])
         log.info(f"Update available for {id_string}: {file['version']} (current version: {current_version}) ({file['name']})")
-        pending_path = Path(system.DOWNLOADS_PATH, file['file_name'])
-
-        # Some mods, like Dual Whistle, list the wrong file name in their metadata
-        # I'm not sure if this is a Nexus mods issue or a mod maker issue
-        # if 'duel whistle' in pending_path.name.lower():
-        #     log.debug(pending_path.name)
-        #     log.debug(file['file_name'])
-        #     log.debug('Duel Whistle 1581 1 2026-07-19T02-08Z muYqJIOHI.zip')
-        #     log.debug(file['file_name'] == pending_path.name)
-        #     log.debug(pending_path.name == 'Duel Whistle 1581 1 2026-07-19T02-08Z muYqJIOHI.zip')
-        #     log.debug(pending_path.exists())
-        #     log.debug(file)
-        #     sys.exit(0)
+        
         if not await does_zipfile_exist(Path(system.DOWNLOADS_PATH, file['file_name']), True, False) and \
            not await does_zipfile_exist(Path(system.CACHE_PATH, file['file_name']), True, False):
             await open_dl_link(meta.game, meta.mod, file['file_id'])

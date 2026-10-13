@@ -3,6 +3,5 @@ colorama
 bad_path
 msgpack
 dataset
-pyquery
 json5
 httpx

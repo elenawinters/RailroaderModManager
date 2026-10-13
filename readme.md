@@ -22,11 +22,6 @@ You will need a [Nexus Mods API Key](https://next.nexusmods.com/settings/api-key
 
 This manager will only manage the mods that you have added to the game via the manager. If you manually add a mod, it will not handle that, and it'll be up to you to maintain and update it.
 
-## Is a feature listed here but not present in the software?
-
-Please open an issue on this. I wrote a good portion of the README before all features were implemented. I'll go through this and make sure everything is correct at a later date.
-
-
 ## RMM-ID Format
 
 Game-id (railroader) -> Mod-id (143)
