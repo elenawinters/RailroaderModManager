@@ -368,7 +368,7 @@ railroader-1414  # Bryson Hardware and Grain
 railroader-108   # andrews loop
 # railroader-104   # walker extensions  - breaks with Woody's walker prod tweaks
 railroader-127   # locust pin extension
-railroader-161   # connelly extension
+# railroader-161   # connelly extension  - also breaks with Woody's walker prod tweaks?
 railroader-172   # grassy gap passing track
 railroader-241   # nantahala banking engine track
 railroader-242   # alarka loop

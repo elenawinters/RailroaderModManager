@@ -185,7 +185,6 @@ async def install_mods(moddat):
             log.debug(f'Folder name has been determined to be {folder}.')
             folders.append(folder)
 
-            # I would've loved to include the above patch in the patcher, but it needs to be separate because it fetches the real modname.
             path = Path(config['gameloc'][meta.game], folder)
             patcher(file, moddat, patch, payload, path)
 
