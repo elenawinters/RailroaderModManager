@@ -169,11 +169,11 @@ async def install_mods(moddat):
             if 'SCAssetPacks' in str(file):
                 log.debug(f"Skipping {file} because it's part of an asset pack!")
                 continue
+            if file.name.lower() == 'info.json' and list(file.parent.glob('Definition.json', case_sensitive=False)):
+                log.warning(f'Refusing to install `{file}` because it is probably already installed.')
+                continue
             folder = file.parents[0].name
             true_id = folder
-            if file.name.lower() == 'info.json' and list(file.parent.glob('Definition.json', case_sensitive=False)):
-                log.warning(f'Refusing to install `{folder}` because it is probably already installed.')
-                continue
             with file.open("r+", encoding="utf-8-sig") as f:
                 modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
                 modid = modinfo.get('Id', modinfo.get('id', None))
@@ -189,7 +189,7 @@ async def install_mods(moddat):
                         f.seek(0)
                         json.dump(modinfo, f, indent=4)
                         f.truncate()
-                        log.info(f'`{true_id}` has been patched to `{modid}` ({moddat['modid']}).')
+                        log.info(f'`{true_id}` has been patched to `{patch['replaceId'][modid]}` ({moddat['modid']}).')
                     folder = modinfo.get('Id', modinfo.get('id', None))
 
             log.debug(f'Folder name has been determined to be {folder}.')
@@ -207,10 +207,10 @@ async def install_mods(moddat):
                     await asyncio.to_thread(shutil.rmtree, true_id_path)
                 else:
                     log.warning(f"Folder `{folder}` doesn't exist and couldn't be cleared. This might mean that the mod identifier changed! Please manually verify. Continuing with install. ({moddat['modid']})")
+            total_installs += 1
 
-        await asyncio.to_thread(shutil.copytree, file.parents[0], path)
-        log.debug(f"Installed `{folder}`.")
-        total_installs += 1
+            await asyncio.to_thread(shutil.copytree, file.parents[0], path)
+            log.debug(f"Installed `{folder}`.")
 
     log.debug(f'Installed {len(folders)}/{len(moddat['pending_filenames'])} file(s) for {moddat['modid']}')
     data.base['mods'].upsert({
