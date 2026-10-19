@@ -148,7 +148,7 @@ async def install_mods(moddat):
         await asyncio.to_thread(unpack_to_tmp, loc)
 
         tmp = Path(TMP_FOLDER, pending_file)
-        glob = list(tmp.rglob('Info.json', case_sensitive=False)) + list(tmp.rglob('Definition.json', case_sensitive=False))
+        glob = list(tmp.rglob('Definition.json', case_sensitive=False)) + list(tmp.rglob('Info.json', case_sensitive=False))
         if not glob:
             log.error(f'Glob was empty!!! {pending_file}. Cannot continue install!!!')
             continue
@@ -164,23 +164,33 @@ async def install_mods(moddat):
             payload = base64.b85decode(payload).decode() if payload else None
 
         # log.debug(f'Patch: {patch} | Payload: {payload} | File: {pending_file}')
+        # log.debug(glob)
         for file in glob:
+            if 'SCAssetPacks' in str(file):
+                log.debug(f"Skipping {file} because it's part of an asset pack!")
+                continue
             folder = file.parents[0].name
             true_id = folder
-            if file.name.lower() == 'info.json':
-                with file.open("r+", encoding="utf-8-sig") as f:
-                    modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
-                    if modinfo:
-                        folder = modinfo['Id']
-                        true_id = folder
-                    if meta.patch and modinfo and 'replaceId' in patch:
-                        if modinfo['Id'] in patch['replaceId']:
-                            modinfo['Id'] = patch['replaceId'][modinfo['Id']]
-                            f.seek(0)
-                            json.dump(modinfo, f, indent=4)
-                            f.truncate()
-                            log.info(f'`{true_id}` has been patched to `{modinfo['Id']}` ({moddat['modid']}).')
-                        folder = modinfo['Id']
+            if file.name.lower() == 'info.json' and list(file.parent.glob('Definition.json', case_sensitive=False)):
+                log.warning(f'Refusing to install `{folder}` because it is probably already installed.')
+                continue
+            with file.open("r+", encoding="utf-8-sig") as f:
+                modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
+                modid = modinfo.get('Id', modinfo.get('id', None))
+                if modinfo:
+                    folder = modid
+                    true_id = folder
+                if meta.patch and modinfo and 'replaceId' in patch:
+                    if modid in patch['replaceId']:
+                        if 'Id' in modinfo:
+                            modinfo['Id'] = patch['replaceId'][modid]
+                        elif 'id' in modinfo:
+                            modinfo['id'] = patch['replaceId'][modid]
+                        f.seek(0)
+                        json.dump(modinfo, f, indent=4)
+                        f.truncate()
+                        log.info(f'`{true_id}` has been patched to `{modid}` ({moddat['modid']}).')
+                    folder = modinfo.get('Id', modinfo.get('id', None))
 
             log.debug(f'Folder name has been determined to be {folder}.')
             folders.append(folder)
@@ -198,8 +208,8 @@ async def install_mods(moddat):
                 else:
                     log.warning(f"Folder `{folder}` doesn't exist and couldn't be cleared. This might mean that the mod identifier changed! Please manually verify. Continuing with install. ({moddat['modid']})")
 
-            await asyncio.to_thread(shutil.copytree, file.parents[0], path)
-            log.debug(f"Installed `{folder}`.")
+        await asyncio.to_thread(shutil.copytree, file.parents[0], path)
+        log.debug(f"Installed `{folder}`.")
         total_installs += 1
 
     log.debug(f'Installed {len(folders)}/{len(moddat['pending_filenames'])} file(s) for {moddat['modid']}')
