@@ -1,7 +1,7 @@
 {
     "railroader": [
-        "1645$fuse!toolshed",
-        "1645$toolshed",
+        "1645$fuse;legacy!toolshed",
+        "1645$toolshed;legacy",
         1618,
         285,
         "569|gaNia3CRqHByb2ZpbGVz",
@@ -11,8 +11,8 @@
         "492|gqNia3CsU2V0dGluZ3MueG1sqmN1c3RvbUZpbGWsU2V0dGluZ3MueG1s?payloadJU@7CY#?@Ja&u{KZapF~E-)e>Wo~0{WNB_^JtB2<W-T}(KRyaPQ)P5?X>Mn8Ab4$TZgV<#b7VatXmoUNIxjDGcXuv#GcIp(XD>1^FflJ!O-xf`Xk~3-A|QBeY;JQpcynnzB4~7Ua5^t9cXxL#cQY<;a%V3xFfcJMSWQe*V`yb<VJ&HHb97;DV`U;f3Lqdnb8BgEQ)O~?X=7zRbaHiNJTG%=X>e0za&~EBWj+cZAUtzxX>dhxb!l*IWo~pnbaHiNJTG%=X>dhxb!l*IWo~pn3Op}UWps3DZfA2o",
         1124,
         816,
-        1433,
-        1441,
+        "1433$legacy",
+        "1441$legacy",
         1627,
         188,
         "1523|gqNia3CvUzMubWVzaGxvZC5qc29uqmN1c3RvbUZpbGWvUzMubWVzaGxvZC5qc29u?payloaddkP>RARr=TZee0<Wn>~cAartdWh@FHARr(jY;R;SQe|#rWpZV5Msi_ebZKvHB03;2E;TF)ARr(hB5ZGDGE!x3WMy(?az=7tV{~b6ZX!A$FfK7QFfcGMFfcVaHZU|cG&DIZ3LqdLAR=sUWHCf(b97;DV`U;bAUH5CFf0lnARr(jY;R;TL}_z$VQyn(B03;4FfcAKED9hXARr=aZ)7t>X>)X8ZewL4Iv_SMFfK4G3LqdLAR=LKaBO*0Z%l7vZ*6aMX?A6EB03;+a&=`a3LqdLAR=LKaBO*0Z$@%uX=iA3Lt%1rB03;+a&=`2eE",
@@ -327,7 +327,8 @@
         253,
         1106,
         545,
-        646
+        646,
+        1436
     ],
     "offsite": [
         "url@https://github.com/Joo200/Railloader-JooMods/releases",

@@ -16,8 +16,8 @@
 # Unrelated, but why is there no program to close a program if it's memory exceeds a set limit, say 32GB 😭
 
 # "essential" mods
-railroader-1645$fuse!toolshed   # fuse
-railroader-1645$toolshed   # toolshed
+railroader-1645$fuse;legacy!toolshed   # fuse
+railroader-1645$toolshed;legacy   # toolshed
 railroader-1618  # ZRVF - Visual Framework
 railroader-285   # TheTies - Doubles the rendering limit for ties and tie plates.
 railroader-569|gaNia3CRqHByb2ZpbGVz   # dynamic weather
@@ -29,8 +29,8 @@ railroader-1352|gqNia3CsU2V0dGluZ3MueG1sqmN1c3RvbUZpbGWsU2V0dGluZ3MueG1s?payload
 railroader-492|gqNia3CsU2V0dGluZ3MueG1sqmN1c3RvbUZpbGWsU2V0dGluZ3MueG1s?payloadJU@7CY#?@Ja&u{KZapF~E-)e>Wo~0{WNB_^JtB2<W-T}(KRyaPQ)P5?X>Mn8Ab4$TZgV<#b7VatXmoUNIxjDGcXuv#GcIp(XD>1^FflJ!O-xf`Xk~3-A|QBeY;JQpcynnzB4~7Ua5^t9cXxL#cQY<;a%V3xFfcJMSWQe*V`yb<VJ&HHb97;DV`U;f3Lqdnb8BgEQ)O~?X=7zRbaHiNJTG%=X>e0za&~EBWj+cZAUtzxX>dhxb!l*IWo~pnbaHiNJTG%=X>dhxb!l*IWo~pn3Op}UWps3DZfA2o
 railroader-1124  # Roundhouse Research Program
 railroader-816   # Light's Modded Diesel Liveries
-railroader-1433  # TooManyWaybills
-railroader-1441  # Bells And Whistles
+railroader-1433$legacy  # TooManyWaybills
+railroader-1441$legacy  # Bells And Whistles
 railroader-1627  # Railroader Origin Culling Fix
 railroader-188   # Discord Rich Presence
 # S3 - Seton's Special Sauce  (will need to create a new customFiles format to support this mod further. Luckily for me, I only use Mesh LOD)
@@ -427,4 +427,5 @@ railroader-1106  # Nations Creek Logging Branch
 # railroader-238   # Flanagan Coal Mine  - breaks kirkland's owned loader and bunker-c interchange? not positive on this yet but I think it might be the case
 railroader-545   # Chesapeake and Ohio T1
 railroader-646   # Epps Springs Interchange
+railroader-1436  # Elks Bryson Crossover
 
