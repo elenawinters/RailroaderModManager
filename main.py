@@ -172,39 +172,33 @@ async def install_mods(moddat):
             if file.name.lower() == 'info.json' and list(file.parent.glob('Definition.json', case_sensitive=False)):
                 log.warning(f'Refusing to install `{file}` because it is probably already installed.')
                 continue
-            folder = file.parents[0].name
-            true_id = folder
+
+            true_id = file.parents[0].name
+            true_path = Path(config['gameloc'][meta.game], true_id)
+            patcher(file, moddat, patch, payload, true_path)
+            folder = true_id
+
             with file.open("r+", encoding="utf-8-sig") as f:
                 modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
-                modid = modinfo.get('Id', modinfo.get('id', None))
+                masterkey = None
+                for key in ('Id', 'id'):
+                    if key not in modinfo: continue
+                    masterkey = key
+                modid = modinfo.get(masterkey, true_id)
                 if modinfo:
                     folder = modid
-                    true_id = folder
-                if meta.patch and modinfo and 'replaceId' in patch:
-                    if modid in patch['replaceId']:
-                        if 'Id' in modinfo:
-                            modinfo['Id'] = patch['replaceId'][modid]
-                        elif 'id' in modinfo:
-                            modinfo['id'] = patch['replaceId'][modid]
-                        f.seek(0)
-                        json.dump(modinfo, f, indent=4)
-                        f.truncate()
-                        log.info(f'`{true_id}` has been patched to `{patch['replaceId'][modid]}` ({moddat['modid']}).')
-                    folder = modinfo.get('Id', modinfo.get('id', None))
-
+                    
             log.debug(f'Folder name has been determined to be {folder}.')
             folders.append(folder)
-
             path = Path(config['gameloc'][meta.game], folder)
-            patcher(file, moddat, patch, payload, path)
 
             if await aiofiles.os.path.exists(path):
                 log.debug(f"Clearing old `{folder}` install.")
                 await asyncio.to_thread(shutil.rmtree, path)
             elif moddat['version'] is not None:  # this could probably be better
-                if folder != true_id and await aiofiles.os.path.exists(true_id_path := Path(config['gameloc'][meta.game], true_id)):
+                if folder != true_id and await aiofiles.os.path.exists(true_path):
                     log.warning(f"Folder `{folder}` didn't exist, but `{true_id}` was found. Deleting potential conflict.")
-                    await asyncio.to_thread(shutil.rmtree, true_id_path)
+                    await asyncio.to_thread(shutil.rmtree, true_path)
                 else:
                     log.warning(f"Folder `{folder}` doesn't exist and couldn't be cleared. This might mean that the mod identifier changed! Please manually verify. Continuing with install. ({moddat['modid']})")
             total_installs += 1

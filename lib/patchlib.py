@@ -12,6 +12,28 @@ def patcher(file, moddat, patch, payload, path):
     if not patch: return
     for key in patch.keys():
         match key:
+            case 'replaceId':
+                with file.open("r+", encoding="utf-8-sig") as f:
+                    modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
+                    masterkey = None
+                    for key in ('Id', 'id', 'identifier'):
+                        if key not in modinfo: continue
+                        masterkey = key
+                    if masterkey is None:
+                        log.error(f"Couldn't find identifier for {file.name}. `replaceId` patch failed")
+                        continue
+                    modid = modinfo.get(masterkey)
+
+                    if modid not in patch['replaceId']:
+                        continue
+
+                    modinfo[masterkey] = patch['replaceId'][modid]
+
+                    f.seek(0)
+                    json.dump(modinfo, f, indent=4)
+                    f.truncate()
+                    log.info(f'`{file.name}` has been patched to `{patch['replaceId'][modid]}` ({moddat['modid']}).')
+
             case 'removeRLConflict' | 'rmRLCnflct':
                 if file.name.lower() != 'definition.json':
                     log.warning(f'Patch `{key}` is only applicable to `definition.json` files. Skipping patch for `{file.name}` ({moddat["modid"]}).')
@@ -69,5 +91,4 @@ def patcher(file, moddat, patch, payload, path):
                         log.warning(f'Backup file `{bkp}` does not exist for `{path.name}` ({moddat["modid"]}). Skipping backup.')
                         continue
                     curr.move(tmp)
-
 

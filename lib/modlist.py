@@ -196,3 +196,12 @@ def remove_mod(rmm_id: str):
     data.base['mods'].delete(modid=target['modid'])
     log.info(f'Deleted `{target['modid']}` from database.')
     return True
+
+def add_mod(rmm_id: str):
+    raise NotImplementedError
+    conflicts = sorted([mod for mod in data.base['mods'] if rmm_id in mod['modid'] and mod['modid'] is not None], key=sort_rmmid)
+    if len(conflicts) != 0:
+        log.info(f'Found {len(conflicts)} potential conflicts.')
+        return True
+    
+    pass

@@ -38,6 +38,9 @@ def handle_args():
     if args := proc_arg('--remove', ['rmm_id']):
         return modlist.remove_mod(args.rmm_id)
 
+    if args := proc_arg('--add', ['rmm_id']):
+        return modlist.add_mod(args.rmm_id)
+
     if args := proc_arg('--help'):
         for com in PATTERN.findall(inspect.getsource(handle_args)):
             log.info(f"Command: {com[0]}")

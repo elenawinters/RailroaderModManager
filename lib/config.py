@@ -1,5 +1,7 @@
+from lib.system import determine_mods_folder_location
 from utils import setup_logging
 import configparser
+import platform
 import logging
 import sys
 import os
@@ -18,11 +20,19 @@ if not os.path.exists(config_file):
         'delete_tmp': True
     }
     config['db'] = { 'address': 'sqlite:///rmm.sqlite' }
-    config['gameloc'] = { 'railroader': '/path/to/railroader/mods' }
+
+    log.warning("For the `gameloc` variable in the `config.ini`, you will need to find the mod folder locations for your game version and OS.")
+    log.warning(f'"{platform.system()}" has been determined to be your OS.')
+    log.warning(f'For pre-MoW, use "{determine_mods_folder_location(pre_mow=True)}"')
+    log.warning(f'For post-MoW, use "{determine_mods_folder_location()}"')
+    log.warning('Please verify that locations are correct before running his software.')
+
+    config['gameloc'] = { 'railroader': determine_mods_folder_location() }
     config['nexus'] = { 'apikey': 'your_nexusmods_api_key_here' }
     with open(config_file, 'w') as configfile:
         config.write(configfile)
-    log.warning('Please edit the `config.ini` file before continuing!')
+
+    log.warning('Please edit the `config.ini` file before continuing! You will need to verify your `gameloc` and set your Nexus Mods API key!')
     sys.exit(0)
 else:
     config.read(config_file)

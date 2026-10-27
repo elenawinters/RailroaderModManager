@@ -1,10 +1,10 @@
 from utils import setup_logging
 from zipfile import is_zipfile
-from lib.data import data
 from pathlib import Path
 import subprocess
 import datetime
 import aiofiles
+import platform
 import logging
 import sys
 import os
@@ -30,6 +30,17 @@ def open_url(url):
     else:  # Linux and other OSes
         subprocess.run(['xdg-open', url])
 
+
+# for the purposes of this, we're only gonna do this for post-MoW locations
+def determine_mods_folder_location(pre_mow=False):
+    user = os.getlogin()
+    log.debug(f'Determind that we should use `{user}` for the mod folder destination. This may not be accurate and should be verified.')
+    if platform.system() == 'Windows':  # Microslop Wimdows
+        return 'C:/Program Files (x86)/Steam/steamapps/common/Railroader/Mods/' if pre_mow else f"C:/users/{user}/Documents/Railroader/Mods/"
+    elif platform.system() == 'Linux':  # I use Arch btw
+        return f"/home/{user}/.local/share/Steam/steamapps/common/Railroader/Mods/" if pre_mow else f"/home/{user}/.local/share/Steam/steamapps/compatdata/1683150/pfx/drive_c/users/steamuser/Documents/Railroader/Mods/"
+    else:
+        return "/path/to/railroader/mods/"
 
 
 async def does_zipfile_exist(path, partial: bool = False, do_log: bool = True):

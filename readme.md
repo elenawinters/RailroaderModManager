@@ -1,12 +1,13 @@
 # Railroader Mod Manager (RMM)
 
-## The future of the project
+## Maintenance of Way
 
-With the September 2026 Developement Update for Railroader, this project's future is kinda in a weird state.
+Railroader just received an update.
 
-Mod support is coming to Railroader (to a limited extent so far), and I'm not sure this project will be required (by myself) in the future. That's also to say whether or not the community will continue to use Nexus Mods for mod hosting.
+Turns out, my patching code was the only thing preventing RMM from working.
 
-I'm not going to archive the project yet, but if it turns out that this project isn't really needed anymore, I will add a license and archive.
+So, please be patient while I work out any issues that may arise.
+
 
 ## Rest of the readme :3
 
