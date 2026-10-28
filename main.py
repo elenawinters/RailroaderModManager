@@ -22,6 +22,7 @@ import base64
 import shutil
 import json5
 import json
+import uuid
 import sys
 import os
 
@@ -132,6 +133,7 @@ async def install_mods(moddat):
 
     # unpack and install new files
     folders = []
+    detailed_mod_info = {}
     for pending_file in moddat['pending_filenames']:
         loc = Path(CACHE_PATH, pending_file)
         if not await aiofiles.os.path.isfile(loc):
@@ -172,10 +174,10 @@ async def install_mods(moddat):
             if file.name.lower() == 'info.json' and list(file.parent.glob('Definition.json', case_sensitive=False)):
                 log.warning(f'Refusing to install `{file}` because it is probably already installed.')
                 continue
-
-            true_id = file.parents[0].name
-            true_path = Path(config['gameloc'][meta.game], true_id)
+            
+            true_path = Path(config['gameloc'][meta.game], str(uuid.uuid1()))
             patcher(file, moddat, patch, payload, true_path)
+            true_id = file.parents[0].name
             folder = true_id
 
             with file.open("r+", encoding="utf-8-sig") as f:
@@ -184,6 +186,12 @@ async def install_mods(moddat):
                 for key in ('Id', 'id'):
                     if key not in modinfo: continue
                     masterkey = key
+                if 'identifier' in modinfo:
+                    detailed_mod_info[modinfo['identifier']] = {
+                        'version': modinfo['version'],
+                        'enabled': True,
+                        'scope': 0
+                    }
                 modid = modinfo.get(masterkey, true_id)
                 if modinfo:
                     folder = modid
@@ -216,6 +224,14 @@ async def install_mods(moddat):
         'pending_fileids': None,
         'pending_version': None
     }, ['modid'])
+
+    if not detailed_mod_info:
+        return
+
+    for identifier in detailed_mod_info.keys():
+        log.debug(identifier)
+        # TODO: Auto-enable all the mods
+
 
 
 if __name__ == "__main__":
