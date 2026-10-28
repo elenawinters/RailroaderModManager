@@ -34,7 +34,7 @@ def import_modlist(path: Path, return_modlist: bool = False):
 
     mods = []
     match path.suffix.lower():
-        case '.mpk' | '.mp' | '.msgpack':
+        case '.mpk' | '.mp' | '.msgpack' | '.rmmpk':
             log.info(f'MsgPack ({path.suffix.lower()}) detected! Trying to parse.')
             with open(path, 'rb') as exportfile:
                 mods = dict_to_rmm(msgpack.unpackb(exportfile.read()))
@@ -123,10 +123,10 @@ def export_modlist(packformat: str, path: Path, mods: list = None):
 
     log.info(f'Exporting modpack of {len(modlist)} mods as `{packformat.upper()}`{' strictly' if '--strict' in sys.argv else ''}!')
     match packformat.lower():
-        case 'msgpack' | 'mpk' | '.mpk':
+        case 'msgpack' | 'mpk' | '.mpk' | 'rmmpk' | '.rmmpk':
             mods = rmm_to_dict(modlist)
             mpk = msgpack.packb(mods)
-            outfile = Path(path).with_suffix('.mpk')
+            outfile = Path(path).with_suffix('.rmmpk')
             if outfile.exists(): raise ModpackExportError(f'File `{outfile}` already exists!')
             with open(outfile, 'wb') as exportfile:
                 exportfile.write(mpk)

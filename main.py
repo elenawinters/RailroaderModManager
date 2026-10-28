@@ -183,7 +183,7 @@ async def install_mods(moddat):
             with file.open("r", encoding="utf-8-sig") as f:
                 modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
                 masterkey = None
-                for key in ('Id', 'id'):
+                for key in ('Id', 'id', 'identifier'):
                     if key not in modinfo: continue
                     masterkey = key
                 if 'identifier' in modinfo:
@@ -194,7 +194,7 @@ async def install_mods(moddat):
                     }
                 modid = modinfo.get(masterkey, true_id)
                 if modinfo:
-                    folder = modid
+                    folder = modid.replace('/', '  -  ')
                     
             log.debug(f'Folder name has been determined to be {folder}.')
             folders.append(folder)
