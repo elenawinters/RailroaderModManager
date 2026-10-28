@@ -180,7 +180,7 @@ async def install_mods(moddat):
             true_id = file.parents[0].name
             folder = true_id
 
-            with file.open("r+", encoding="utf-8-sig") as f:
+            with file.open("r", encoding="utf-8-sig") as f:
                 modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
                 masterkey = None
                 for key in ('Id', 'id'):
@@ -227,12 +227,35 @@ async def install_mods(moddat):
 
     if not detailed_mod_info:
         return
+    
+    pref = Path(Path(config['gameloc'][meta.game]).parent, 'Preferences.json')
+    if not pref.exists:
+        return
 
-    for identifier in detailed_mod_info.keys():
-        log.debug(identifier)
-        # TODO: Auto-enable all the mods
+    with pref.open("r+", encoding="utf-8-sig") as f:
+        prefdat = json5.load(f)
+        prefmods = prefdat['mods']
+
+        for identifier in detailed_mod_info.keys():
+            dict_upsert(prefmods, { f'identifier': identifier, **detailed_mod_info[identifier]})
+            log.debug(identifier)
+
+        prefdat['mods'] = prefmods
+        prefdat['settings']['mods.allow-dll'] = 1
+
+        f.seek(0)
+        json.dump(prefdat, f, indent=2)
+        f.truncate()
+
+    log.info('Enabled all mods in game and enabled unsafe DLL loading.')
 
 
+def dict_upsert(items, new_item, key="identifier"):
+    existing = next((i for i in items if i[key] == new_item[key]), None)
+    if existing:
+        existing.update(new_item)
+    else:
+        items.append(new_item)
 
 if __name__ == "__main__":
     if handle_args():
