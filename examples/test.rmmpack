@@ -1,14 +1,22 @@
 
 
 
-# *okay, turns out none of these mods actually load cuz they really want Harmony to be present and it's not*
-
-
-
-
-# railroader-1333  # Extended Car Tags ??? still using UMM?!?!?!
+# mods that load just fine
 railroader-1862$experimental  # Tetz's Diesel Traction
-railroader-1383  # Decouple and Couple Tenders
-railroader-212   # Discount
-railroader-257  # passenger helper
+
+
+
+
+# *mods don't actually load cuz they really want Harmony to be present and it's not*
+# railroader-1383  # Decouple and Couple Tenders
+# railroader-212   # Discount
+# railroader-257  # passenger helper
+
+
+
+
+# dumbasses still using UMM for some reason (would love to know the reason)
+# railroader-1333  # Extended Car Tags
+
+
 
