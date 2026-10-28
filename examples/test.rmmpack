@@ -7,7 +7,7 @@ railroader-1862$experimental  # Tetz's Diesel Traction
 
 
 
-# *mods don't actually load cuz they really want Harmony to be present and it's not*
+# *mods that don't actually load cuz they really want Harmony to be present and it's not*
 # railroader-1383  # Decouple and Couple Tenders
 # railroader-212   # Discount
 # railroader-257  # passenger helper

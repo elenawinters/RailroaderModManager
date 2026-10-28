@@ -2,12 +2,9 @@
 
 ## Maintenance of Way
 
-Railroader just received an update.
+Railroader has received it's Maintenance of Way update.
 
-Turns out, my patching code was the only thing preventing RMM from working.
-
-So, please be patient while I work out any issues that may arise.
-
+RMM has been updated and made compatible. My primary focus going forward will be MoW support. If there are any issues with mod handling on 2025.1, please let me know.
 
 ## Rest of the readme :3
 
