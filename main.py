@@ -98,6 +98,31 @@ async def refresh_nexus_data_and_install():
     if config['settings'].getboolean('delete_tmp') == True and not is_dangerous_path(TMP_FOLDER):
         shutil.rmtree(TMP_FOLDER)
 
+    if not detailed_mod_info:
+        return
+    
+    pref = Path(Path(config['gameloc']['railroader']).parent, 'Preferences.json')
+    if not pref.exists:
+        return
+
+    with pref.open("r+", encoding="utf-8-sig") as f:
+        prefdat = json5.load(f)
+        prefmods = prefdat['mods']
+
+        for identifier in detailed_mod_info.keys():
+            dict_upsert(prefmods, { f'identifier': identifier, **detailed_mod_info[identifier]})
+            log.debug(identifier)
+
+        prefdat['mods'] = prefmods
+        prefdat['settings']['mods.allow-dll'] = 1
+
+        f.seek(0)
+        json.dump(prefdat, f, indent=2)
+        f.truncate()
+
+    log.info('Enabled all mods in game and enabled unsafe DLL loading.')
+
+
 def unpack_to_tmp(archive: Path):
     loc = Path(TMP_FOLDER, archive.name)
     if loc.exists():
@@ -119,6 +144,7 @@ def unpack_to_tmp(archive: Path):
 
 total_installs = 0
 pending_installs = 0
+detailed_mod_info = {}
 async def install_mods(moddat):
     meta = nexus.parse_id_string(moddat['modid'])
     meta.patch = moddat['patch']
@@ -133,7 +159,7 @@ async def install_mods(moddat):
 
     # unpack and install new files
     folders = []
-    detailed_mod_info = {}
+    global detailed_mod_info
     for pending_file in moddat['pending_filenames']:
         loc = Path(CACHE_PATH, pending_file)
         if not await aiofiles.os.path.isfile(loc):
@@ -224,30 +250,6 @@ async def install_mods(moddat):
         'pending_fileids': None,
         'pending_version': None
     }, ['modid'])
-
-    if not detailed_mod_info:
-        return
-    
-    pref = Path(Path(config['gameloc'][meta.game]).parent, 'Preferences.json')
-    if not pref.exists:
-        return
-
-    with pref.open("r+", encoding="utf-8-sig") as f:
-        prefdat = json5.load(f)
-        prefmods = prefdat['mods']
-
-        for identifier in detailed_mod_info.keys():
-            dict_upsert(prefmods, { f'identifier': identifier, **detailed_mod_info[identifier]})
-            log.debug(identifier)
-
-        prefdat['mods'] = prefmods
-        prefdat['settings']['mods.allow-dll'] = 1
-
-        f.seek(0)
-        json.dump(prefdat, f, indent=2)
-        f.truncate()
-
-    log.info('Enabled all mods in game and enabled unsafe DLL loading.')
 
 
 def dict_upsert(items, new_item, key="identifier"):
