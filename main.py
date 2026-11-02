@@ -102,7 +102,7 @@ async def refresh_nexus_data_and_install():
         return
     
     pref = Path(Path(config['gameloc']['railroader']).parent, 'Preferences.json')
-    if not pref.exists:
+    if not pref.exists():
         return
 
     with pref.open("r+", encoding="utf-8-sig") as f:
