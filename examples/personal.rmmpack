@@ -3,12 +3,15 @@
 railroader-257  # passenger helper
 railroader-1029  # Waypoint Queue
 railroader-1905  # Industry Inspector
+railroader-1725$experimental  # Consist and Power Tooltip
 railroader-1920!source  # Secondhand Rail
 railroader-1923  # Beaten Path
 railroader-1940  # College-Educated Spouts
 railroader-1961  # Industry Car Order
 railroader-1962  # Track Class Logger
 railroader-1953  # Crowds Kept
+railroader-1985  # IPFTWM (I Paid For The Whole Map)
+railroader-18$exp  # Map Enhancer
 
 # Tetz's mods
 railroader-1817$experimental  # Tetz's Game Fixes
@@ -19,9 +22,7 @@ railroader-1862$experimental  # Tetz's Diesel Traction
 railroader-1948  # Salty's Truck Pack (MOW)
 
 
-# railroader-1898  # Map Enhancer (MoW Fork)
-railroader-1894  # Map Plus  - til Reaper's Map Enhancer releases. Alex's is kinda scuffy
-railroader-1725$experimental  # Consist and Power Tooltip
+
 
 
 # railroader-1333  # Extended Car Tags - waiting for this to work properly on MoW, and then dropping TLM.
@@ -46,6 +47,7 @@ railroader-1932$g3a  # EMD 710 Prime Mover Audio Pack (MoW)
 
 # bmr mods
 railroader-1955  # BMR East Whittier Yard (MoW)
+railroader-1990  # BMR Scott Tie Plant (MoW)
 
 
 # cars
@@ -59,7 +61,7 @@ railroader-211  # Robinson Gap
 
 # misc mods
 railroader-1968  # Bryson Distributors (M.O.W.)  - will probably conflict when Scrappalachia releases for MoW
-railroader-1972  # Elks Sylva Interchange 2.0 and Scott Tie Tweaks
+railroader-1972$sylva  # Elks Sylva Interchange 2.0 and Scott Tie Tweaks
 
 
 # Mods that aren't updated yet, but that I consider essential
