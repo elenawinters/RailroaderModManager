@@ -10,7 +10,9 @@ railroader-1940  # College-Educated Spouts
 railroader-1961  # Industry Car Order
 railroader-1962  # Track Class Logger
 railroader-1953  # Crowds Kept
-railroader-1985  # IPFTWM (I Paid For The Whole Map)
+# IPFTWM (I Paid For The Whole Map)
+# The mod author used an invalid scope, so the game refuses to load it. This is a temporary patch until the author fixes it.
+railroader-1985|gadybUtleUluqUluZm8uanNvbg==?payloadb7OCCWd
 railroader-18$exp  # Map Enhancer
 
 # Tetz's mods

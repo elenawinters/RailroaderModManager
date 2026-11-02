@@ -216,7 +216,7 @@ async def install_mods(moddat):
                     detailed_mod_info[modinfo['identifier']] = {
                         'version': modinfo['version'],
                         'enabled': True,
-                        'scope': 0
+                        'scope': 1 if 'scope' in modinfo and modinfo['scope'] == 'optional' else 0
                     }
                 modid = modinfo.get(masterkey, true_id)
                 if modinfo:
