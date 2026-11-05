@@ -256,4 +256,5 @@ You really don't have to. In fact, I'd prefer if you don't.
 I'm making this for me, but if you really really really really **really** want to support me, you can do so on my [Ko-fi](https://ko-fi.com/elenaberry).
 
 Again, no pressure. I've put it at the bottom here for a reason. I don't wanna bother anyone.
+lol, forgot this was here. i should probably remove this
  -->
