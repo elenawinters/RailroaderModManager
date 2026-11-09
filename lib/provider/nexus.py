@@ -9,8 +9,10 @@ from pathlib import Path
 from sqids import Sqids
 from lib import system
 from lib import web
+import fnmatch
 import logging
 import json
+import copy
 import sys
 import re
 
@@ -224,6 +226,8 @@ async def init(id_string):
     if file_info == 'offsite':
         return
 
+    file_info = copy.deepcopy(file_info)
+
     aggregate = {
         'pending_fileids': [],
         'pending_files': []
@@ -239,7 +243,9 @@ async def init(id_string):
             log.debug(f"No update available for {id_string} (current version: {current_version})")
             return
 
-        file['file_name'] = f'{file['name']} {meta.mod} * {datetime.fromisoformat(file['uploaded_time']).strftime('%Y-%m-%dT%H-%MZ')} {Sqids().encode([file['uid']])}.zip'
+        file_glob = f'{file['name']} {meta.mod} * {datetime.fromisoformat(file['uploaded_time']).strftime('%Y-%m-%dT%H-%MZ')} {Sqids().encode([file['uid']])}.zip'
+        if fnmatch.fnmatch(file_glob, file['file_name']):
+            file['file_name'] = file_glob
 
         # if file['file_name'] in brokenDLFilenamePatches:
         #     file['file_name'] = brokenDLFilenamePatches[file['file_name']]
