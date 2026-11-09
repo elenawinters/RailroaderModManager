@@ -29,6 +29,7 @@ if not os.path.exists(config_file):
 
     config['gameloc'] = { 'railroader': determine_mods_folder_location() }
     config['nexus'] = { 'apikey': 'your_nexusmods_api_key_here' }
+    # config['github'] = { 'apikey': 'your_github_api_key_here' }
     with open(config_file, 'w') as configfile:
         config.write(configfile)
 

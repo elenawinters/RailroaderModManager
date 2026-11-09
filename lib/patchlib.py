@@ -34,6 +34,9 @@ def patcher(file, moddat, patch, payload, path):
                     f.truncate()
                     log.info(f'`{file.name}` has been patched to `{patch['replaceId'][modid]}` ({moddat['modid']}).')
 
+            case 'scope':
+                pass
+
             case 'removeRLConflict' | 'rmRLCnflct':
                 if file.name.lower() != 'definition.json':
                     log.warning(f'Patch `{key}` is only applicable to `definition.json` files. Skipping patch for `{file.name}` ({moddat["modid"]}).')
@@ -91,4 +94,3 @@ def patcher(file, moddat, patch, payload, path):
                         log.warning(f'Backup file `{bkp}` does not exist for `{path.name}` ({moddat["modid"]}). Skipping backup.')
                         continue
                     curr.move(tmp)
-

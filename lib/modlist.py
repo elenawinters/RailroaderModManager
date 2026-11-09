@@ -1,7 +1,7 @@
 from lib.system import DATE_FORMAT, does_zipfile_exist
 from lib.config import config, config_file
 from bad_path import is_dangerous_path
-from lib.nexus import parse_id_string
+from lib.provider.nexus import parse_id_string
 from utils import setup_logging
 from datetime import datetime
 from lib.data import data

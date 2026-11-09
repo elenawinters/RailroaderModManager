@@ -248,6 +248,11 @@ offsite-url@https://rmh.alinanova.dev/mod/da44df04-5e79-4cce-92fc-909d9cbb33fd
 
 RMM will open these in the browser for the user to install every time RMM is run.
 
+### VCACHE
+
+You may notice that a file gets generated called `vcache.json`. The VCACHE is RMM's way to keep track of data returned by the Nexus Mods API. If there are 2 RMM entries for 1 mod (say, a scripts file and a locomotive file), we only need to hit the API once.
+
+The reason it is being logged is for debugging purposes.
 
 <!-- ## Want to support my work?
 

@@ -1,12 +1,12 @@
+from lib.rmmlib import DELIMITER, parse_id_string
 from lib.system import does_zipfile_exist
-from datetime import datetime, timedelta
 from collections import OrderedDict
-from dataclasses import dataclass
 from utils import setup_logging
 from lib.config import config
-from pprint import pformat
+from datetime import datetime
 from lib.data import data
 from pathlib import Path
+from sqids import Sqids
 from lib import system
 from lib import web
 import logging
@@ -98,34 +98,6 @@ async def open_dl_link(game, mod_id, file_id=None):
     system.open_url(url)
 
 
-DELIMITER = ';;'
-# Regex is hard.
-RE_PATTERN = pattern = re.compile(
-    r'^(?P<game>[^@#$!|]+)-(?P<mod>[^-@#$!|]+)'
-    r'(?:@(?P<version>[^#$!|]+))?'
-    r'(?:#(?P<fileid>\d+))?'
-    r'(?:\$(?P<search>[^!|]+))?'
-    r'(?:!(?P<exclude>[^|]+))?'
-    r'(?:\|(?P<patch>.+))?$'
-)
-
-@dataclass
-class ModMeta:
-    game: str
-    mod: str
-    version: str = None
-    fileid: str = None
-    search: list = None
-    exclude: list = None
-    patch: str = None
-        
-def parse_id_string(id_string):
-    meta = RE_PATTERN.match(id_string)
-    meta_dict = meta.groupdict() if meta else {}
-    meta_dict['search'] = meta_dict['search'].split(';') if meta_dict['search'] else []
-    meta_dict['exclude'] = meta_dict['exclude'].split(';') if meta_dict['exclude'] else []
-    return ModMeta(**meta_dict)
-
 async def refresh_nexus_data(kwargs):
     raise NotImplementedError("This would require a UI for it to really be useful. Dunno if one will ever be made")
     pass
@@ -198,12 +170,6 @@ def search_nexus_file_data(versions, meta):
 VCACHE = {}
 async def fetch_nexus_file_info(id_string):
     meta = parse_id_string(id_string)
-    if meta.game == 'offsite':
-        if config['settings'].getboolean('offsite_open') == True:
-            if datetime.now() - timedelta(days=config['settings'].getint('offsite_frequency')) > datetime.strptime(config['settings']['offsite_last_open'], system.DATE_FORMAT):
-                log.info(f'Offsite mod detected. Opening link to allow the user to check if it needs to be updated. ({meta.version})')
-                system.open_url(meta.version)
-        return 'offsite'
     
     data = await API.get_mod_files(meta.game, meta.mod)
     if not data: 
@@ -222,6 +188,26 @@ async def fetch_nexus_file_info(id_string):
 
     return result
 
+
+"""
+    Alright, let's go over this. NexusMods reports what a file name *should* be, but that's not always accurate.
+    This always has something to do with version numbers. For example, MapEnhancer has had this happen twice now as of writing.
+
+    File names are formatted as such
+    {name} {mod_id} {version} {date(truncated)} {sqids_uid}.zip
+
+    {version} can basically be anything. Recently, ME released 2.0.16, but the {version} was 2.0.17 for some reason.
+    Nexus would still report {version} as 2.0.16 when fetching the file name from the API, but it'd be 2.0.17 when downloaded.
+
+    Why this happens, I don't know. But it does. It completely broke our install process, as we expected the file name to be exactly what Nexus reports it to be.
+
+    So, how do we get around this? Well, since the version name reported by the API is always correct, we can just build a partial file name and then search for it.
+
+
+    So basically, we do this using glob.
+    {name} {mod_id} * {date(truncated)} {sqids_uid}.zip
+"""
+
 # Yep, sometimes this happens. Dunno how to get around it so these patches are hardcoded for now
 # Could potentially rely on the end of file identifier, but I don't know how to easily get that rn
 # TODO: Make this not hardcoded. Might require a rewrite
@@ -229,7 +215,7 @@ brokenDLFilenamePatches = {
     'Duel Whistle 1581 1.0.0 2026-07-19T02-08Z muYqJIOHI.zip': 'Duel Whistle 1581 1 2026-07-19T02-08Z muYqJIOHI.zip',
     'Reaper-ME 2.0.14-exp 18 2.0.14 2026-11-02T12-31Z DBw1ClrDQ.zip': 'Reaper-ME 2.0.14-exp 18 1 2026-11-02T12-31Z DBw1ClrDQ.zip'
 }
-async def check_for_updates_and_download_if_available(id_string):
+async def init(id_string):
     meta = parse_id_string(id_string)
     file_info = await fetch_nexus_file_info(id_string)
     if not file_info:
@@ -253,8 +239,10 @@ async def check_for_updates_and_download_if_available(id_string):
             log.debug(f"No update available for {id_string} (current version: {current_version})")
             return
 
-        if file['file_name'] in brokenDLFilenamePatches:
-            file['file_name'] = brokenDLFilenamePatches[file['file_name']]
+        file['file_name'] = f'{file['name']} {meta.mod} * {datetime.fromisoformat(file['uploaded_time']).strftime('%Y-%m-%dT%H-%MZ')} {Sqids().encode([file['uid']])}.zip'
+
+        # if file['file_name'] in brokenDLFilenamePatches:
+        #     file['file_name'] = brokenDLFilenamePatches[file['file_name']]
 
         aggregate['pending_files'].append(file['file_name'])
         aggregate['pending_fileids'].append(file['file_id'])

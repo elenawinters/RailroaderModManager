@@ -3,5 +3,6 @@ colorama
 bad_path
 msgpack
 dataset
+squids
 json5
 httpx

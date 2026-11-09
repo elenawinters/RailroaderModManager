@@ -1,5 +1,5 @@
+from zipfile import is_zipfile, ZipFile
 from utils import setup_logging
-from zipfile import is_zipfile
 from pathlib import Path
 import subprocess
 import datetime
@@ -44,25 +44,35 @@ def determine_mods_folder_location(pre_mow=False):
 
 
 async def does_zipfile_exist(path, partial: bool = False, do_log: bool = True):
-    if not await aiofiles.os.path.exists(path):
-        if do_log: log.warning(f"Pending file `{path}` does not exist.")
+    # DO GLOB FOR FINDING FILE
+
+    # if not await aiofiles.os.path.exists(path):
+    file = list(path.parent.glob(path.name))
+    if not file:
+        if do_log: log.warning(f"Pending file `{path.name}` could not be found.")
         return False
 
     check_path = DOWNLOADS_PATH if path.parent == DOWNLOADS_PATH else CACHE_PATH
-    glob = list(check_path.glob(f'{path.name.removesuffix('.zip')}*.zip.part'))
+    glob = list(check_path.glob(f'{path.name}.part'))
     if glob:  # glob to the rescue!!!
-        if do_log: log.warning(f"Please wait for `{path}` to finish downloading.")
+        if do_log: log.warning(f"Please wait for `{path.name}` to finish downloading.")
         if partial:
             return True
         else:
             return False
 
-    if not is_zipfile(path):
-        if do_log: log.error(f"`{path}` is not a valid zipfile!")
+    if not is_zipfile(file[0]):
+        if do_log: log.error(f"`{path.name}` is not a valid zipfile!")
         return False
 
-    return True
+    return file[0]
 
+def dict_upsert(items, new_item, key="identifier"):
+    existing = next((i for i in items if i[key] == new_item[key]), None)
+    if existing:
+        existing.update(new_item)
+    else:
+        items.append(new_item)
 
 def rm_key(data, target):
     if isinstance(data, dict):
@@ -74,4 +84,23 @@ def rm_key(data, target):
     if isinstance(data, list):
         return [rm_key(item, target) for item in data]
     return data
+
+def unpack_to_tmp(archive: Path):
+    loc = Path(TMP_FOLDER, archive.name)
+    if loc.exists():
+        log.debug(f'Directory `{archive.name}` already exists in the temp folder!')
+        return
+    with ZipFile(archive, 'r') as obj:
+        obj.extractall(path=loc)
+
+    log.debug(f'`{archive.name}` extracted to temp folder.')
+
+    # Some mods, like TheTies and InterchangedIndustryUnloader have their archives structured weirdly
+    # So, uh... this corrects it! Or, at least tries to.
+    for orig in loc.glob('*'):
+        if orig.is_dir(): return  # Safe to abort if we find a directory
+        if '\\' not in str(orig): return
+        final = Path(loc, *str(orig).split('\\'))
+        final.parent.mkdir(parents=True, exist_ok=True)
+        orig.move(final)
 

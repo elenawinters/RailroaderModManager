@@ -9,3 +9,4 @@
 *.log
 example.txt
 fuse.health
+vcache.json

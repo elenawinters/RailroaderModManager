@@ -1,38 +1,60 @@
 
+# I'm trying to keep the "AI-Generated" mods out of this pack. Ashen's mods in particular block the deletion of their folders (somehow).
+# "AI-Assisted" mods are fine, I just don't want slop to infest this pack.
+
+# railroader-patch|gaVzY29wZahvcHRpb25hbA==  # Make all mods "optional". Stops the game from warning when a mod is missing or was updated.
+
 # essentials / unsorted
-railroader-257  # passenger helper
 railroader-1029  # Waypoint Queue
-railroader-1905  # Industry Inspector
 railroader-1725$experimental  # Consist and Power Tooltip
 railroader-1920!source  # Secondhand Rail
-railroader-1923  # Beaten Path
-railroader-1940  # College-Educated Spouts
-railroader-2007  # College Educated AutoEngineer
-railroader-1961  # Industry Car Order
-railroader-1962  # Track Class Logger
-railroader-1953  # Crowds Kept
+railroader-1924!source  # Yard Oilers
 # IPFTWM (I Paid For The Whole Map)
-railroader-1985|gqNia3Ctc2V0dGluZ3MuanNvbqVjRmlsZa1zZXR0aW5ncy5qc29u?payloaddkP>RARr=hWps3DZfA2=WpZ<AZ*C$wATlfpARr(hB4uu2Vr*q(B03;+a&=`a3LqdLAR=aAa#m?&cTFNXATcsEFfK4G3LqdLAR=vHcvNL_a$#w1b0Rt*HZ&{>ARr(hB4%=FZf9jwX>4V4B03;+a&=`a3LqdLAR=aRX>Mm_Okr+hLvMCvaw0k)B6n|cY-D3^c4cxRED9hXARr=Ua%pa7Wl~{eX?1f=B03;2E-)+#ARr(hB4%%FX<=t&B03-<XJKt+A}k6ZARr(jbaG{7L}_z$VQyn(O(HrVGc_<UE-)+#ARr(hB4TN5Y+`R=a%59<VRCdLIv_DFH7p7sARr(jc4cQ}bYXO9Z*EL)WI}0Sb0Rt*F)lJSED9hXARr=Va$$3GL}_z$VQyn(B03;3E;TF)ARr(hB4=`8b8}Q^X>M+5Zf7DoATcgAED9hXARr=UVRBSua&lp5ZX!A$baHiNED9hXARr=UVRBSua&lp5ZbWHvB03-<A}k6ZARr(jW?^zvWpZ+1X>Lq!WJY0QbZ>GZIv_DFH7p7sARr(jW?^zvWpZ+1X>LJmVr67+B03;3E-)+#ARr(hB4%N7RAq8<VQFqxVRU73Q*Cc=bZBm6b8{j(ATTaCH83zRFfcMRI5aUhH8(jd3LqdLAR=aAa#Uq<a$#w1MsH_RbYXIIB03;2E-^4LFfcGMFflYaFflPUF)}O)ARr(hB4%N7RAq8<VQFqdb#iuLbairNB03;+a&=`a3LqdLAR=aAa#Uq<a$#w1P-%E&Y(;W%Z*n3!ATlm6ED9hXARr=UVRBSua&lp5Zck!rWn*+hb!==+B03;2E-)+#ARr(hB4%N7RAq8<VQFqhWo~71VRU68Iv{j%b!99HARr(hB4%N7RAq8<VQFqhWo}YoWNCGCB03;6FfcGME-)+#ARr(hB4%N7RAq8<VQFqdVQz15c_KO>baHiNED9hXARr=aZ)a0wV{dL`b0Rt*HZU$Q3Vi
+railroader-1985|gqNia3Ctc2V0dGluZ3MuanNvbqVjRmlsZa1zZXR0aW5ncy5qc29u?payloaddkP>RARr=hWps3DZfA2=WpZ<AZ*C$wATlfpARr(hB4uu2Vr*q(B03;+a&=`a3LqdLAR=aAa#m?&cTFNXATcsEFfK4G3LqdLAR=vHcvNL_a$#w1b0Rt*HZ&{>ARr(hB4%=FZf9jwX>4V4B03;uVQh0{ED9hXARr=Ua%pa7WlUjiWJ7OuWpW}qAR>2fa%^N{Z+2yJA}k6ZARr(jW^!q6XJt}hWNCGCO(HrVFfK4G3LqdLAR=aOY-wR<Wg<EtB4=T3Wg;vJARr(hB6M<PWkhLnbYX5|WlbVFATu>EFfK4G3LqdLAR=OEY;0n0VRB?sbYXIIB03;3E;TF)ARr(hB6ekGWprV5X>V>!Z)8GgVRIrnATcg7H7p7sARr(jXL4b4b3|!#bYX5|Wg<EtF)lSM3LqdLAR=dSVRLg-XlZV4X>MmCIv_DFH7p7sARr(jW?^zvWpZ+1X>KAqAartdWh@FHARr(jW?^zvWpZ+1X>LSmaw0k)A|fmbARr(hB4%N7RAq8<VQFqmZ)8ScV{~tFB03;3E;TF)ARr(hB4%N7RAq8<VQFqbY+_|(Zz4J%F)lDH3LqdLAR=aAa#Uq<a$#w1S7CHza#L+@Z**vGWpi^PIv_AEI5jXZFfcGOGdMIcI5jspED9hXARr=UVRBSua&lp5ZbolsQ*>c+bRs$+FfK7LFfcGMFfcJRIWRFXHZd|R3LqdLAR=aAa#Uq<a$#w1Lv?a?VRUtJWg<EtbaHiNED9hXARr=UVRBSua&lp5Zcu4>Wo$)qa&K}XIv_GGFf0lnARr(jW?^zvWpZ+1X>LzqYGq?|Lv?IyO(HrVFfK4G3LqdLAR=aAa#Uq<a$#w1M`dnha$$63B03;+a&=`a3LqdLAR=aAa#Uq<a$#w1M`dnOVPt7_b0Rt*G%zqQFfK4G3LqdLAR=aAa#Uq<a$#w1Lt$=jaCss+AartdWh@FHARr(jY;R{%Wn*t{WOE`qAT}^AFbaJ
 railroader-18$exp  # Map Enhancer
+railroader-github%Reaper8f+Railroader-MapEnhancer$tile;packs
 railroader-1892  # Production Monitor - A pretty Convenient menu
+railroader-1333  # Extended Car Tags
+
 
 # Tetz's mods
 railroader-1817$experimental  # Tetz's Game Fixes
 railroader-1862$experimental  # Tetz's Diesel Traction
 
 # Asset packs
-railroader-434   # SCOLD  - I don't trust REX. Thankfully, this isn't a DLL mod.
 # railroader-1636$mow  # terrahs city structures  - will be enabled when there are mods that use these assets in this modlist
+# railroader-2119  # Steveo's Steel Girder
+
+# livery packs
+
+
+
+# Salty's mods
 railroader-1948  # Salty's Truck Pack (MOW)
-
-
-
-
-# While TLM has a lot of features, it also messes with a lot of stuff (such as car tags not being transparent when at their destination regardless of settings).
-# I also just don't trust Rex, especially after his porting of people's mods without permission (and the ensuing crashout after getting banned for it).
-# It's just childish, and any trust I had with him or RTM is gone. I scanned TLM, and it's safe, but I don't trust that it'll continue to be.
-# So, we're using Extended Car Tags here.
-railroader-1333  # Extended Car Tags
+railroader-2089  # Greenbrier 33.700 Gallon LPG Tank Car (MOW)
+## Ortner FS-139 Skeleton Log Car
+railroader-1946$colourable
+railroader-1946$american
+railroader-1946$canadian
+## NSC 2500 3-Bay Aggregate Hopper (MOW)
+railroader-2080$colourable
+railroader-2080$american
+railroader-2080$canadian;national
+railroader-2080$bc;rail
+railroader-2080$leasing
+railroader-2080$other
+## TrentonWorks 5-Bay Rotary Dump Hopper (MOW)
+railroader-2090$colourable
+railroader-2090$american
+railroader-2090$canadian
+## Hawker Siddeley 60 Foot Woodchip Gondola (MOW)
+railroader-2095$colourable
+railroader-2095$american
+railroader-2095$canadian
+## Railcar America Bethgon ll (MOW)
+railroader-2096$colourable
+railroader-2096$american
+railroader-2096$canadian
 
 
 
@@ -57,13 +79,29 @@ railroader-1990  # BMR Scott Tie Plant (MoW)
 
 
 # cars
-railroader-1946$colourable  # Ortner FS-139 Skeleton Log Car
-railroader-1946$american  # Ortner FS-139 Skeleton Log Car
-railroader-1946$canadian  # Ortner FS-139 Skeleton Log Car
+railroader-2131  # Lionel Style Pennsy Depressed Center 4 Truck Flat Car (MOW)
+
+
+# kater's map mods
+railroader-2118  # Katers Sylva Interchange (MOW)
+
 
 
 # foxy's map mods
 railroader-211  # Robinson Gap
+
+
+
+# Rex's mods
+# I wholeheartedly do not trust Rex, and I do not recommend using his mods if you can avoid it.
+# Every mod in this collection has been scanned and verified to be safe, but I do not trust that this will continue to be the case,
+# especially after his recent behavior and ban from the official Railroader Discord server for ripping other modders assets without permission.
+railroader-434   # SCOLD - No DLL, safe to use
+
+
+# Freeman's mods
+# I've lost a lot of respect for Freeman with him continuing to use Rex's mods as dependencies.
+# Most of his mods are rolling stock or locomotives though, so they'll generally be safe to use.
 
 
 
@@ -75,6 +113,8 @@ railroader-2014  # Track Repair Console Commands
 railroader-656!expanded;stable  # Governors Island Grain Elevator
 railroader-656$expanded!stable  # Governors Island Grain Elevator
 railroader-2041  # Baxterville's Ela Goldmine
+railroader-1014  # Ela Reworked
+railroader-2110  # Ela Reworked 2.0 and Baxterville Gold Mine Compatibility Patch
 
 
 # Mods that aren't updated yet, but that I consider essential
