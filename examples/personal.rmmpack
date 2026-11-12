@@ -14,12 +14,19 @@ railroader-1985|gqNia3Ctc2V0dGluZ3MuanNvbqVjRmlsZa1zZXR0aW5ncy5qc29u?payloaddkP>
 railroader-18$exp  # Map Enhancer
 railroader-github%Reaper8f+Railroader-MapEnhancer$tile;packs
 railroader-1892  # Production Monitor - A pretty Convenient menu
-railroader-1333  # Extended Car Tags
+# railroader-1333  # Extended Car Tags
+railroader-2074  # RichTags
 
+# visual mods
+railroader-2124  # Passenger Car Lights
+railroader-2006  # Rusty Rails
+railroader-2125  # Cab Lights
 
 # Tetz's mods
 railroader-1817$experimental  # Tetz's Game Fixes
 railroader-1862$experimental  # Tetz's Diesel Traction
+railroader-1811!legacy  # Tetz's Rails Load
+railroader-1810!legacy  # Tetz's Ties Load
 
 # Asset packs
 # railroader-1636$mow  # terrahs city structures  - will be enabled when there are mods that use these assets in this modlist
@@ -27,6 +34,9 @@ railroader-1862$experimental  # Tetz's Diesel Traction
 
 # livery packs
 
+
+# greenninja's mods
+railroader-2190  # EMD RS1325 (MoW)
 
 
 # Salty's mods
@@ -56,7 +66,9 @@ railroader-2096$colourable
 railroader-2096$american
 railroader-2096$canadian
 
-
+# ALW mods
+railroader-1071  # Autism Locomotive Works Trucks Pack
+railroader-2182  # Elgin Joliet and Eastern 70 Ton Side Dump Hoppers
 
 # beemans
 railroader-1040$replacer;mow  # Custom Prime Mover Audio by TheBeeMan
@@ -71,6 +83,8 @@ railroader-1932$g3c;es  # EMD 710 Prime Mover Audio Pack (MoW)
 railroader-1932$g3c!es  # EMD 710 Prime Mover Audio Pack (MoW)
 railroader-1932$g3b  # EMD 710 Prime Mover Audio Pack (MoW)
 railroader-1932$g3a  # EMD 710 Prime Mover Audio Pack (MoW)
+railroader-2157$20;e3  # 20 645E3 MoW
+railroader-2157!12;e3  # 12 645E MoW
 
 
 # bmr mods
@@ -83,13 +97,12 @@ railroader-2131  # Lionel Style Pennsy Depressed Center 4 Truck Flat Car (MOW)
 
 
 # kater's map mods
-railroader-2118  # Katers Sylva Interchange (MOW)
-
+# Kater made a deal with the devil (Rex). Will not include this into they come to their senses.
+# railroader-2118  # Katers Sylva Interchange (MOW)
 
 
 # foxy's map mods
 railroader-211  # Robinson Gap
-
 
 
 # Rex's mods
@@ -101,8 +114,11 @@ railroader-434   # SCOLD - No DLL, safe to use
 
 # Freeman's mods
 # I've lost a lot of respect for Freeman with him continuing to use Rex's mods as dependencies.
-# Most of his mods are rolling stock or locomotives though, so they'll generally be safe to use.
+# So, since he chose to make a deal with the devil, none of his mods will appear here.
 
+
+# misc rolling stock
+railroader-2181  # WC Mega Log Hauler
 
 
 # misc mods

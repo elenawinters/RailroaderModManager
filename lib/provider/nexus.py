@@ -210,10 +210,11 @@ async def fetch_nexus_file_info(id_string):
     {name} {mod_id} * {date(truncated)} {sqids_uid}.zip
 """
 
-# Yep, sometimes this happens. Dunno how to get around it so these patches are hardcoded for now
-# Could potentially rely on the end of file identifier, but I don't know how to easily get that rn
-# TODO: Make this not hardcoded. Might require a rewrite
-brokenDLFilenamePatches = {
+# PassengerCarLights 1.0.1 2124 1.0.1 2026-11-10T23-57Z kgVPjLjHy.zip
+# PassengerCarLights 1.0.1 2124 2 2026-11-10T23-57Z kgVPjLjHy.zip
+
+
+brokenDLFilenamePatches = {  # I'll be deleting this soon
     'Duel Whistle 1581 1.0.0 2026-07-19T02-08Z muYqJIOHI.zip': 'Duel Whistle 1581 1 2026-07-19T02-08Z muYqJIOHI.zip',
     'Reaper-ME 2.0.14-exp 18 2.0.14 2026-11-02T12-31Z DBw1ClrDQ.zip': 'Reaper-ME 2.0.14-exp 18 1 2026-11-02T12-31Z DBw1ClrDQ.zip'
 }
@@ -244,7 +245,7 @@ async def init(id_string):
             return
 
         file_glob = f'{file['name']} {meta.mod} * {datetime.fromisoformat(file['uploaded_time']).strftime('%Y-%m-%dT%H-%MZ')} {Sqids().encode([file['uid']])}.zip'
-        if fnmatch.fnmatch(file_glob, file['file_name']):
+        if not fnmatch.fnmatch(file_glob, file['file_name']):
             file['file_name'] = file_glob
 
         # if file['file_name'] in brokenDLFilenamePatches:

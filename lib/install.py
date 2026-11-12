@@ -68,11 +68,11 @@ async def install_mods(moddat):
     folders = []
     global detailed_mod_info
     for pending_file in moddat['pending_filenames']:
-        loc = next(CACHE_PATH.glob(pending_file), pending_file)
+        loc = next(CACHE_PATH.glob(pending_file), Path(CACHE_PATH, pending_file))
         # loc = Path(CACHE_PATH, pending_file)
         if not await aiofiles.os.path.isfile(loc):
             # dl = Path(DOWNLOADS_PATH, pending_file)
-            dl = next(DOWNLOADS_PATH.glob(loc.name), pending_file)
+            dl = next(DOWNLOADS_PATH.glob(loc.name), Path(DOWNLOADS_PATH, pending_file))
             if not await aiofiles.os.path.isfile(dl):
                 log.critical(f'Pending file `{pending_file}` does not exist in Downloads or Cache. How did we get here?! Skipping file.')
                 continue
