@@ -2,8 +2,8 @@
 # I'm trying to keep the "AI-Generated" mods out of this pack. Ashen's mods in particular block the deletion of their folders (somehow).
 # "AI-Assisted" mods are fine, I just don't want slop to infest this pack.
 
-# I draw a hard line against any DLL mods from REX due to his behavior. If a mod depends on a Rex DLL mod, that mod wont be here.
-# As far as I can tell, all of his DLL mods are "safe", but I don't trust that to stay the case.
+# I draw a hard line against any DLL mods from REX due to his behavior. If a mod depends on an RTM DLL mod, that mod wont be here.
+# As far as I can tell, all of his DLL mods are currently "safe", but I don't trust that to stay the case.
 
 global-patch|gaVzY29wZahvcHRpb25hbA==  # Make all mods "optional". Stops the game from warning when a mod is missing or was updated.
 
@@ -22,7 +22,8 @@ railroader-2074  # RichTags
 
 # visual mods
 railroader-2124  # Passenger Car Lights
-railroader-2006  # Rusty Rails
+## Rusty Rails (will likely be removed from this pack soon)
+railroader-2006|gqNia3C3UnVzdHlSYWlscy1zZXR0aW5ncy50eHSlY0ZpbGW3UnVzdHlSYWlscy1zZXR0aW5ncy50eHQ=?payloadBOp?Bb98wiQekOqb0BkNbaZKMXLBwfL2PqxAZ27}bYWs_Wguy8AZKB1WjY{Ga%E;^a%FB~Wpf}tAX0U6ba^0BVQFl0E(!`GAT2E|Eg(>3a%OLGZDDR>WgsYYXk{QwZ+9<EWn^h}Z7)b^XJ{Z|b#!!ZZgU`WWpp5PXk~L{DIhH^EiDRAa%FR6bUjFEXJ`r|AX8;yZ*F9BAYx^7cV%U6AZB%JY#?%Vb95kZVRLh3b1n)}b#ru7X=7_sWn*t{WOF?+3L_v>Wn*t{WOE>5WpsCCWo{sHWpH6>Zgg`XZ)PBLa$#d@Aa!nJWpW^GZ+2;JXCQZIWo2x0ASf^(Js@vpW+^TTQFUo!YfxcnZgf*+V{dL`b3HIFF*OP!AVpzgXdrWRa%FU5XeV<ZbaG*BaBO8{Aa`YDWOE>OaAaY0Wgua6AZ>4RbRcDRWpa5SbZBXFAZ=l8c_4FTV{dL`b1n*3Wo2YlaAaY0Wm9EiZ*F9BJu(U-AXjB&WFT{Na%FU5Xk~LCb#P>1bY)~9aAk5JXklz-AaiA7Z*F8R3Rh)iWKCgsP-SvdX=7_WF*XWUWo2Yka$#w1Q)OdsZe(*kF$xMJAT2E|Eg({Lb95jrEiEkyQgw55MQ&kYY-MCUbaHiN3L_v%WNc+1WMO%8AZBlJAarPDAYyW9XJ~XFa&>NQX>MmAb98cLVQV0CZy<7Yb95kYc4cxPW_4_Ac`gc4b#rt?VR>^sH3}mjMsj6yXdrTRb95kcXm59OAYyW9XJ~XFZ*pO7XJsH_WoB=3Wgui>a%*L7X>MmAbZ;PHa&LETASiTlb!9JRVQh0{DJ}|6a$#;~Wm9xvXJtKfa&=`2BOpm+Y-J#1VR>^PW^ZyJZ*pO7XJsIAb#rtebZ;PJVRCC_ZXk4TAa87BAY@^3Yan8BZ+C7k3Q~1*bU|ljL}7VzJu@&0BOpj`cOYhAb95kda$#w1b0BkQX>Mg8bZBKDa$#v~b08=&AUz;%Z*py6Y%Cx$AUz;-cWGl~AYpSLW?^%5DJ}|7Z)|CEXj61@Wo~D5Xgx6sBOpj`cOYhAav)@7bYW?1Wn>_7VQFl0AShvOWFT~CWodFCb7)~?Z+CMkAYpQ4AY^i3cWx{obZKp6b0BnRWgur^ZDk;2WoBV@Y;-OlF(7nrAT%x@NNHziWpW^6Z*z2WAaG@JW^ZzBVQyn(E(%0tbYW?1L}_z$VQyn(Jv0g<AX8{>cOY_gb95kYZXk4MWguo@a&%~Ab95kda$#d@Aa-eGcOZ0cZy+dia&=`dW?^h|WhpKoQe|^=VRCdJbZBKDXJKt+AYo>7WpW^6Xkl(=X>MmO3RG!sbVgxvRB~ZsYdv&wb!7@8AW~&*Wo=?*av*Ybb95kKZe$>Ia$#+7Y-MC1cV%T{b0BwVbZ8)DVPj|@b76L6ASiTlb!9JRVQh0{DJ}|AVRmIwb#rt*baHiN3L_v=b#rteVQyp~aBpmBb7&xGZXhurZ6IW2bYW?1Aa8CUaBN{|ZXk4WVPk6`D0FglWiMu7Y;$EPE+9{4W;!5mZe<{BZ*OZLaAk5Jb98cLbYo~P3Q%QoO=Wata#D43bUk!(b!7@8AWd&qAa`$aYan54b8jGWWpi|Ia%FQMbZBKDa$#v~b0BnYAYyW9XJ~XFb97~8Y#=Cfa&=`XE+9r>Y;$EgAWd&qAa8DLc_3qKWnpr2AarPDAa`YDWOE>4Ze$>IXk{RBVQFl0AZul1a3FMOWodFCa&>cbE(%R=cTjI^X>(|0b3Jr&b!7@8AX98<aByjEXCP#9X?AIDXCQZIWo2x0AYyfLZXje~a%&)MVRCD8AZc!NZy<DNWgv24X>4d^VPqgEbaHiNFJ@tEb7d(m3Rh@lWo$xqa&B`ybaHiN3L_vya%pyDa&sVaaA|ICX>MmAX>K5JY+++%AZ=l5Wgv8DWgv24X>4d^VPqg@Y;SiUD0FglWiMu7Y;$EPE(%C*bW&kyY)5QwcRh4+b!7@yWpq+uX>4;nbaHiN3Q}QdZc=q~baOp)a&=`2Qgw55M{;R!J#=z)WeQStb96^?X>e0?a%FC3bZ9*>3Px#iWm9l+WnpAfaAjp=JuwPMZ*yf$X>N6NWph0-FbYU-b7e+yWo1EWZ9Q~yb!7@jZ*yfqX>Cnma%*LBJ#=z)WeP@Va%DkmWpZ?LJ#=z)WeP}dbYgFKMrm?ob3Jr&b!7@ubYWv_Mrm?ob3Jr&b!7@uY-w;tX>w(AJ#=z)WeP@Va%ECwaCLNHbZKvHJ!WBSb7cxfX>w&lY;SXAb4hMwb#rubX=QUgW?^h|WeP@YVRB_gX>w(AJ!WBSb7cxfX>w&lY+-3_b3JBZY;$D_Mrm?oLUnR(b3<Wrb3JBZY;$D_Msj6kRBv}~S7CHzay@2YY;$D_Mrm?oLvm$zb3JBZY;$D_Mrm?oMQ&$lZe?>lbaHiN3Px#iWkX?dLUnX>Z*FrvW?^h|WeQhebY*f#X>N3LJ#=z)WeP@Va%FQxZee0<Wn?{OVQh0{3L_v>Xm58Qa$#v~AY*TCWNCD1Z*CxIZXk4MWgur^ZDl8OAartJV{0IEZ*OdLX>cGYbaHiNFJ@tEb7d(m3RH4oV{24zZ)|jFa6NQ#b!7@8AW39wWgui>d2=9UZ*m|_Z&xj2Y-M3?Wn>_7VQFk2b7^E{b0BnYAaZqcbRchbWpXYGQ)y&nQgw55L}7VzJv9m=AWd&qAY*K0VQzCEZ*FXPAarPDAaY@8Y-nX+WFTQ~WFT~CWgv24X>1^KX=G({AaitKc_4Cib98wuAZ%%CWgv28VQe5`b#r+jbaG*1Yal3ea&=`dW?^h|WhpKSOJ!wnQ)y&nb5eD4ba_2=a&=`23L_vbEiEk|M{;3vb094(EiDQoAV_a_AZB55Aa8YaAZK!6b8{ebbYXdOAYpVMW_4_AAY^53b7^#WAYx@^Z*pZIbZBKDXJKt+AarPHZgU`MbSxlrX>Db5AarPDAZKB1Wgui_W?^+~bRZ}(AarjaG$}3$M{;3vb4FogWm98eY-K$$E;R}xAXI2&AZKB1WhZkWXL4b4b0B1Cb97;DV`U(8X>Db5AarPHb08=&AarjaGAS+~NNHziWpW^6Z*z2WAaG@JW^ZzBVQyn(E(%9-VRLgtX>)X8ZewLrV_|G%JuwO+AXI2&AZKB1WhZkWXL4b4b0BYHV{CPEX>V>IV|8q7X>MmAD0FglWgtBuXJKt+AY^4`VRdYDDJ~#SW@aF1b0A?LbY*jNAZBlJAa`YDWOE>NXlZV4X>MmAZ*_DaX>K5NXk{Q|X>)X8ZewLG3P*Bbb8}B)V{CPEX>V>lbaHiN3L_v)Z((F<Zf787Z)YHBXKrtDWpf~OWpZ+1X>K5NXkm09X>%ZNZftoVVr6M=XCQKAW^!e7Xk}y|D0gLLWFTW`VQyz-b15t!b8jGYXk{Q|X>)X8ZewL2WN&42ZYOjgW^ZR8Z*_DaD0FglWiMu7Y;$EPE(%k0WnpA_MsH_5baHiN3L_v$Z+9SOVR9gEb#x$eZDDL|AaHD9Zgg`XD0FgRV{2k%WFU8CWn^<HAYpQ4AY^i3cWx{ocp!9WWgur^ZDl8OASf{{G$}3$Q*B{vY*1`rZgfm<WI}0Sb3HK%3L_vbEiEk|S7l{nb094(EiDRHWo2Y@MQ&kYY-MCUbaHiN3L_v?XlZV4X>MmAZ*FBEVRmJ5VP|C^V_|Y2VPs@;Aa8bMav)(KW_4_AAaG%Gb0BYKAYmYLbaG{MV`w06W*~HOVPk793RH4oZE$R5P-SvMVRAh%E-*C;BOpz0b95kMY-M3`X>MmAbaG*7ZgU`EY;SI5AY)-}AaZ44V`v~KFd#i3Zf|a7EFdu;Js@UvY;1WTV{Bz%aw#q#RA^-&O>b8qV_|Y2b98BJY#?K7Wnpr2AZB%JY<VsUS7l{nLt$_|FfKR>BOpm+Y-J#1VR>^PW^ZyJW_4_Ac_4IhVQp}1Wn>_CWo2Y@AarjaXL4_MAYx%-Yc2{`Wo2YiWoL44cSK=%b3HT)BOp>?WNCGCAZczOZDn+2a&sVNZ*m}XXk{QnY-M3`Aa`YDWOE>HWnpq+c_3nSbaZcSE(%U%VRB-5O=Wata&tX1Ffa-uAXIW;ZE$R9Zf787Y+-bCWo~mIcV%T{b08>mVQg$5Z*FCCAZKqZAaiJMa&#bPa$$3GAaitKd2=ZsX>N0LWnp9>Z)PBLXlZV4X>MmAWp-t9d30!LZf77UbaHiNFJ@tEb7d(mAVOtxbRc17bY*fNVIXp4Y;R#?E($|(b#rKCWLITnWOF@qa&=`2BOpj`cOYnCa%3Q8b!==PbaG*BaBOLAXCQELWpi_7b0BnRWgvHDWn^<8WN&wFASf^{F(7nrATTa9DJ~#LX=i9<av))Bb8jGYXlZV9AarPDAaiJMa&#bPa$$3GE($|(b#rJ_baG{GXLM*iFfKGT3RH4oV{2k%WJhvgb8|g(a&=`2RB~ZsYhq<&M{;3vb4X=rXJ~XiF$z?2VPk7zWn@QkVRLgqZEtmMbUiT&Lt%1oWpqb!Z*^{DJunJXa$#d@Vr67Ua$$3GQ*U*0V`V*Ib#!kE
 railroader-2125  # Cab Lights
 
 # Tetz's mods
@@ -89,12 +90,16 @@ railroader-1932$g3c!es  # EMD 710 Prime Mover Audio Pack (MoW)
 railroader-1932$g3b  # EMD 710 Prime Mover Audio Pack (MoW)
 railroader-1932$g3a  # EMD 710 Prime Mover Audio Pack (MoW)
 railroader-2157$20;e3  # 20 645E3 MoW
-railroader-2157!12;e3  # 12 645E MoW
+railroader-2157$12!e3  # 12 645E MoW
 
+# Crusher's mods
+railroader-420  # CNJ A-1 0-4-0T (840)
 
 # bmr mods
+railroader-1708  # BMR Load Dictionary
 railroader-1955  # BMR East Whittier Yard (MoW)
 railroader-1990  # BMR Scott Tie Plant (MoW)
+railroader-2073  # BMR Whittier Central - (MoW)
 
 
 # whippet's cars
@@ -105,6 +110,7 @@ railroader-2216  # Great Northern 40ft Truss-Rod Boxcars
 railroader-2217  # Northern Pacific 10000 Series Boxcars
 railroader-2219  # USRA Specification 1003-B 40-Ton Double Sheathed Boxcar
 railroader-2221  # Nevada Copper Belt Caboose 3
+railroader-2224  # USRA Design 70-Ton Steel Triple Hopper
 
 # foxy's map mods
 railroader-211  # Robinson Gap
