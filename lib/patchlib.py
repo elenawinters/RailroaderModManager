@@ -35,6 +35,22 @@ def patcher(file, moddat, patch, payload, path):
                     log.info(f'`{file.name}` has been patched to `{patch['replaceId'][modid]}` ({moddat['modid']}).')
 
             case 'scope':
+                if file.name.lower() != 'info.json':
+                    log.warning(f'Patch `{key}` is only applicable to `info.json` files. Skipping patch for `{file.name}` ({moddat["modid"]}).')
+                    continue
+
+                with file.open("r+", encoding="utf-8-sig") as f:
+                    modinfo = json5.load(f)  # need to use json5 cuz some mods have misplaced commas
+                    if 'identifier' not in modinfo:
+                        log.warning(f'Unable to patch the scope for {moddat['name']} ({moddat['modid']}): Mod was not made for MoW!')
+                        continue
+
+                    modinfo['scope'] = patch['scope']
+
+                    f.seek(0)
+                    json.dump(modinfo, f, indent=4)
+                    f.truncate()
+                    log.info(f"{moddat['name']}`'s scope has been set to `{patch['scope']}` ({moddat['modid']}).")
                 pass
 
             case 'removeRLConflict' | 'rmRLCnflct':

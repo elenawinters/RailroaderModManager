@@ -2,7 +2,10 @@
 # I'm trying to keep the "AI-Generated" mods out of this pack. Ashen's mods in particular block the deletion of their folders (somehow).
 # "AI-Assisted" mods are fine, I just don't want slop to infest this pack.
 
-# railroader-patch|gaVzY29wZahvcHRpb25hbA==  # Make all mods "optional". Stops the game from warning when a mod is missing or was updated.
+# I draw a hard line against any DLL mods from REX due to his behavior. If a mod depends on a Rex DLL mod, that mod wont be here.
+# As far as I can tell, all of his DLL mods are "safe", but I don't trust that to stay the case.
+
+global-patch|gaVzY29wZahvcHRpb25hbA==  # Make all mods "optional". Stops the game from warning when a mod is missing or was updated.
 
 # essentials / unsorted
 railroader-1029  # Waypoint Queue
@@ -29,6 +32,8 @@ railroader-1811!legacy  # Tetz's Rails Load
 railroader-1810!legacy  # Tetz's Ties Load
 
 # Asset packs
+railroader-434   # SCOLD - No DLL, safe to use
+railroader-1020  # RTM ASSET PACK - No DLL, safe to use
 # railroader-1636$mow  # terrahs city structures  - will be enabled when there are mods that use these assets in this modlist
 # railroader-2119  # Steveo's Steel Girder
 
@@ -92,32 +97,21 @@ railroader-1955  # BMR East Whittier Yard (MoW)
 railroader-1990  # BMR Scott Tie Plant (MoW)
 
 
-# cars
-railroader-2131  # Lionel Style Pennsy Depressed Center 4 Truck Flat Car (MOW)
-
-
-# kater's map mods
-# Kater made a deal with the devil (Rex). Will not include this into they come to their senses.
-# railroader-2118  # Katers Sylva Interchange (MOW)
-
+# whippet's cars
+railroader-2212  # AAR Recommended Practice 11-Panel 41ft Steel Gondola
+railroader-2214  # ACF Type 27 8000 Gallon 3 Dome Tank Car
+railroader-2215  # ACF Type 27 8000 Gallon Single Dome Tank Car
+railroader-2216  # Great Northern 40ft Truss-Rod Boxcars
+railroader-2217  # Northern Pacific 10000 Series Boxcars
+railroader-2219  # USRA Specification 1003-B 40-Ton Double Sheathed Boxcar
+railroader-2221  # Nevada Copper Belt Caboose 3
 
 # foxy's map mods
 railroader-211  # Robinson Gap
 
 
-# Rex's mods
-# I wholeheartedly do not trust Rex, and I do not recommend using his mods if you can avoid it.
-# Every mod in this collection has been scanned and verified to be safe, but I do not trust that this will continue to be the case,
-# especially after his recent behavior and ban from the official Railroader Discord server for ripping other modders assets without permission.
-railroader-434   # SCOLD - No DLL, safe to use
-
-
-# Freeman's mods
-# I've lost a lot of respect for Freeman with him continuing to use Rex's mods as dependencies.
-# So, since he chose to make a deal with the devil, none of his mods will appear here.
-
-
 # misc rolling stock
+railroader-2131  # Lionel Style Pennsy Depressed Center 4 Truck Flat Car (MOW)
 railroader-2181  # WC Mega Log Hauler
 
 
@@ -131,6 +125,7 @@ railroader-656$expanded!stable  # Governors Island Grain Elevator
 railroader-2041  # Baxterville's Ela Goldmine
 railroader-1014  # Ela Reworked
 railroader-2110  # Ela Reworked 2.0 and Baxterville Gold Mine Compatibility Patch
+railroader-2204  # Tuckasegee River Chipping Works
 
 
 # Mods that aren't updated yet, but that I consider essential

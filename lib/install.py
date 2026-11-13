@@ -48,6 +48,7 @@ async def check_mod(id_string):
             await init(id_string)
             return
 
+global_patch = None
 
 total_installs = 0
 pending_installs = 0
@@ -97,8 +98,14 @@ async def install_mods(moddat):
                 patch, payload = meta.patch.split('?payload', 1)
             else:
                 patch = meta.patch
-            patch = msgpack.unpackb(base64.b64decode(patch))
-            payload = base64.b85decode(payload).decode() if payload else None
+
+        local_patch = msgpack.unpackb(base64.b64decode(patch)) if patch else None
+        payload = base64.b85decode(payload).decode() if payload else None
+
+        patch = msgpack.unpackb(base64.b64decode(global_patch))
+        if local_patch:
+            patch.update(local_patch)
+
 
         # log.debug(f'Patch: {patch} | Payload: {payload} | File: {pending_file}')
         # log.debug(glob)

@@ -1,4 +1,5 @@
-from lib.install import install_mods, total_installs, pending_installs, detailed_mod_info, check_mod
+# from lib.install import install_mods, total_installs, pending_installs, detailed_mod_info, check_mod
+from lib import install
 from lib.system import (
     DATE_FORMAT, TMP_FOLDER,
     DOWNLOADS_PATH, CACHE_PATH,
@@ -45,7 +46,7 @@ async def do_all_pending_files_exist(pending_files):
     return all_exist
 
 async def refresh_nexus_data_and_install():
-    check_func = check_mod
+    check_func = install.check_mod
     mod_ids = sorted([mod['modid'] for mod in data.base['mods'].all() if mod['modid'] is not None])
 
     log.debug(mod_ids)
@@ -86,24 +87,31 @@ async def refresh_nexus_data_and_install():
 
     if not TMP_FOLDER.exists(): os.mkdir(TMP_FOLDER)
     if not CACHE_PATH.exists(): os.mkdir(CACHE_PATH)
+    if config['settings'].getboolean('delete_tmp') == True and not is_dangerous_path(TMP_FOLDER):
+        shutil.rmtree(TMP_FOLDER)
 
     log.info("All pending update files are present. Proceeding with installation...")
+
+    install.global_patch = data.base['mods'].find_one(modid = 'global-patch').get('patch', None)
+    log.critical(install.global_patch)
+
     try:
         async with asyncio.TaskGroup() as tg:
             for mod in data.base['mods'].all():
                 if mod['modid'] is None: continue
                 if mod['pending_filenames'] is None: continue
                 if 'offsite' in mod['modid']: continue
-                tg.create_task(install_mods(mod))
+                if 'patch' in mod['modid']: continue
+                tg.create_task(install.install_mods(mod))
     except Exception as e:
         log.exception(e)
 
-    log.info(f'Successfully installed {total_installs}/{pending_installs} mod(s).')
+    log.info(f'Successfully installed {install.total_installs}/{install.pending_installs} mod(s).')
 
     if config['settings'].getboolean('delete_tmp') == True and not is_dangerous_path(TMP_FOLDER):
         shutil.rmtree(TMP_FOLDER)
 
-    if not detailed_mod_info:
+    if not install.detailed_mod_info:
         return
     
     pref = Path(Path(config['gameloc']['railroader']).parent, 'Preferences.json')
@@ -114,8 +122,8 @@ async def refresh_nexus_data_and_install():
         prefdat = json5.load(f)
         prefmods = prefdat['mods']
 
-        for identifier in detailed_mod_info.keys():
-            dict_upsert(prefmods, { f'identifier': identifier, **detailed_mod_info[identifier]})
+        for identifier in install.detailed_mod_info.keys():
+            dict_upsert(prefmods, { f'identifier': identifier, **install.detailed_mod_info[identifier]})
             # log.debug(identifier)
 
         prefdat['mods'] = prefmods
