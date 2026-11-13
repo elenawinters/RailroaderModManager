@@ -94,7 +94,9 @@ async def install_mods(moddat):
         patch = None
         payload = None
         if meta.patch:
-            if '?payload' in meta.patch:
+            if '?payload=' in meta.patch:
+                patch, payload = meta.patch.split('?payload=', 1)
+            elif '?payload' in meta.patch:
                 patch, payload = meta.patch.split('?payload', 1)
             else:
                 patch = meta.patch
