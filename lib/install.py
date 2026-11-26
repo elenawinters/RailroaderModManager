@@ -75,7 +75,7 @@ async def install_mods(moddat):
             # dl = Path(DOWNLOADS_PATH, pending_file)
             dl = next(DOWNLOADS_PATH.glob(loc.name), Path(DOWNLOADS_PATH, pending_file))
             if not await aiofiles.os.path.isfile(dl):
-                log.critical(f'Pending file `{pending_file}` does not exist in Downloads or Cache. How did we get here?! Skipping file.')
+                log.critical(f'Pending file for `{moddat['name']}` does not exist in Downloads or Cache. How did we get here?! Skipping file.')
                 continue
             dl.move(loc)
 
@@ -115,9 +115,18 @@ async def install_mods(moddat):
             if 'SCAssetPacks' in str(file):
                 log.debug(f"Skipping {file} because it's part of an asset pack!")
                 continue
+            true_id = file.parents[0].name
             if file.name.lower() == 'info.json' and list(file.parent.glob('Definition.json', case_sensitive=False)):
-                log.warning(f'Refusing to install `{file}` because it is probably already installed.')
+                log.warning(f'Refusing to install `{file}` for `{moddat['name']}` because it is probably already installed. ' \
+                            'This warning only appears when an info.json and a definition.json appear in the same folder. It\'s usually safe to ignore this warning.')
                 continue
+            if 'skipFolders' in patch:
+                pcontent = patch['skipFolders']
+                flist = pcontent if isinstance(pcontent, list) else [pcontent]
+                if [x for x in flist if x.lower() == file.parent.name.lower()]:
+                    log.warning(f'Refusing to install `{file.parent.name}` for `{moddat['name']}` because of an attached patch telling us not to.')
+                    continue
+
             
             true_path = Path(config['gameloc'][meta.game], str(uuid.uuid1()))
             patcher(file, moddat, patch, payload, true_path)

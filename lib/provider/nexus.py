@@ -203,21 +203,13 @@ async def fetch_nexus_file_info(id_string):
 
     Why this happens, I don't know. But it does. It completely broke our install process, as we expected the file name to be exactly what Nexus reports it to be.
 
-    So, how do we get around this? Well, since the version name reported by the API is always correct, we can just build a partial file name and then search for it.
+    So, how do we get around this? Well, since the version name reported by the API is always correct, we can just build a partial file name and then glob for it.
+    We are also using a wildcard for the {name} field, as it turns out that that can also be incorrect.
 
-
-    So basically, we do this using glob.
-    {name} {mod_id} * {date(truncated)} {sqids_uid}.zip
+    So, this is our glob:
+    * {mod_id} * {date(truncated)} {sqids_uid}.zip
 """
 
-# PassengerCarLights 1.0.1 2124 1.0.1 2026-11-10T23-57Z kgVPjLjHy.zip
-# PassengerCarLights 1.0.1 2124 2 2026-11-10T23-57Z kgVPjLjHy.zip
-
-
-brokenDLFilenamePatches = {  # I'll be deleting this soon
-    'Duel Whistle 1581 1.0.0 2026-07-19T02-08Z muYqJIOHI.zip': 'Duel Whistle 1581 1 2026-07-19T02-08Z muYqJIOHI.zip',
-    'Reaper-ME 2.0.14-exp 18 2.0.14 2026-11-02T12-31Z DBw1ClrDQ.zip': 'Reaper-ME 2.0.14-exp 18 1 2026-11-02T12-31Z DBw1ClrDQ.zip'
-}
 async def init(id_string):
     meta = parse_id_string(id_string)
     file_info = await fetch_nexus_file_info(id_string)
@@ -244,12 +236,10 @@ async def init(id_string):
             log.debug(f"No update available for {id_string} (current version: {current_version})")
             return
 
-        file_glob = f'{file['name']} {meta.mod} * {datetime.fromisoformat(file['uploaded_time']).strftime('%Y-%m-%dT%H-%MZ')} {Sqids().encode([file['uid']])}.zip'
+        file_glob = f'* {meta.mod} * {datetime.fromisoformat(file['uploaded_time']).strftime('%Y-%m-%dT%H-%MZ')} {Sqids().encode([file['uid']])}.zip'
+        log.critical(fnmatch.fnmatch(file_glob, file['file_name']))
         if not fnmatch.fnmatch(file_glob, file['file_name']):
             file['file_name'] = file_glob
-
-        # if file['file_name'] in brokenDLFilenamePatches:
-        #     file['file_name'] = brokenDLFilenamePatches[file['file_name']]
 
         aggregate['pending_files'].append(file['file_name'])
         aggregate['pending_fileids'].append(file['file_id'])

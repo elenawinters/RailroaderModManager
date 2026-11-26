@@ -32,11 +32,11 @@ def patcher(file, moddat, patch, payload, path):
                     f.seek(0)
                     json.dump(modinfo, f, indent=4)
                     f.truncate()
-                    log.info(f'`{file.name}` has been patched to `{patch['replaceId'][modid]}` ({moddat['modid']}).')
+                    log.debug(f'`{file.name}` has been patched to `{patch['replaceId'][modid]}` ({moddat['modid']}).')
 
             case 'scope':
                 if file.name.lower() != 'info.json':
-                    log.warning(f'Patch `{key}` is only applicable to `info.json` files. Skipping patch for `{file.name}` ({moddat["modid"]}).')
+                    log.debug(f'Patch `{key}` is only applicable to `info.json` files. Skipping patch for `{file.name}` ({moddat["modid"]}).')
                     continue
 
                 with file.open("r+", encoding="utf-8-sig") as f:
@@ -50,12 +50,12 @@ def patcher(file, moddat, patch, payload, path):
                     f.seek(0)
                     json.dump(modinfo, f, indent=4)
                     f.truncate()
-                    log.info(f"{moddat['name']}`'s scope has been set to `{patch['scope']}` ({moddat['modid']}).")
+                    log.debug(f"{moddat['name']}`'s scope has been set to `{patch['scope']}` ({moddat['modid']}).")
                 pass
 
             case 'removeRLConflict' | 'rmRLCnflct':
                 if file.name.lower() != 'definition.json':
-                    log.warning(f'Patch `{key}` is only applicable to `definition.json` files. Skipping patch for `{file.name}` ({moddat["modid"]}).')
+                    log.debug(f'Patch `{key}` is only applicable to `definition.json` files. Skipping patch for `{file.name}` ({moddat["modid"]}).')
                     continue
                 with file.open("r+", encoding="utf-8-sig") as f:
                     modinfo = json5.load(f)
@@ -68,7 +68,7 @@ def patcher(file, moddat, patch, payload, path):
                     f.seek(0)
                     json.dump(modinfo, f, indent=4)
                     f.truncate()
-                    log.info(f'`{file.name}` has been patched for mod `{path.name}` ({moddat['modid']}).')
+                    log.debug(f'`{file.name}` has been patched for mod `{path.name}` ({moddat['modid']}).')
 
             case 'customFile' | 'cFile':
                 if payload is None:
@@ -76,12 +76,12 @@ def patcher(file, moddat, patch, payload, path):
                     continue
                 cfile = Path(file.parent, patch[key])
                 if cfile.exists():
-                    log.warning(f'Custom file `{patch[key]}` already exists for `{path.name}` ({moddat["modid"]}). Skipping patch.')
+                    log.debug(f'Custom file `{patch[key]}` already exists for `{path.name}` ({moddat["modid"]}). Skipping patch.')
                     continue
                 cfile.touch()
                 with cfile.open("w", encoding="utf-8-sig") as f:
                     f.write(payload)
-                log.info(f'Custom file `{patch[key]}` has been created for `{path.name}` ({moddat['modid']}).')
+                log.debug(f'Custom file `{patch[key]}` has been created for `{path.name}` ({moddat['modid']}).')
 
             case 'rmKeyIn':
                 if payload is None:
@@ -93,7 +93,7 @@ def patcher(file, moddat, patch, payload, path):
                     f.seek(0)
                     json.dump(cdat, f, indent=4)
                     f.truncate()
-                    log.info(f'Key `{payload}` has been removed from `{patch[key]}` for `{path.name}` ({moddat['modid']}).')
+                    log.debug(f'Key `{payload}` has been removed from `{patch[key]}` for `{path.name}` ({moddat['modid']}).')
 
             case 'bkp' | 'bpk' | 'backup':  # bpk is cuz i kept typoing it when updating patches in my modpack and i dont wanna double check them all
                 # This patch movess over files from the previous version of the mod to the new version. 
@@ -107,6 +107,6 @@ def patcher(file, moddat, patch, payload, path):
                         continue
                     curr = Path(path, bkp)
                     if not curr.exists():
-                        log.warning(f'Backup file `{bkp}` does not exist for `{path.name}` ({moddat["modid"]}). Skipping backup.')
+                        log.debug(f'Backup file `{bkp}` does not exist for `{path.name}` ({moddat["modid"]}). Skipping backup.')
                         continue
                     curr.move(tmp)

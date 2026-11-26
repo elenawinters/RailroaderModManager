@@ -27,8 +27,8 @@ railroader-2006|gqNia3C3UnVzdHlSYWlscy1zZXR0aW5ncy50eHSlY0ZpbGW3UnVzdHlSYWlscy1z
 railroader-2125  # Cab Lights
 
 # Tetz's mods
-railroader-1817$experimental  # Tetz's Game Fixes
-railroader-1862$experimental  # Tetz's Diesel Traction
+railroader-1817!legacy  # Tetz's Game Fixes
+railroader-1862!legacy  # Tetz's Locomotive Traction
 railroader-1811!legacy  # Tetz's Rails Load
 railroader-1810!legacy  # Tetz's Ties Load
 
@@ -80,7 +80,9 @@ railroader-2182  # Elgin Joliet and Eastern 70 Ton Side Dump Hoppers
 railroader-1040$replacer;mow  # Custom Prime Mover Audio by TheBeeMan
 railroader-1040$16;567c;mow  # beemans
 railroader-1921  # Smooth Transitions (Throttle Smoothing)
-railroader-1174  # TheBeeMans SD38-2 6.0.0  - causes a LOT of lag for some reason rn
+railroader-143  # EMD GP38 V6.0.2
+railroader-491|gatza2lwRm9sZGVyc5KrR1AzOFNjcmlwdHOsZ3AzOGJsb21iZXJn  # EMD GP40 6.0.1
+# railroader-1174|gatza2lwRm9sZGVyc5KrR1AzOFNjcmlwdHOsZ3AzOGJsb21iZXJn  # TheBeeMans SD38-2 6.0.0  - causes a LOT of lag for some reason rn
 
 # engine sounds
 railroader-1935$dual  # 16 567B Dual Exh MoW
@@ -97,6 +99,7 @@ railroader-420  # CNJ A-1 0-4-0T (840)
 
 # bmr mods
 railroader-1708  # BMR Load Dictionary
+railroader-2329  # BMR Placeable Lights
 railroader-1955  # BMR East Whittier Yard (MoW)
 railroader-1990  # BMR Scott Tie Plant (MoW)
 railroader-2073  # BMR Whittier Central - (MoW)
@@ -111,9 +114,11 @@ railroader-2217  # Northern Pacific 10000 Series Boxcars
 railroader-2219  # USRA Specification 1003-B 40-Ton Double Sheathed Boxcar
 railroader-2221  # Nevada Copper Belt Caboose 3
 railroader-2224  # USRA Design 70-Ton Steel Triple Hopper
+railroader-2281  # USRA Specification 1005-B 55-ton Steel Twin Hopper
 
 # foxy's map mods
 railroader-211  # Robinson Gap
+railroader-494  # Foxy's Alarka Copper Mine Expansion
 
 
 # misc rolling stock
@@ -132,6 +137,8 @@ railroader-2041  # Baxterville's Ela Goldmine
 railroader-1014  # Ela Reworked
 railroader-2110  # Ela Reworked 2.0 and Baxterville Gold Mine Compatibility Patch
 railroader-2204  # Tuckasegee River Chipping Works
+railroader-2278  # Barker's Steel Mill
+railroader-2392  # Deep Creek Branch
 
 
 # Mods that aren't updated yet, but that I consider essential
